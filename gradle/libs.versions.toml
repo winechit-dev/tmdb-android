@@ -10,6 +10,16 @@ activityCompose = "1.9.2"
 composeBom = "2024.09.03"
 appcompat = "1.7.0"
 material = "1.12.0"
+customPlugin = "1.0.0"
+kotlinKsp = "2.0.21-1.0.25"
+kotlinSerialization = "2.0.0"
+hilt = "2.51.1"
+hiltNavigationCompose = "1.2.0"
+kotlinxSerializationJson = "1.7.0"
+coreArrow = "1.0.1"
+coilVersion = "2.6.0"
+foundation = "1.7.0"
+composeNavigation = "2.8.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -17,6 +27,8 @@ junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
+
+## Compose Libraries
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
 androidx-ui = { group = "androidx.compose.ui", name = "ui" }
@@ -26,10 +38,26 @@ androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-toolin
 androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
+androidx-lifecycle-viewmodel-compose = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "lifecycleRuntimeKtx" }
+androidx-compose-foundation = { group = "androidx.compose.foundation", name = "foundation", version.ref = "foundation" }
+androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "composeNavigation" }
+
+
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 kotlin-gradle-plugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
 android-gradle-plugin = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
+androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
+
+## Dagger Hilt Libraries
+hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
+hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hilt" }
+
+## Kotlin Serialization
+kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
+
+arrow = { module = "io.arrow-kt:arrow-core", version.ref = "coreArrow" }
+coil = { module = "io.coil-kt:coil-compose", version.ref = "coilVersion" }
 
 
 [plugins]
@@ -37,5 +65,13 @@ android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 android-library = { id = "com.android.library", version.ref = "agp" }
+kotlin-ksp = { id = "com.google.devtools.ksp", version.ref = "kotlinKsp" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlinSerialization" }
+hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 
+## Custom Plugin
+convention-application = { id = "conventionPluginApplication.android.application", version.ref = "customPlugin" }
+convention-library = { id = "conventionPluginLibrary.android.library", version.ref = "customPlugin" }
+convention-compose-application = { id = "conventionPluginApplication.compose.application", version.ref = "customPlugin" }
+convention-compose-library = { id = "conventionPluginLibrary.compose.library", version.ref = "customPlugin" }
 
