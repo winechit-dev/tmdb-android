@@ -1,4 +1,4 @@
-package com.wcp.moviequest.ui.theme
+package com.moviequest.mobile.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

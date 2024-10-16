@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "com.wcp.moviequest"
+    namespace = "com.moviequest.mobile"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.wcp.moviequest"
+        applicationId = "com.moviequest.mobile"
         minSdk = 24
         targetSdk = 34
         versionCode = 1

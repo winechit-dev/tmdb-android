@@ -1,4 +1,4 @@
-package com.wcp.moviequest
+package com.moviequest.mobile
 
 import org.junit.Test
 
