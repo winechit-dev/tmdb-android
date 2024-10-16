@@ -19,7 +19,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "MovieQuest"
+rootProject.name = "moviequest-android"
 include(":app")
 include(":feature:discover")
 include(":feature:favorites")
