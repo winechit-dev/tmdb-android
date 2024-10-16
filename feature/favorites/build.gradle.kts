@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.moviequest.discover"
+    namespace = "com.moviequest.favorites"
     compileSdk = 34
 
     defaultConfig {

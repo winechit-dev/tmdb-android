@@ -22,3 +22,4 @@ dependencyResolutionManagement {
 rootProject.name = "MovieQuest"
 include(":app")
 include(":feature:discover")
+include(":feature:favorites")
