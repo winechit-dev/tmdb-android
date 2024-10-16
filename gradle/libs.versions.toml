@@ -20,6 +20,7 @@ coreArrow = "1.0.1"
 coilVersion = "2.6.0"
 foundation = "1.7.0"
 composeNavigation = "2.8.0"
+jetbrainsKotlinJvm = "1.9.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -74,4 +75,5 @@ convention-application = { id = "conventionPluginApplication.android.application
 convention-library = { id = "conventionPluginLibrary.android.library", version.ref = "customPlugin" }
 convention-compose-application = { id = "conventionPluginApplication.compose.application", version.ref = "customPlugin" }
 convention-compose-library = { id = "conventionPluginLibrary.compose.library", version.ref = "customPlugin" }
+jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrainsKotlinJvm" }
 
