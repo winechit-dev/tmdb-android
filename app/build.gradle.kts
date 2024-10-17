@@ -12,3 +12,7 @@ composeCompiler {
     reportsDestination = layout.buildDirectory.dir("compose_compiler")
 }
 
+dependencies {
+    implementation(project(":core:designsystem"))
+}
+
