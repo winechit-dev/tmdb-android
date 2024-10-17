@@ -19,6 +19,30 @@ class MovieRepositoryImpl @Inject constructor(
             .map { it.toMoviesModel() }
     }
 
+    override suspend fun getPopularMovies(nextPage: Int): Either<DataException, MoviesModel> {
+        return movieDataSource
+            .getPopularMovies(nextPage)
+            .map { it.toMoviesModel() }
+    }
+
+    override suspend fun getUpcomingMovies(nextPage: Int): Either<DataException, MoviesModel> {
+        return movieDataSource
+            .getUpcomingMovies(nextPage)
+            .map { it.toMoviesModel() }
+    }
+
+    override suspend fun getTopRatedMovies(nextPage: Int): Either<DataException, MoviesModel> {
+        return movieDataSource
+            .getTopRatedMovies(nextPage)
+            .map { it.toMoviesModel() }
+    }
+
+    override suspend fun getNowPlayingMovies(nextPage: Int): Either<DataException, MoviesModel> {
+        return movieDataSource
+            .getNowPlayingMovies(nextPage)
+            .map { it.toMoviesModel() }
+    }
+
     override suspend fun getMovieGenres(): Either<DataException, GenresModel> {
         return movieDataSource
             .getMovieGenres()

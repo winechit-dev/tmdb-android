@@ -23,20 +23,48 @@ class MovieDataSourceImpl @Inject constructor(
         )
     }
 
-    override suspend fun getPopularMovies(nextPage: Int): Either<com.tmdb.domain.exception.DataException, MoviesResponse> {
-        TODO("Not yet implemented")
+    override suspend fun getPopularMovies(nextPage: Int): Either<DataException, MoviesResponse> {
+        return handleCall(
+            apiCall = {
+                service.getPopularMovies(nextPage)
+            },
+            mapper = { data ->
+                data
+            }
+        )
     }
 
-    override suspend fun getUpcomingMovies(nextPage: Int): Either<com.tmdb.domain.exception.DataException, MoviesResponse> {
-        TODO("Not yet implemented")
+    override suspend fun getUpcomingMovies(nextPage: Int): Either<DataException, MoviesResponse> {
+        return handleCall(
+            apiCall = {
+                service.getUpcomingMovies(nextPage)
+            },
+            mapper = { data ->
+                data
+            }
+        )
     }
 
-    override suspend fun getTopRatedMovies(nextPage: Int): Either<com.tmdb.domain.exception.DataException, MoviesResponse> {
-        TODO("Not yet implemented")
+    override suspend fun getTopRatedMovies(nextPage: Int): Either<DataException, MoviesResponse> {
+        return handleCall(
+            apiCall = {
+                service.getTopRatedMovies(nextPage)
+            },
+            mapper = { data ->
+                data
+            }
+        )
     }
 
-    override suspend fun getNowPlayingMovies(nextPage: Int): Either<com.tmdb.domain.exception.DataException, MoviesResponse> {
-        TODO("Not yet implemented")
+    override suspend fun getNowPlayingMovies(nextPage: Int): Either<DataException, MoviesResponse> {
+        return handleCall(
+            apiCall = {
+                service.getNowPlayingMovies(nextPage)
+            },
+            mapper = { data ->
+                data
+            }
+        )
     }
 
     override suspend fun getMovieGenres(): Either<DataException, GenresResponse> {

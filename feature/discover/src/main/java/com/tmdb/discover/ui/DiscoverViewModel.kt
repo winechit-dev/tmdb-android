@@ -3,7 +3,6 @@ package com.tmdb.discover.ui
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tmdb.discover.model.GenreUIModel
-import com.tmdb.domain.model.GenreModel
 import com.tmdb.domain.repository.MovieRepository
 import com.tmdb.ui.MovieUIModel
 import com.tmdb.ui.toMoviesUIModel
@@ -31,7 +30,12 @@ class DiscoverViewModel @Inject constructor(
 
     private fun fetchAll() {
         getTrendingTodayMovies()
+        getPopularMovies()
+        getUpcomingMovies()
+        getTopRatedMovies()
+        getNowPlayingMovies()
     }
+
 
     private fun getGenres() {
         viewModelScope.launch(Dispatchers.IO) {
@@ -64,11 +68,83 @@ class DiscoverViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             repository
                 .getTrendingTodayMovies(1)
-                .onRight { trendingTodayMovies ->
+                .onRight { movies ->
 
                     _uiState.update { state ->
                         state.copy(
-                            trendingTodayMovies = trendingTodayMovies
+                            trendingTodayMovies = movies
+                                .searches
+                                .toMoviesUIModel(state.selectedGenreId)
+                        )
+                    }
+                }.onLeft {
+
+                }
+        }
+    }
+
+    private fun getPopularMovies() {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository
+                .getPopularMovies(1)
+                .onRight { movies ->
+                    _uiState.update { state ->
+                        state.copy(
+                            popularMovies = movies
+                                .searches
+                                .toMoviesUIModel(state.selectedGenreId)
+                        )
+                    }
+                }.onLeft {
+
+                }
+        }
+    }
+
+    private fun getUpcomingMovies() {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository
+                .getUpcomingMovies(1)
+                .onRight { movies ->
+                    _uiState.update { state ->
+                        state.copy(
+                            upcomingMovies = movies
+                                .searches
+                                .toMoviesUIModel(state.selectedGenreId)
+                        )
+                    }
+                }.onLeft {
+
+                }
+        }
+    }
+
+    private fun getTopRatedMovies() {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository
+                .getTopRatedMovies(1)
+                .onRight { movies ->
+                    _uiState.update { state ->
+                        state.copy(
+                            topRatedMovies = movies
+                                .searches
+                                .toMoviesUIModel(state.selectedGenreId)
+                        )
+                    }
+                }.onLeft {
+
+                }
+        }
+    }
+
+    private fun getNowPlayingMovies() {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository
+                .getNowPlayingMovies(1)
+                .onRight { movies ->
+                    _uiState.update { state ->
+                        state.copy(
+                            nowPlayingMovies = movies
                                 .searches
                                 .toMoviesUIModel(state.selectedGenreId)
                         )
@@ -83,7 +159,8 @@ class DiscoverViewModel @Inject constructor(
         _uiState.update { state ->
             state.copy(
                 selectedGenreId = genreId,
-                genres = state.genres.map { it.copy(selected = it.id == genreId) })
+                genres = state.genres.map { it.copy(selected = it.id == genreId) }
+                )
         }
         fetchAll()
     }
@@ -92,5 +169,9 @@ class DiscoverViewModel @Inject constructor(
 data class DiscoverUIState(
     val genres: List<GenreUIModel> = emptyList(),
     val selectedGenreId: Int = 100,
-    val trendingTodayMovies: List<MovieUIModel> = emptyList()
+    val trendingTodayMovies: List<MovieUIModel>? = null,
+    val popularMovies: List<MovieUIModel>? = null,
+    val upcomingMovies: List<MovieUIModel>? = null,
+    val nowPlayingMovies: List<MovieUIModel>? = null,
+    val topRatedMovies: List<MovieUIModel>? = null
 )

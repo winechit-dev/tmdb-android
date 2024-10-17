@@ -7,5 +7,9 @@ import com.tmdb.domain.model.MoviesModel
 
 interface MovieRepository {
     suspend fun getTrendingTodayMovies(nextPage: Int): Either<DataException, MoviesModel>
+    suspend fun getPopularMovies(nextPage: Int): Either<DataException, MoviesModel>
+    suspend fun getUpcomingMovies(nextPage: Int): Either<DataException, MoviesModel>
+    suspend fun getTopRatedMovies(nextPage: Int): Either<DataException, MoviesModel>
+    suspend fun getNowPlayingMovies(nextPage: Int): Either<DataException, MoviesModel>
     suspend fun getMovieGenres(): Either<DataException, GenresModel>
 }
