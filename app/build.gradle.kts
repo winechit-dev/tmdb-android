@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.moviequest.mobile"
+    namespace = "com.tmdb.mobile"
 }
 
 composeCompiler {

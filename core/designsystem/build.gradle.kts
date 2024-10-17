@@ -4,5 +4,5 @@ plugins {
 }
 
 android {
-    namespace = "com.moviequest.designsystem"
+    namespace = "com.tmdb.designsystem"
 }

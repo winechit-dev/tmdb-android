@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.moviequest.favorites"
+    namespace = "com.tmdb.favorites"
 }
 dependencies {
     implementation(project(":core:designsystem"))

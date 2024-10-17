@@ -3,5 +3,5 @@ plugins {
 }
 
 android {
-    namespace = "com.moviequest.network"
+    namespace = "com.tmdb.network"
 }

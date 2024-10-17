@@ -20,7 +20,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "moviequest-android"
+rootProject.name = "tmdb-android"
 include(":app")
 include(":feature:discover")
 include(":feature:favorites")

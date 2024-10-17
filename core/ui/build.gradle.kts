@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.moviequest.ui"
+    namespace = "com.tmdb.ui"
 }
 
 dependencies {

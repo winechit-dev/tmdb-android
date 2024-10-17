@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.moviequest.search"
+    namespace = "com.tmdb.search"
 }
 dependencies {
     implementation(project(":core:designsystem"))
