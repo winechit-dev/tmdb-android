@@ -1,4 +1,4 @@
-package com.moviequest.mobile
+package com.moviequest.mobile.entry
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -11,9 +11,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.moviequest.designsystem.theme.MovieQuestTheme
-import com.moviequest.discover.Discover
+import com.moviequest.discover.ui.Discover
 import com.moviequest.mobile.navigation.NavGraph
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -1,4 +1,4 @@
-package com.moviequest.mobile
+package com.moviequest.mobile.entry
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
