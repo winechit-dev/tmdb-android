@@ -5,28 +5,28 @@ import com.tmdb.ui.MovieUIModel
 
 val genresPreview = listOf(
     GenreUIModel(
-        id = "1",
+        id = 1,
         name = "Action",
         selected = true
     ),
     GenreUIModel(
-        id = "2",
+        id = 2,
         name = "Adventure"
     ),
     GenreUIModel(
-        id = "3",
+        id = 3,
         name = "Animation"
     ),
     GenreUIModel(
-        id = "4",
+        id = 4,
         name = "Comedy"
     ),
     GenreUIModel(
-        id = "5",
+        id = 5,
         name = "Crime"
     ),
     GenreUIModel(
-        id = "6",
+        id = 6,
         name = "Documentary"
     )
 )

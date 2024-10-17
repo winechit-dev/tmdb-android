@@ -1,8 +1,11 @@
 package com.tmdb.data.mapper
 
 import com.tmdb.data.BuildConfig
+import com.tmdb.data.model.GenresResponse
 import com.tmdb.data.model.MovieResponse
 import com.tmdb.data.model.MoviesResponse
+import com.tmdb.domain.model.GenreModel
+import com.tmdb.domain.model.GenresModel
 import com.tmdb.domain.model.MovieModel
 import com.tmdb.domain.model.MoviesModel
 
@@ -31,6 +34,17 @@ private fun MovieResponse.toMovieModel(): MovieModel {
         video = video,
         voteAverage = voteAverage,
         voteCount = voteCount
+    )
+}
+
+fun GenresResponse.toGenresModel(): GenresModel {
+    return GenresModel(
+        genres = this.genres.map {
+            GenreModel(
+                id = it.id,
+                name = it.name
+            )
+        }
     )
 }
 

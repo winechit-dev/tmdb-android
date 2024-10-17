@@ -1,5 +1,6 @@
 package com.tmdb.network.service
 
+import com.tmdb.data.model.GenresResponse
 import com.tmdb.data.model.MoviesResponse
 import com.tmdb.network.BuildConfig
 import retrofit2.Response
@@ -44,4 +45,10 @@ interface MovieService {
         @Query("api_key") apiKey: String = BuildConfig.API_KEY,
         @Query("language") language: String = LANGUAGE
     ): Response<MoviesResponse>
+
+    @GET("genre/movie/list")
+    suspend fun getMovieGenres(
+        @Query("api_key") apiKey: String = BuildConfig.API_KEY,
+        @Query("language") language: String = "en"
+    ): Response<GenresResponse>
 }

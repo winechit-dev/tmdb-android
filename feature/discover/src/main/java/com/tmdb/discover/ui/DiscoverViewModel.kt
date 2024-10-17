@@ -2,7 +2,6 @@ package com.tmdb.discover.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.tmdb.discover.genresPreview
 import com.tmdb.discover.model.GenreUIModel
 import com.tmdb.domain.repository.MovieRepository
 import com.tmdb.ui.MovieUIModel
@@ -25,7 +24,26 @@ class DiscoverViewModel @Inject constructor(
     val uiState: StateFlow<DiscoverUIState> = _uiState.asStateFlow()
 
     init {
+        getGenres()
         getTrendingTodayMovies()
+    }
+
+    private fun getGenres() {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository
+                .getMovieGenres()
+                .onRight {
+                    val genres = it.genres.map { genre ->
+                        GenreUIModel(
+                            id = genre.id,
+                            name = genre.name
+                        )
+                    }
+                    _uiState.update { state ->
+                        state.copy(genres = genres)
+                    }
+                }
+        }
     }
 
     private fun getTrendingTodayMovies() {
@@ -44,7 +62,7 @@ class DiscoverViewModel @Inject constructor(
 }
 
 data class DiscoverUIState(
-    val genres: List<GenreUIModel> = genresPreview,
+    val genres: List<GenreUIModel> = emptyList(),
     val selectedGenre: String = "",
     val trendingTodayMovies: List<MovieUIModel> = emptyList()
 )

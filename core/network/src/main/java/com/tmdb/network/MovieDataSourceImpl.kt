@@ -2,6 +2,7 @@ package com.tmdb.network
 
 import arrow.core.Either
 import com.tmdb.data.datasource.remote.MovieDataSource
+import com.tmdb.data.model.GenresResponse
 import com.tmdb.data.model.MoviesResponse
 import com.tmdb.domain.exception.DataException
 import com.tmdb.network.handler.handleCall
@@ -36,6 +37,17 @@ class MovieDataSourceImpl @Inject constructor(
 
     override suspend fun getNowPlayingMovies(nextPage: Int): Either<com.tmdb.domain.exception.DataException, MoviesResponse> {
         TODO("Not yet implemented")
+    }
+
+    override suspend fun getMovieGenres(): Either<DataException, GenresResponse> {
+        return handleCall(
+            apiCall = {
+                service.getMovieGenres()
+            },
+            mapper = { data ->
+                data
+            }
+        )
     }
 
 }
