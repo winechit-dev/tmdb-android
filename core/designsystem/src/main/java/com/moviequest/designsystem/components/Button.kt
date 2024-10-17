@@ -23,12 +23,12 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import com.moviequest.designsystem.R
 import com.moviequest.designsystem.theme.AppPreview
+import com.moviequest.designsystem.theme.ThemePreviews
 import com.moviequest.designsystem.theme.asBrush
 import com.moviequest.designsystem.theme.defaultButton
 
@@ -96,7 +96,7 @@ class ButtonPreviewParameterProvider : PreviewParameterProvider<Boolean> {
 
 }
 
-@Preview
+@ThemePreviews
 @Composable
 private fun ButtonPreview(
     @PreviewParameter(ButtonPreviewParameterProvider::class) enabled: Boolean
@@ -116,7 +116,7 @@ private fun ButtonPreview(
     }
 }
 
-@Preview
+@ThemePreviews
 @Composable
 private fun ButtonWithLeadingIconPreview(
     @PreviewParameter(ButtonPreviewParameterProvider::class) enabled: Boolean

@@ -4,14 +4,17 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.FilterChip
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SuggestionChip
+import androidx.compose.material3.SuggestionChipDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import com.moviequest.designsystem.theme.AppPreview
+import com.moviequest.designsystem.theme.ThemePreviews
 
 @Composable
 fun AppFilterChip(
@@ -33,6 +36,26 @@ fun AppFilterChip(
     )
 }
 
+@Composable
+fun AppChip(
+    modifier: Modifier = Modifier,
+    label: String,
+    onClick: () -> Unit
+) {
+    SuggestionChip(
+        modifier = modifier,
+        onClick = onClick,
+        shape = CircleShape,
+        colors = SuggestionChipDefaults.suggestionChipColors(
+            containerColor = MaterialTheme.colorScheme.surfaceVariant,
+            labelColor = MaterialTheme.colorScheme.onSurfaceVariant
+        ),
+        label = {
+            Text(label)
+        }
+    )
+}
+
 class ChipPreviewParameterProvider : PreviewParameterProvider<Boolean> {
     override val values: Sequence<Boolean>
         get() = sequenceOf(
@@ -42,7 +65,7 @@ class ChipPreviewParameterProvider : PreviewParameterProvider<Boolean> {
 
 }
 
-@Preview
+@ThemePreviews
 @Composable
 private fun AppFilterChipPreview(
     @PreviewParameter(ChipPreviewParameterProvider::class) selected: Boolean
@@ -50,6 +73,18 @@ private fun AppFilterChipPreview(
     AppPreview {
         AppFilterChip(
             selected = selected,
+            label = "Popular",
+            onClick = {},
+            modifier = Modifier.padding(20.dp)
+        )
+    }
+}
+
+@ThemePreviews
+@Composable
+private fun AppChipPreview() {
+    AppPreview {
+        AppChip(
             label = "Popular",
             onClick = {},
             modifier = Modifier.padding(20.dp)

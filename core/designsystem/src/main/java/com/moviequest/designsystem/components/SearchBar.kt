@@ -22,10 +22,10 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.moviequest.designsystem.R
 import com.moviequest.designsystem.theme.AppPreview
+import com.moviequest.designsystem.theme.ThemePreviews
 
 @Composable
 fun AppSearchBar(
@@ -36,7 +36,7 @@ fun AppSearchBar(
 ) {
     val focusManager = LocalFocusManager.current
     val focusRequester = remember { FocusRequester() }
-    val focusedContainerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.12f)
+    val focusedContainerColor = MaterialTheme.colorScheme.surfaceVariant
 
     OutlinedTextField(
         value = query,
@@ -75,7 +75,7 @@ fun AppSearchBar(
     )
 }
 
-@Preview
+@ThemePreviews
 @Composable
 private fun AppSearchBarPreview() {
     var query by remember { mutableStateOf("") }
