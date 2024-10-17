@@ -4,8 +4,8 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import com.moviequest.discover.Discover
-import com.moviequest.discover.DiscoverScreen
+import com.moviequest.discover.ui.Discover
+import com.moviequest.discover.ui.DiscoverScreen
 import com.moviequest.favorites.Favorites
 import com.moviequest.favorites.FavoritesScreen
 import com.moviequest.search.Search

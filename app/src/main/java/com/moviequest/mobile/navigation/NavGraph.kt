@@ -9,7 +9,6 @@ import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
@@ -28,8 +27,9 @@ import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.moviequest.designsystem.theme.LocalEntryPadding
 import com.moviequest.designsystem.theme.MovieQuestTheme
-import com.moviequest.discover.Discover
+import com.moviequest.discover.ui.Discover
 import com.moviequest.favorites.Favorites
 import kotlin.reflect.KClass
 
@@ -96,4 +96,3 @@ private fun NavBackStackEntry?.hasAnyRoute(vararg routes: KClass<*>): Boolean {
 
 val LocalNavAnimatedVisibilityScope = compositionLocalOf<AnimatedVisibilityScope?> { null }
 val LocalSharedTransitionScope = compositionLocalOf<SharedTransitionScope?> { null }
-val LocalEntryPadding = compositionLocalOf { PaddingValues() }
