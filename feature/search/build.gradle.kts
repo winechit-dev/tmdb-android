@@ -6,3 +6,6 @@ plugins {
 android {
     namespace = "com.moviequest.search"
 }
+dependencies {
+    implementation(project(":core:designsystem"))
+}

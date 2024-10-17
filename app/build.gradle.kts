@@ -14,5 +14,8 @@ composeCompiler {
 
 dependencies {
     implementation(project(":core:designsystem"))
+    implementation(project(":feature:discover"))
+    implementation(project(":feature:favorites"))
+    implementation(project(":feature:search"))
 }
 

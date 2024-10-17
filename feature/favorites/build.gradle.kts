@@ -6,3 +6,6 @@ plugins {
 android {
     namespace = "com.moviequest.favorites"
 }
+dependencies {
+    implementation(project(":core:designsystem"))
+}
