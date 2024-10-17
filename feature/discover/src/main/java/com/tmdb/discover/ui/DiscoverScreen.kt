@@ -28,6 +28,7 @@ import com.tmdb.designsystem.theme.AppPreviewWrapper
 import com.tmdb.designsystem.theme.LocalEntryPadding
 import com.tmdb.designsystem.theme.ThemePreviews
 import com.tmdb.discover.genresPreview
+import com.tmdb.discover.model.GenreUIModel
 import com.tmdb.discover.moviesPreview
 import com.tmdb.discover.subtitle_discover
 import com.tmdb.discover.title_discover
@@ -88,24 +89,11 @@ internal fun DiscoverContent(
                         .padding(horizontal = 30.dp)
                 )
             }
-            item {
-                LazyRow(
-                    horizontalArrangement = Arrangement.spacedBy(12.dp),
-                    contentPadding = PaddingValues(horizontal = 30.dp)
-                ) {
-                    items(
-                        items = uiState.genres,
-                        key = { it.id },
-                        contentType = { "Genre" }
-                    ) { genre ->
-                        AppFilterChip(
-                            selected = genre.selected,
-                            label = genre.name,
-                            onClick = {}
-                        )
-                    }
-                }
-            }
+
+            genresSection(
+                genres = uiState.genres,
+                onClickItem = {}
+            )
 
             moviesSection(
                 title = "Today Trending Movies",
@@ -142,6 +130,30 @@ private fun LazyListScope.moviesSection(
                 MovieItem(
                     model = model,
                     onClick = onClickItem
+                )
+            }
+        }
+    }
+}
+
+private fun LazyListScope.genresSection(
+    genres: List<GenreUIModel>,
+    onClickItem: (GenreUIModel) -> Unit
+) {
+    item {
+        LazyRow(
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
+            contentPadding = PaddingValues(horizontal = 30.dp)
+        ) {
+            items(
+                items = genres,
+                key = { it.id },
+                contentType = { "Genre" }
+            ) { genre ->
+                AppFilterChip(
+                    selected = genre.selected,
+                    label = genre.name,
+                    onClick = { onClickItem(genre) }
                 )
             }
         }
