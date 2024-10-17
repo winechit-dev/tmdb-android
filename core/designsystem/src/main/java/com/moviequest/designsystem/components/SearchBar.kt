@@ -1,15 +1,15 @@
 package com.moviequest.designsystem.components
 
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -18,12 +18,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.moviequest.designsystem.R
+import com.moviequest.designsystem.components.textfield.core.CoreTextField
 import com.moviequest.designsystem.theme.AppPreviewWrapper
 import com.moviequest.designsystem.theme.ThemePreviews
 
@@ -38,7 +40,7 @@ fun AppSearchBar(
     val focusRequester = remember { FocusRequester() }
     val focusedContainerColor = MaterialTheme.colorScheme.surfaceVariant
 
-    OutlinedTextField(
+    CoreTextField(
         value = query,
         onValueChange = onQueryChanged,
         readOnly = readOnly,
@@ -55,11 +57,9 @@ fun AppSearchBar(
                 focusManager.clearFocus()
             }
         ),
-        colors = OutlinedTextFieldDefaults.colors(
-            focusedContainerColor = focusedContainerColor,
-            unfocusedContainerColor = focusedContainerColor,
-            focusedBorderColor = focusedContainerColor,
-            unfocusedBorderColor = focusedContainerColor
+        colors = TextFieldDefaults.colors(
+            focusedIndicatorColor = Color.Transparent,
+            unfocusedIndicatorColor = Color.Transparent
         ),
         singleLine = true,
         trailingIcon = {
@@ -71,7 +71,9 @@ fun AppSearchBar(
         shape = CircleShape,
         enabled = true,
         isError = false,
-        modifier = modifier.focusRequester(focusRequester)
+        modifier = modifier
+            .focusRequester(focusRequester)
+            .height(46.dp)
     )
 }
 
