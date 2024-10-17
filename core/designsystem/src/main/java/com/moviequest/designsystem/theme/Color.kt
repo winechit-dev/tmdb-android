@@ -8,5 +8,6 @@ val MetallicViolet = Color(0xFF540BA1)
 val Violet = Color(0xFF8000FF)
 val PhilippinePink = Color(0xFFFF1F8A)
 val EerieBlack = Color(0xFF15151D)
+val White = Color(0xFFFFFFFF)
 
 fun Color.asBrush(): Brush = SolidColor(this)
