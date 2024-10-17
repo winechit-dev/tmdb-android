@@ -107,7 +107,7 @@ internal fun DiscoverContent(
             )
 
             moviesSection(
-                title = "Today Trending Movies",
+                title = "Today Trending",
                 movies = uiState.trendingTodayMovies,
                 onClickItem = {}
             )
