@@ -4,7 +4,6 @@ import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.navigationBars
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -23,7 +22,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.moviequest.designsystem.theme.AppPreviewWrapper
 import com.moviequest.designsystem.theme.ThemePreviews
-import com.moviequest.discover.Discover
+import com.moviequest.discover.ui.Discover
 import com.moviequest.favorites.Favorites
 import com.moviequest.mobile.R
 import kotlin.reflect.KClass
@@ -62,9 +61,6 @@ fun DefaultBottomNavigation(
     NavigationBar(
         tonalElevation = 0.dp,
         windowInsets = WindowInsets(bottom = bottomBarPadding),
-        modifier = Modifier
-            .navigationBarsPadding()
-
     ) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
 
