@@ -43,15 +43,26 @@ data object Discover
 fun DiscoverScreen() {
     val viewModel: DiscoverViewModel = hiltViewModel()
     val uiState by viewModel.uiState.collectAsState()
+
     DiscoverContent(
-        uiState = uiState
+        uiState = uiState,
+        onEvent = { event ->
+            when (event) {
+                is DiscoverEvent.SelectedGenre -> {
+                    viewModel.onSelectedGenre(event.genreId)
+                }
+
+                else -> Unit
+            }
+        }
     )
 }
 
 @Composable
 internal fun DiscoverContent(
     modifier: Modifier = Modifier,
-    uiState: DiscoverUIState
+    uiState: DiscoverUIState,
+    onEvent: (DiscoverEvent) -> Unit
 ) {
     Surface(
         modifier = modifier.fillMaxSize()
@@ -92,7 +103,7 @@ internal fun DiscoverContent(
 
             genresSection(
                 genres = uiState.genres,
-                onClickItem = {}
+                onClickItem = { onEvent(DiscoverEvent.SelectedGenre(it.id)) }
             )
 
             moviesSection(
@@ -110,6 +121,7 @@ private fun LazyListScope.moviesSection(
     onClickItem: (MovieUIModel) -> Unit
 ) {
     item {
+        if (movies.isEmpty()) return@item
         Text(
             text = title,
             style = MaterialTheme.typography.titleMedium,
@@ -169,7 +181,8 @@ internal fun DiscoverContentPreview() {
             uiState = DiscoverUIState(
                 genres = genresPreview,
                 trendingTodayMovies = moviesPreview
-            )
+            ),
+            onEvent = {}
         )
     }
 }

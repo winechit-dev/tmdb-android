@@ -3,6 +3,7 @@ package com.tmdb.discover.ui
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tmdb.discover.model.GenreUIModel
+import com.tmdb.domain.model.GenreModel
 import com.tmdb.domain.repository.MovieRepository
 import com.tmdb.ui.MovieUIModel
 import com.tmdb.ui.toMoviesUIModel
@@ -25,6 +26,10 @@ class DiscoverViewModel @Inject constructor(
 
     init {
         getGenres()
+        fetchAll()
+    }
+
+    private fun fetchAll() {
         getTrendingTodayMovies()
     }
 
@@ -33,13 +38,22 @@ class DiscoverViewModel @Inject constructor(
             repository
                 .getMovieGenres()
                 .onRight {
-                    val genres = it.genres.map { genre ->
-                        GenreUIModel(
-                            id = genre.id,
-                            name = genre.name
-                        )
-                    }
+
                     _uiState.update { state ->
+                        val default = listOf(
+                            GenreUIModel(
+                                id = 100,
+                                name = "All",
+                                selected = true
+                            )
+                        )
+                        val genres = default + it.genres.map { genre ->
+                            GenreUIModel(
+                                id = genre.id,
+                                name = genre.name,
+                                selected = state.selectedGenreId == genre.id
+                            )
+                        }
                         state.copy(genres = genres)
                     }
                 }
@@ -51,18 +65,32 @@ class DiscoverViewModel @Inject constructor(
             repository
                 .getTrendingTodayMovies(1)
                 .onRight { trendingTodayMovies ->
-                    _uiState.update {
-                        it.copy(trendingTodayMovies = trendingTodayMovies.searches.toMoviesUIModel())
+
+                    _uiState.update { state ->
+                        state.copy(
+                            trendingTodayMovies = trendingTodayMovies
+                                .searches
+                                .toMoviesUIModel(state.selectedGenreId)
+                        )
                     }
                 }.onLeft {
 
                 }
         }
     }
+
+    fun onSelectedGenre(genreId: Int) {
+        _uiState.update { state ->
+            state.copy(
+                selectedGenreId = genreId,
+                genres = state.genres.map { it.copy(selected = it.id == genreId) })
+        }
+        fetchAll()
+    }
 }
 
 data class DiscoverUIState(
     val genres: List<GenreUIModel> = emptyList(),
-    val selectedGenre: String = "",
+    val selectedGenreId: Int = 100,
     val trendingTodayMovies: List<MovieUIModel> = emptyList()
 )
