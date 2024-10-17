@@ -27,7 +27,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import com.moviequest.designsystem.R
-import com.moviequest.designsystem.theme.AppPreview
+import com.moviequest.designsystem.theme.AppPreviewWrapper
 import com.moviequest.designsystem.theme.ThemePreviews
 import com.moviequest.designsystem.theme.asBrush
 import com.moviequest.designsystem.theme.defaultButton
@@ -101,7 +101,7 @@ class ButtonPreviewParameterProvider : PreviewParameterProvider<Boolean> {
 private fun ButtonPreview(
     @PreviewParameter(ButtonPreviewParameterProvider::class) enabled: Boolean
 ) {
-    AppPreview {
+    AppPreviewWrapper {
         Column(
             verticalArrangement = Arrangement.spacedBy(30.dp),
             modifier = Modifier.padding(30.dp)
@@ -121,7 +121,7 @@ private fun ButtonPreview(
 private fun ButtonWithLeadingIconPreview(
     @PreviewParameter(ButtonPreviewParameterProvider::class) enabled: Boolean
 ) {
-    AppPreview {
+    AppPreviewWrapper {
         Column(
             verticalArrangement = Arrangement.spacedBy(30.dp),
             modifier = Modifier.padding(30.dp)

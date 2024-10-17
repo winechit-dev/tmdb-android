@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
-import com.moviequest.designsystem.theme.AppPreview
+import com.moviequest.designsystem.theme.AppPreviewWrapper
 import com.moviequest.designsystem.theme.ThemePreviews
 
 @Composable
@@ -70,7 +70,7 @@ class ChipPreviewParameterProvider : PreviewParameterProvider<Boolean> {
 private fun AppFilterChipPreview(
     @PreviewParameter(ChipPreviewParameterProvider::class) selected: Boolean
 ) {
-    AppPreview {
+    AppPreviewWrapper {
         AppFilterChip(
             selected = selected,
             label = "Popular",
@@ -83,7 +83,7 @@ private fun AppFilterChipPreview(
 @ThemePreviews
 @Composable
 private fun AppChipPreview() {
-    AppPreview {
+    AppPreviewWrapper {
         AppChip(
             label = "Popular",
             onClick = {},

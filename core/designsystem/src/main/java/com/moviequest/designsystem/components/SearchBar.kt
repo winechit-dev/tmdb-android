@@ -24,7 +24,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.moviequest.designsystem.R
-import com.moviequest.designsystem.theme.AppPreview
+import com.moviequest.designsystem.theme.AppPreviewWrapper
 import com.moviequest.designsystem.theme.ThemePreviews
 
 @Composable
@@ -79,7 +79,7 @@ fun AppSearchBar(
 @Composable
 private fun AppSearchBarPreview() {
     var query by remember { mutableStateOf("") }
-    AppPreview {
+    AppPreviewWrapper {
         AppSearchBar(
             modifier = Modifier
                 .fillMaxWidth()

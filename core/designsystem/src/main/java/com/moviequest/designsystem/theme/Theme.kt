@@ -59,7 +59,7 @@ fun MovieQuestTheme(
 annotation class ThemePreviews
 
 @Composable
-fun AppPreview(
+fun AppPreviewWrapper(
     content: @Composable BoxWithConstraintsScope.() -> Unit,
 ) {
     MovieQuestTheme {
