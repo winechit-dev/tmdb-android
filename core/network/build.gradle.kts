@@ -13,6 +13,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":core:data"))
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.retrofit.core)
     implementation(libs.retrofit.kotlin.serialization)
