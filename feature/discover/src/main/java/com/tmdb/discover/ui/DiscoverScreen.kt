@@ -3,6 +3,8 @@
 package com.tmdb.discover.ui
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -10,6 +12,7 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
@@ -71,69 +74,87 @@ internal fun DiscoverContent(
     Surface(
         modifier = modifier.fillMaxSize()
     ) {
+        val top = LocalEntryPadding.current.calculateTopPadding()
+        val bottom = LocalEntryPadding.current.calculateBottomPadding()
 
         LazyColumn(
-            contentPadding = PaddingValues(vertical = 30.dp),
-            verticalArrangement = Arrangement.spacedBy(30.dp),
-            modifier = Modifier
-                .padding(LocalEntryPadding.current)
-                .padding(top = 30.dp)
+            contentPadding = PaddingValues(top = 20.dp + top, bottom = bottom),
+            modifier = Modifier.statusBarsPadding()
         ) {
-            item {
-                Text(
-                    text = title_discover,
-                    style = MaterialTheme.typography.headlineMedium,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier
-                        .padding(horizontal = 30.dp)
-                )
-                Text(
-                    text = subtitle_discover,
-                    style = MaterialTheme.typography.titleSmall,
-                    modifier = Modifier
-                        .padding(horizontal = 30.dp)
-                        .padding(top = 6.dp)
-                )
-            }
-            stickyHeader {
-                AppSearchBar(
-                    query = "",
-                    onQueryChanged = {},
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 30.dp)
-                )
-            }
+            headerSection()
+
+            searchBarSection(onEvent = onEvent)
 
             genresSection(
                 genres = uiState.genres,
-                onClickItem = { onEvent(DiscoverEvent.SelectedGenre(it.id)) }
+                onEvent = onEvent
             )
 
             moviesSection(
                 title = "Today Trending",
                 movies = uiState.trendingTodayMovies,
-                onClickItem = { onEvent(DiscoverEvent.MovieDetails(it)) }
+                onEvent = onEvent
             )
             moviesSection(
                 title = "Popular",
                 movies = uiState.popularMovies,
-                onClickItem = { onEvent(DiscoverEvent.MovieDetails(it)) }
+                onEvent = onEvent
             )
             moviesSection(
                 title = "Upcoming",
                 movies = uiState.upcomingMovies,
-                onClickItem = { onEvent(DiscoverEvent.MovieDetails(it)) }
+                onEvent = onEvent
             )
             moviesSection(
                 title = "Now Playing",
                 movies = uiState.nowPlayingMovies,
-                onClickItem = { onEvent(DiscoverEvent.MovieDetails(it)) }
+                onEvent = onEvent
             )
             moviesSection(
                 title = "Top Rated",
                 movies = uiState.topRatedMovies,
-                onClickItem = { onEvent(DiscoverEvent.MovieDetails(it)) }
+                onEvent = onEvent
+            )
+        }
+    }
+}
+
+private fun LazyListScope.headerSection() {
+    item {
+        Text(
+            text = title_discover,
+            style = MaterialTheme.typography.headlineMedium,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier
+                .padding(horizontal = 20.dp)
+        )
+        Text(
+            text = subtitle_discover,
+            style = MaterialTheme.typography.titleSmall,
+            modifier = Modifier
+                .padding(horizontal = 20.dp)
+                .padding(top = 6.dp)
+        )
+    }
+}
+
+private fun LazyListScope.searchBarSection(
+    onEvent: (DiscoverEvent) -> Unit
+) {
+    stickyHeader {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(MaterialTheme.colorScheme.surface.copy(alpha = SurfaceContainerAlpha))
+        ) {
+            AppSearchBar(
+                query = "",
+                onQueryChanged = {},
+                readOnly = true,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(20.dp)
+                    .clickable { onEvent(DiscoverEvent.Search) }
             )
         }
     }
@@ -142,7 +163,7 @@ internal fun DiscoverContent(
 private fun LazyListScope.moviesSection(
     title: String,
     movies: List<MovieUIModel>?,
-    onClickItem: (MovieUIModel) -> Unit
+    onEvent: (DiscoverEvent) -> Unit
 ) {
     if (movies?.isEmpty() == true) return
 
@@ -157,7 +178,8 @@ private fun LazyListScope.moviesSection(
         )
         LazyRow(
             horizontalArrangement = Arrangement.spacedBy(12.dp),
-            contentPadding = PaddingValues(horizontal = 30.dp)
+            contentPadding = PaddingValues(horizontal = 30.dp),
+            modifier = Modifier.padding(bottom = 30.dp)
         ) {
             if (movies != null) {
                 items(
@@ -167,7 +189,7 @@ private fun LazyListScope.moviesSection(
                 ) { model ->
                     MovieItem(
                         model = model,
-                        onClick = onClickItem
+                        onClick = { onEvent(DiscoverEvent.MovieDetails(it)) }
                     )
                 }
             } else {
@@ -193,12 +215,13 @@ private fun LazyListScope.loading() {
 
 private fun LazyListScope.genresSection(
     genres: List<GenreUIModel>,
-    onClickItem: (GenreUIModel) -> Unit
+    onEvent: (DiscoverEvent) -> Unit
 ) {
     item {
         LazyRow(
             horizontalArrangement = Arrangement.spacedBy(12.dp),
-            contentPadding = PaddingValues(horizontal = 30.dp)
+            contentPadding = PaddingValues(horizontal = 20.dp),
+            modifier = Modifier.padding(bottom = 30.dp)
         ) {
             items(
                 items = genres,
@@ -208,13 +231,13 @@ private fun LazyListScope.genresSection(
                 AppFilterChip(
                     selected = genre.selected,
                     label = genre.name,
-                    onClick = { onClickItem(genre) }
+                    onClick = { onEvent(DiscoverEvent.SelectedGenre(genre.id)) }
                 )
             }
         }
     }
 }
-
+const val SurfaceContainerAlpha = 0.98f
 
 @ThemePreviews
 @Composable

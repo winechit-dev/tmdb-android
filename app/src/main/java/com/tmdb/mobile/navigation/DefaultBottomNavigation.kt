@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
@@ -23,6 +24,7 @@ import androidx.navigation.compose.rememberNavController
 import com.tmdb.designsystem.theme.AppPreviewWrapper
 import com.tmdb.designsystem.theme.ThemePreviews
 import com.tmdb.discover.ui.Discover
+import com.tmdb.discover.ui.SurfaceContainerAlpha
 import com.tmdb.favorites.Favorites
 import com.tmdb.mobile.R
 import kotlin.reflect.KClass
@@ -59,8 +61,8 @@ fun DefaultBottomNavigation(
         .calculateBottomPadding() / 2
 
     NavigationBar(
-        tonalElevation = 0.dp,
         windowInsets = WindowInsets(bottom = bottomBarPadding),
+        containerColor = MaterialTheme.colorScheme.surfaceContainer.copy(alpha = SurfaceContainerAlpha)
     ) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
 
