@@ -3,6 +3,7 @@ package com.tmdb.network
 import arrow.core.Either
 import com.tmdb.data.datasource.remote.MovieDataSource
 import com.tmdb.data.model.GenresResponse
+import com.tmdb.data.model.MovieDetailsResponse
 import com.tmdb.data.model.MoviesResponse
 import com.tmdb.domain.exception.DataException
 import com.tmdb.network.handler.handleCall
@@ -78,4 +79,14 @@ class MovieDataSourceImpl @Inject constructor(
         )
     }
 
+    override suspend fun getMovieDetails(movieId: Int): Either<DataException, MovieDetailsResponse> {
+        return handleCall(
+            apiCall = {
+                service.getMovieDetails(movieId)
+            },
+            mapper = { data ->
+                data
+            }
+        )
+    }
 }

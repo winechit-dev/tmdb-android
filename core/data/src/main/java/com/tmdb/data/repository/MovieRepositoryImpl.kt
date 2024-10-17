@@ -3,9 +3,11 @@ package com.tmdb.data.repository
 import arrow.core.Either
 import com.tmdb.data.datasource.remote.MovieDataSource
 import com.tmdb.data.mapper.toGenresModel
+import com.tmdb.data.mapper.toMovieDetailsModel
 import com.tmdb.data.mapper.toMoviesModel
 import com.tmdb.domain.exception.DataException
 import com.tmdb.domain.model.GenresModel
+import com.tmdb.domain.model.MovieDetailsModel
 import com.tmdb.domain.model.MoviesModel
 import com.tmdb.domain.repository.MovieRepository
 import javax.inject.Inject
@@ -47,5 +49,11 @@ class MovieRepositoryImpl @Inject constructor(
         return movieDataSource
             .getMovieGenres()
             .map { it.toGenresModel() }
+    }
+
+    override suspend fun getMovieDetails(movieId: Int): Either<DataException, MovieDetailsModel> {
+        return movieDataSource
+            .getMovieDetails(movieId)
+            .map { it.toMovieDetailsModel() }
     }
 }
