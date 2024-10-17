@@ -47,7 +47,9 @@ import kotlinx.serialization.Serializable
 data object Discover
 
 @Composable
-fun DiscoverScreen() {
+fun DiscoverScreen(
+    onEvent: (DiscoverEvent) -> Unit
+) {
     val viewModel: DiscoverViewModel = hiltViewModel()
     val uiState by viewModel.uiState.collectAsState()
 
@@ -59,7 +61,7 @@ fun DiscoverScreen() {
                     viewModel.onSelectedGenre(event.genreId)
                 }
 
-                else -> Unit
+                else -> onEvent(event)
             }
         }
     )

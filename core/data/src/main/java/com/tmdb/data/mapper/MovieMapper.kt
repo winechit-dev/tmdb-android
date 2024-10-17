@@ -10,6 +10,9 @@ import com.tmdb.domain.model.GenresModel
 import com.tmdb.domain.model.MovieDetailsModel
 import com.tmdb.domain.model.MovieModel
 import com.tmdb.domain.model.MoviesModel
+import java.time.LocalDateTime
+import java.time.ZoneOffset
+import java.time.format.DateTimeFormatter
 
 fun MoviesResponse.toMoviesModel(): MoviesModel {
     return MoviesModel(
@@ -69,18 +72,39 @@ fun MovieDetailsResponse.toMovieDetailsModel(): MovieDetailsModel {
         overview = overview.orEmpty(),
         popularity = popularity ?: 0.0,
         posterPath = posterPath.createImageUrl(),
-        releaseDate = releaseDate.orEmpty(),
+        releaseDate = releaseDate.changeFormat("yyyy-MM-dd","dd MMMM yyyy"),
         revenue = revenue ?: 0,
         runtime = runtime ?: 0,
         status = status.orEmpty(),
         tagline = tagline.orEmpty(),
         title = title.orEmpty(),
         video = video ?: false,
-        voteAverage = voteAverage ?: 0.0,
+        voteAverage = (voteAverage ?: 0.0).toFloat(),
         voteCount = voteCount ?: 0
     )
 }
 
 fun String?.createImageUrl(): String {
     return "${BuildConfig.IMAGE_BASE_UR}/$this"
+}
+
+fun String?.changeFormat(
+    originPattern: String,
+    targetPattern: String,
+    isUTC: Boolean = false,
+    default: String = "-"
+): String {
+    if (this.isNullOrBlank()) return default
+    return try {
+        val fromP = DateTimeFormatter.ofPattern(originPattern)
+        val toP = DateTimeFormatter.ofPattern(targetPattern)
+        val fromLocalDate = LocalDateTime.parse(this, fromP)
+        if (isUTC) {
+            val fromZoneDateTime = fromLocalDate.atZone(ZoneOffset.UTC)
+            return fromZoneDateTime.format(toP)
+        }
+        return fromLocalDate.format(toP)
+    } catch (e: Exception) {
+        this
+    }
 }

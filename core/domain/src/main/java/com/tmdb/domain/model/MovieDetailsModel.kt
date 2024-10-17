@@ -20,6 +20,6 @@ data class MovieDetailsModel(
     val tagline: String,
     val title: String,
     val video: Boolean,
-    val voteAverage: Double,
+    val voteAverage: Float,
     val voteCount: Int
 )

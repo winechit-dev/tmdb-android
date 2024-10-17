@@ -12,6 +12,7 @@ private fun MovieModel.toMovieUIModel(): MovieUIModel {
     return MovieUIModel(
         id = id,
         posterPath = posterPath,
+        name = originalTitle,
         genreIds = genreIds
     )
 }

@@ -42,6 +42,7 @@ private fun MovieItemPreview() {
             model = MovieUIModel(
                 id = 1,
                 posterPath = "",
+                name = "",
                 genreIds = emptyList()
             ),
             onClick = {}
