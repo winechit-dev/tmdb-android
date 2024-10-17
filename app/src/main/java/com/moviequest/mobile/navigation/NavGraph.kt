@@ -6,10 +6,13 @@ import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.animation.SharedTransitionScope
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.offset
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -18,6 +21,8 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.IntOffset
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavHostController
@@ -46,11 +51,20 @@ fun NavGraph(
         }
     }
 
+    val offsetY by animateDpAsState(
+        label = "",
+        targetValue = if (showBottomNav) 0.dp else 150.dp,
+        animationSpec = tween(durationMillis = 300)
+    )
 
     MovieQuestTheme {
         Scaffold(
             contentWindowInsets = WindowInsets(0),
-            bottomBar = { DefaultBottomNavigation(navController = navController) },
+            bottomBar = {
+                DefaultBottomNavigation(
+                    navController = navController,
+                    modifier = Modifier.offset { IntOffset(0, offsetY.roundToPx()) })
+            },
         ) { padding ->
             SharedTransitionLayout {
                 CompositionLocalProvider(
