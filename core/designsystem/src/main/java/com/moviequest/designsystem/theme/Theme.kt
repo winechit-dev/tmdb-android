@@ -14,23 +14,23 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 
 private val DarkColorScheme = darkColorScheme(
-    primary = DarkBlue,
-    secondary = LightBlue,
-    tertiary = LightGreen,
+    primary = MetallicViolet,
+    secondary = Violet,
+    tertiary = PhilippinePink,
     surface = EerieBlack
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = DarkBlue,
-    secondary = LightBlue,
-    tertiary = LightGreen
+    primary = MetallicViolet,
+    secondary = Violet,
+    tertiary = PhilippinePink
 )
 
 @Composable
 fun MovieQuestTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
+    dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {
