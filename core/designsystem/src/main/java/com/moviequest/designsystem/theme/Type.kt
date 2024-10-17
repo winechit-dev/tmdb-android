@@ -136,6 +136,13 @@ val AppTypography = Typography(
         letterSpacing = 0.4.sp
     )
 )
+val Typography.defaultButton: TextStyle
+    get() = TextStyle(
+        fontFamily = interFamily,
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 16.sp,
+        letterSpacing = 0.sp
+    )
 
 @Preview
 @Composable
