@@ -19,15 +19,15 @@ private val DarkColorScheme = darkColorScheme(
     primary = MetallicViolet,
     secondary = Violet,
     surface = EerieBlack,
-    secondaryContainer = PhilippinePink,
-    onSecondaryContainer = White
+    tertiary = PhilippinePink,
+    onTertiary = White
 )
 
 private val LightColorScheme = lightColorScheme(
     primary = MetallicViolet,
     secondary = Violet,
-    secondaryContainer = PhilippinePink,
-    onSecondaryContainer = White
+    tertiary = PhilippinePink,
+    onTertiary = White
 )
 
 @Composable

@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.FilterChip
+import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SuggestionChip
 import androidx.compose.material3.SuggestionChipDefaults
@@ -28,6 +29,10 @@ fun AppFilterChip(
         modifier = modifier.height(31.dp),
         selected = selected,
         shape = CircleShape,
+        colors = FilterChipDefaults.filterChipColors(
+            selectedContainerColor = MaterialTheme.colorScheme.tertiary,
+            selectedLabelColor = MaterialTheme.colorScheme.onTertiary
+        ),
         enabled = enabled,
         onClick = onClick,
         label = {
