@@ -67,7 +67,6 @@ okhttp-logging = { group = "com.squareup.okhttp3", name = "logging-interceptor",
 arrow = { module = "io.arrow-kt:arrow-core", version.ref = "coreArrow" }
 coil = { module = "io.coil-kt:coil-compose", version.ref = "coilVersion" }
 
-
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }

@@ -6,3 +6,7 @@ plugins {
 android {
     namespace = "com.tmdb.designsystem"
 }
+
+dependencies {
+    implementation(libs.coil)
+}

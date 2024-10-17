@@ -1,6 +1,8 @@
-package com.tmdb.network
+package com.tmdb.network.service
 
 import com.tmdb.data.model.MoviesResponse
+import com.tmdb.network.BuildConfig
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -13,33 +15,33 @@ interface MovieService {
         @Query("page") page: Int = STARTING_PAGE_INDEX,
         @Query("api_key") apiKey: String = BuildConfig.API_KEY,
         @Query("language") language: String = LANGUAGE
-    ): MoviesResponse
+    ): Response<MoviesResponse>
 
     @GET("movie/popular")
     suspend fun getPopularMovies(
         @Query("page") page: Int = STARTING_PAGE_INDEX,
         @Query("api_key") apiKey: String = BuildConfig.API_KEY,
         @Query("language") language: String = LANGUAGE
-    ): MoviesResponse
+    ): Response<MoviesResponse>
 
     @GET("movie/upcoming")
     suspend fun getUpcomingMovies(
         @Query("page") page: Int = STARTING_PAGE_INDEX,
         @Query("api_key") apiKey: String = BuildConfig.API_KEY,
         @Query("language") language: String = LANGUAGE
-    ): MoviesResponse
+    ): Response<MoviesResponse>
 
     @GET("movie/top_rated")
     suspend fun getTopRatedMovies(
         @Query("page") page: Int = STARTING_PAGE_INDEX,
         @Query("api_key") apiKey: String = BuildConfig.API_KEY,
         @Query("language") language: String = LANGUAGE
-    ): MoviesResponse
+    ): Response<MoviesResponse>
 
     @GET("movie/now_playing")
     suspend fun getNowPlayingMovies(
         @Query("page") page: Int = STARTING_PAGE_INDEX,
         @Query("api_key") apiKey: String = BuildConfig.API_KEY,
         @Query("language") language: String = LANGUAGE
-    ): MoviesResponse
+    ): Response<MoviesResponse>
 }

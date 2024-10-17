@@ -1,9 +1,12 @@
 package com.tmdb.network.di
 
 import android.content.Context
+import com.tmdb.data.datasource.remote.MovieDataSource
 import com.tmdb.network.BuildConfig
-import com.tmdb.network.createOkHttpClient
-import com.tmdb.network.createRetrofitClient
+import com.tmdb.network.MovieDataSourceImpl
+import com.tmdb.network.utils.createOkHttpClient
+import com.tmdb.network.utils.createRetrofitClient
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -56,4 +59,9 @@ abstract class NetworkModule {
             return createRetrofitClient(BuildConfig.BASE_URL, okHttpClient, networkJson)
         }
     }
+
+    @Binds
+    abstract fun bindMovieDataSource(
+        movieDataSourceImpl: MovieDataSourceImpl
+    ): MovieDataSource
 }

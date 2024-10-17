@@ -1,4 +1,4 @@
-package com.tmdb.network
+package com.tmdb.network.utils
 
 import java.lang.reflect.Type
 import okhttp3.ResponseBody

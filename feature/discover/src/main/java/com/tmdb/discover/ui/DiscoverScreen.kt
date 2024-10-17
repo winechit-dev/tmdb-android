@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
@@ -27,8 +28,11 @@ import com.tmdb.designsystem.theme.AppPreviewWrapper
 import com.tmdb.designsystem.theme.LocalEntryPadding
 import com.tmdb.designsystem.theme.ThemePreviews
 import com.tmdb.discover.genresPreview
+import com.tmdb.discover.moviesPreview
 import com.tmdb.discover.subtitle_discover
 import com.tmdb.discover.title_discover
+import com.tmdb.ui.MovieItem
+import com.tmdb.ui.MovieUIModel
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -102,6 +106,44 @@ internal fun DiscoverContent(
                     }
                 }
             }
+
+            moviesSection(
+                title = "Today Trending Movies",
+                movies = uiState.trendingTodayMovies,
+                onClickItem = {}
+            )
+        }
+    }
+}
+
+private fun LazyListScope.moviesSection(
+    title: String,
+    movies: List<MovieUIModel>,
+    onClickItem: (MovieUIModel) -> Unit
+) {
+    item {
+        Text(
+            text = title,
+            style = MaterialTheme.typography.titleMedium,
+            fontWeight = FontWeight.SemiBold,
+            modifier = Modifier
+                .padding(horizontal = 30.dp)
+                .padding(bottom = 16.dp)
+        )
+        LazyRow(
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
+            contentPadding = PaddingValues(horizontal = 30.dp)
+        ) {
+            items(
+                items = movies,
+                key = { it.id },
+                contentType = { "Movie" }
+            ) { model ->
+                MovieItem(
+                    model = model,
+                    onClick = onClickItem
+                )
+            }
         }
     }
 }
@@ -113,7 +155,8 @@ internal fun DiscoverContentPreview() {
     AppPreviewWrapper {
         DiscoverContent(
             uiState = DiscoverUIState(
-                genres = genresPreview
+                genres = genresPreview,
+                trendingTodayMovies = moviesPreview
             )
         )
     }
