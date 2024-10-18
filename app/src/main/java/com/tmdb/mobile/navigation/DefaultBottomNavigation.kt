@@ -61,6 +61,7 @@ fun DefaultBottomNavigation(
         .calculateBottomPadding() / 2
 
     NavigationBar(
+        modifier = modifier,
         windowInsets = WindowInsets(bottom = bottomBarPadding),
         containerColor = MaterialTheme.colorScheme.surfaceContainer.copy(alpha = SurfaceContainerAlpha)
     ) {
@@ -85,7 +86,6 @@ fun DefaultBottomNavigation(
                             contentDescription = item.name
                         )
                     },
-                    modifier = modifier,
                     label = {
                         Text(
                             text = item.label
