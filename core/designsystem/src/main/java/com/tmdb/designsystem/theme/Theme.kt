@@ -19,6 +19,7 @@ import androidx.compose.ui.tooling.preview.Preview
 
 private val DarkColorScheme = darkColorScheme(
     primary = MetallicViolet,
+    onPrimary = White,
     secondary = Violet,
     surface = EerieBlack,
     tertiary = PhilippinePink,
@@ -27,6 +28,7 @@ private val DarkColorScheme = darkColorScheme(
 
 private val LightColorScheme = lightColorScheme(
     primary = MetallicViolet,
+    onPrimary = White,
     secondary = Violet,
     tertiary = PhilippinePink,
     onTertiary = White
