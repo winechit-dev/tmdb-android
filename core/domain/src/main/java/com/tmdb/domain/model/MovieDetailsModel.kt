@@ -21,5 +21,6 @@ data class MovieDetailsModel(
     val title: String,
     val video: Boolean,
     val voteAverage: Float,
-    val voteCount: Int
+    val voteCount: Int,
+    val cast: List<CastModel> = emptyList()
 )

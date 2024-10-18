@@ -29,7 +29,8 @@ class MovieDetailsViewModel @Inject constructor(
 
     private fun getDetails() {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.getMovieDetails(id)
+            repository
+                .getMovieDetails(id)
                 .onRight {
                     _uiState.update { state ->
                         state.copy(

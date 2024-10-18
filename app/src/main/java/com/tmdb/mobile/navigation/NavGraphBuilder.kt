@@ -84,7 +84,6 @@ fun NavGraphBuilder.navMovieDetails(navController: NavController) {
             MovieDetailsScreen(
                 id = args.id,
                 posterPath = args.posterPath,
-                name = args.name,
                 onEvent = { event ->
                     when (event) {
                         is MovieDetailsEvent.NavigateUp -> {

@@ -1,10 +1,12 @@
 package com.tmdb.data.mapper
 
 import com.tmdb.data.BuildConfig
+import com.tmdb.data.model.CreditsResponse
 import com.tmdb.data.model.GenresResponse
 import com.tmdb.data.model.MovieDetailsResponse
 import com.tmdb.data.model.MovieResponse
 import com.tmdb.data.model.MoviesResponse
+import com.tmdb.domain.model.CastModel
 import com.tmdb.domain.model.GenreModel
 import com.tmdb.domain.model.GenresModel
 import com.tmdb.domain.model.MovieDetailsModel
@@ -72,7 +74,7 @@ fun MovieDetailsResponse.toMovieDetailsModel(): MovieDetailsModel {
         overview = overview.orEmpty(),
         popularity = popularity ?: 0.0,
         posterPath = posterPath.createImageUrl(),
-        releaseDate = releaseDate.changeFormat("yyyy-MM-dd","dd MMMM yyyy"),
+        releaseDate = releaseDate.changeFormat("yyyy-MM-dd", "dd MMMM yyyy"),
         revenue = revenue ?: 0,
         runtime = runtime ?: 0,
         status = status.orEmpty(),
@@ -82,6 +84,17 @@ fun MovieDetailsResponse.toMovieDetailsModel(): MovieDetailsModel {
         voteAverage = (voteAverage ?: 0.0).toFloat(),
         voteCount = voteCount ?: 0
     )
+}
+
+fun CreditsResponse.toCast(): List<CastModel> {
+    return cast.map {
+        CastModel(
+            castId = it.castId,
+            id = it.id,
+            profilePath = it.profilePath.createImageUrl(),
+            originalName = it.originalName
+        )
+    }
 }
 
 fun String?.createImageUrl(): String {

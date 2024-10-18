@@ -1,6 +1,7 @@
 package com.tmdb.discover
 
 import com.tmdb.discover.model.GenreUIModel
+import com.tmdb.domain.model.CastModel
 import com.tmdb.domain.model.GenreModel
 import com.tmdb.domain.model.MovieDetailsModel
 import com.tmdb.ui.MovieUIModel
@@ -102,7 +103,33 @@ val MovieDetailsPreview = MovieDetailsModel(
     status = "",
     tagline = "If you follow the instructions, what could go wrong?",
     title = "The Substance",
-    video = false,
+    video = true,
     voteAverage = 5.4f,
-    voteCount = 568
+    voteCount = 568,
+    cast = listOf(
+        CastModel(
+            id = 1,
+            castId = 1,
+            profilePath = "",
+            originalName = "User A"
+        ),
+        CastModel(
+            id = 2,
+            castId = 2,
+            profilePath = "",
+            originalName = "User B"
+        ),
+        CastModel(
+            id = 3,
+            castId = 3,
+            profilePath = "",
+            originalName = "User C"
+        ),
+        CastModel(
+            id = 4,
+            castId = 4,
+            profilePath = "",
+            originalName = "User D"
+        )
+    )
 )

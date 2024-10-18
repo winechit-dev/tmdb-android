@@ -1,5 +1,6 @@
 package com.tmdb.network.service
 
+import com.tmdb.data.model.CreditsResponse
 import com.tmdb.data.model.GenresResponse
 import com.tmdb.data.model.MovieDetailsResponse
 import com.tmdb.data.model.MoviesResponse
@@ -60,4 +61,10 @@ interface MovieService {
         @Query("api_key") apiKey: String = BuildConfig.API_KEY,
         @Query("language") language: String = "en"
     ): Response<MovieDetailsResponse>
+
+    @GET("movie/{movie_id}/credits")
+    suspend fun getCreditDetails(
+        @Path("movie_id") movieId: Int,
+        @Query("api_key") apiKey: String = BuildConfig.API_KEY,
+    ): Response<CreditsResponse>
 }
