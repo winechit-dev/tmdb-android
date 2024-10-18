@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -46,12 +47,14 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.tmdb.designsystem.R
 import com.tmdb.designsystem.components.AppButton
+import com.tmdb.designsystem.components.AppChip
 import com.tmdb.designsystem.components.AppIconButton
 import com.tmdb.designsystem.theme.AppPreviewWrapper
 import com.tmdb.designsystem.theme.ThemePreviews
 import com.tmdb.designsystem.utils.networkImagePainter
 import com.tmdb.discover.MovieDetailsPreview
 import com.tmdb.domain.model.CastModel
+import com.tmdb.domain.model.GenreModel
 import kotlin.math.roundToInt
 import kotlinx.serialization.Serializable
 
@@ -83,6 +86,7 @@ internal fun MovieDetailsContent(
 ) {
 
     Scaffold(
+        modifier = Modifier.navigationBarsPadding(),
         contentWindowInsets = WindowInsets(0),
         topBar = {
             TopAppBar(
@@ -106,46 +110,51 @@ internal fun MovieDetailsContent(
     ) { innerPadding ->
         if (uiState.details != null) {
             LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(bottom = innerPadding.calculateBottomPadding())
+                contentPadding = PaddingValues(bottom = innerPadding.calculateBottomPadding()),
+                modifier = Modifier.fillMaxSize()
             ) {
-                item {
-                    HeadSection(
-                        posterPath = posterPath,
-                        voteAverage = uiState.details.voteAverage,
-                        originalTitle = uiState.details.originalTitle,
-                        releaseDate = uiState.details.releaseDate,
-                        modifier = Modifier
-                            .aspectRatio(375f / 450f)
-                            .padding(bottom = 20.dp)
-                    )
-                }
 
-                if (uiState.details.overview.isNotBlank()) {
-                    item {
-                        Text(
-                            text = uiState.details.overview,
-                            style = MaterialTheme.typography.bodyMedium,
-                            modifier = Modifier.padding(horizontal = 20.dp)
-                        )
-                    }
-                }
+                headSection(
+                    posterPath = posterPath,
+                    voteAverage = uiState.details.voteAverage,
+                    originalTitle = uiState.details.originalTitle,
+                    releaseDate = uiState.details.releaseDate,
+                    modifier = Modifier
+                        .aspectRatio(375f / 450f)
+                        .padding(bottom = 20.dp)
+                )
 
-                if (uiState.details.video) {
-                    item {
-                        AppButton(
-                            text = "Video trailer",
-                            leadingIcon = R.drawable.ic_play,
-                            onClick = {},
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(top = 30.dp)
-                                .padding(horizontal = 20.dp)
-                        )
-                    }
-                }
+                overviewSection(
+                    overview = uiState.details.overview,
+                    video = uiState.details.video
+                )
+
                 castSection(cast = uiState.details.cast)
+
+                categoriesSection(genres = uiState.details.genres)
+            }
+        }
+    }
+}
+
+private fun LazyListScope.overviewSection(overview: String, video: Boolean) {
+    if (overview.isNotBlank()) {
+        item {
+            Text(
+                text = overview,
+                style = MaterialTheme.typography.bodyMedium,
+                modifier = Modifier.padding(horizontal = 20.dp)
+            )
+            if (video) {
+                AppButton(
+                    text = "Video trailer",
+                    leadingIcon = R.drawable.ic_play,
+                    onClick = {},
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 30.dp)
+                        .padding(horizontal = 20.dp)
+                )
             }
         }
     }
@@ -154,6 +163,7 @@ internal fun MovieDetailsContent(
 fun LazyListScope.castSection(
     cast: List<CastModel>
 ) {
+    if (cast.isEmpty()) return
     item {
         Text(
             text = "Cast",
@@ -168,7 +178,6 @@ fun LazyListScope.castSection(
             contentPadding = PaddingValues(horizontal = 30.dp),
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 30.dp)
                 .padding(top = 14.dp)
 
         ) {
@@ -202,55 +211,90 @@ fun LazyListScope.castSection(
     }
 }
 
-@Composable
-private fun HeadSection(
+private fun LazyListScope.headSection(
     modifier: Modifier = Modifier,
     posterPath: String,
     voteAverage: Float,
     originalTitle: String,
     releaseDate: String
 ) {
-    Box(
-        contentAlignment = Alignment.BottomCenter,
-        modifier = modifier.fillMaxWidth()
-    ) {
-        Image(
-            painter = networkImagePainter(posterPath),
-            contentDescription = "poster",
-            contentScale = ContentScale.Crop,
-            modifier = Modifier.fillMaxSize()
+    item {
+        Box(
+            contentAlignment = Alignment.BottomCenter,
+            modifier = modifier.fillMaxWidth()
+        ) {
+            Image(
+                painter = networkImagePainter(posterPath),
+                contentDescription = "poster",
+                contentScale = ContentScale.Crop,
+                modifier = Modifier.fillMaxSize()
+            )
+            InnerBottomShadow()
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(16.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 20.dp)
+                    .padding(bottom = 20.dp)
+            ) {
+                VoteAverage(
+                    progress = voteAverage,
+                    modifier = Modifier.size(57.dp)
+                )
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(4.dp)
+                ) {
+                    Text(
+                        text = originalTitle,
+                        style = MaterialTheme.typography.titleLarge,
+                        fontWeight = FontWeight.Bold,
+                    )
+                    Text(
+                        text = releaseDate,
+                        style = MaterialTheme.typography.bodyLarge,
+                    )
+                }
+            }
+            HorizontalDivider(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 30.dp)
+            )
+        }
+    }
+}
+
+private fun LazyListScope.categoriesSection(genres: List<GenreModel>) {
+    if (genres.isEmpty()) return
+    item {
+        Text(
+            text = "Categories",
+            style = MaterialTheme.typography.titleMedium,
+            fontWeight = FontWeight.SemiBold,
+            modifier = Modifier
+                .padding(horizontal = 30.dp)
+                .padding(top = 32.dp)
         )
-        InnerBottomShadow()
-        Row(
-            horizontalArrangement = Arrangement.spacedBy(16.dp),
+        LazyRow(
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
+            contentPadding = PaddingValues(horizontal = 30.dp),
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 20.dp)
-                .padding(bottom = 20.dp)
+                .padding(bottom = 30.dp)
+                .padding(top = 14.dp)
+
         ) {
-            VoteAverage(
-                progress = voteAverage,
-                modifier = Modifier.size(57.dp)
-            )
-            Column(
-                verticalArrangement = Arrangement.spacedBy(4.dp)
-            ) {
-                Text(
-                    text = originalTitle,
-                    style = MaterialTheme.typography.titleLarge,
-                    fontWeight = FontWeight.Bold,
-                )
-                Text(
-                    text = releaseDate,
-                    style = MaterialTheme.typography.bodyLarge,
+            items(
+                items = genres,
+                key = { it.id },
+                contentType = { "genres" }
+            ) { genre ->
+                AppChip(
+                    label = genre.name,
+                    onClick = {}
                 )
             }
         }
-        HorizontalDivider(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 30.dp)
-        )
     }
 }
 
