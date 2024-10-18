@@ -1,7 +1,14 @@
+@file:OptIn(ExperimentalSharedTransitionApi::class)
+
 package com.tmdb.designsystem.theme
 
 import android.content.res.Configuration
 import android.os.Build
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.AnimatedVisibilityScope
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionLayout
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.BoxWithConstraintsScope
@@ -13,6 +20,7 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
@@ -75,4 +83,28 @@ fun AppPreviewWrapper(
     }
 }
 
+@Composable
+fun AppPreviewWithSharedTransitionLayout(
+    content: @Composable BoxWithConstraintsScope.() -> Unit,
+) {
+    MovieQuestTheme {
+        SharedTransitionLayout {
+            AnimatedVisibility(visible = true) {
+                CompositionLocalProvider(
+                    LocalSharedTransitionScope provides this@SharedTransitionLayout,
+                    LocalNavAnimatedVisibilityScope provides this
+                ) {
+                    Surface {
+                        BoxWithConstraints {
+                            content()
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
 val LocalEntryPadding = compositionLocalOf { PaddingValues() }
+val LocalNavAnimatedVisibilityScope = compositionLocalOf<AnimatedVisibilityScope?> { null }
+val LocalSharedTransitionScope = compositionLocalOf<SharedTransitionScope?> { null }

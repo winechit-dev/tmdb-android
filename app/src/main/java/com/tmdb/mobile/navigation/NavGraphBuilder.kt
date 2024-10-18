@@ -5,6 +5,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
+import com.tmdb.designsystem.theme.LocalNavAnimatedVisibilityScope
 import com.tmdb.discover.ui.Discover
 import com.tmdb.discover.ui.DiscoverEvent
 import com.tmdb.discover.ui.DiscoverScreen
@@ -39,7 +40,8 @@ fun NavGraphBuilder.navDiscover(navController: NavController) {
                                 MovieDetails(
                                     id = event.model.id,
                                     name = event.model.name,
-                                    posterPath = event.model.posterPath
+                                    posterPath = event.model.posterPath,
+                                    type = event.type
                                 )
                             )
                         }
@@ -82,8 +84,7 @@ fun NavGraphBuilder.navMovieDetails(navController: NavController) {
             LocalNavAnimatedVisibilityScope provides this@composable
         ) {
             MovieDetailsScreen(
-                id = args.id,
-                posterPath = args.posterPath,
+                args = args,
                 onEvent = { event ->
                     when (event) {
                         is MovieDetailsEvent.NavigateUp -> {

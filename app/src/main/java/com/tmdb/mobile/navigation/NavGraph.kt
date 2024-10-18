@@ -2,10 +2,8 @@
 
 package com.tmdb.mobile.navigation
 
-import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
-import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Box
@@ -15,7 +13,6 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -28,6 +25,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.tmdb.designsystem.theme.LocalEntryPadding
+import com.tmdb.designsystem.theme.LocalSharedTransitionScope
 import com.tmdb.designsystem.theme.MovieQuestTheme
 import com.tmdb.discover.ui.Discover
 import com.tmdb.favorites.Favorites
@@ -94,5 +92,3 @@ private fun NavBackStackEntry?.hasAnyRoute(vararg routes: KClass<*>): Boolean {
     return routes.any { this?.destination?.hasRoute(it) == true }
 }
 
-val LocalNavAnimatedVisibilityScope = compositionLocalOf<AnimatedVisibilityScope?> { null }
-val LocalSharedTransitionScope = compositionLocalOf<SharedTransitionScope?> { null }

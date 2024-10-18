@@ -31,7 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.tmdb.designsystem.components.AppFilterChip
 import com.tmdb.designsystem.components.AppSearchBar
-import com.tmdb.designsystem.theme.AppPreviewWrapper
+import com.tmdb.designsystem.theme.AppPreviewWithSharedTransitionLayout
 import com.tmdb.designsystem.theme.LocalEntryPadding
 import com.tmdb.designsystem.theme.ThemePreviews
 import com.tmdb.discover.genresPreview
@@ -191,7 +191,10 @@ private fun LazyListScope.moviesSection(
                 ) { model ->
                     MovieItem(
                         model = model,
-                        onClick = { onEvent(DiscoverEvent.MovieDetails(it)) }
+                        type = title,
+                        onClick = { it, type ->
+                            onEvent(DiscoverEvent.MovieDetails(model = it, type = type))
+                        }
                     )
                 }
             } else {
@@ -239,12 +242,13 @@ private fun LazyListScope.genresSection(
         }
     }
 }
+
 const val SurfaceContainerAlpha = 0.98f
 
 @ThemePreviews
 @Composable
 internal fun DiscoverContentPreview() {
-    AppPreviewWrapper {
+    AppPreviewWithSharedTransitionLayout {
         DiscoverContent(
             uiState = DiscoverUIState(
                 genres = genresPreview,

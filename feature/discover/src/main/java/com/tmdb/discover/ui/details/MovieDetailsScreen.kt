@@ -1,7 +1,10 @@
-@file:OptIn(ExperimentalMaterial3Api::class)
+@file:OptIn(ExperimentalMaterial3Api::class, ExperimentalSharedTransitionApi::class)
 
 package com.tmdb.discover.ui.details
 
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -49,9 +52,15 @@ import com.tmdb.designsystem.R
 import com.tmdb.designsystem.components.AppButton
 import com.tmdb.designsystem.components.AppChip
 import com.tmdb.designsystem.components.AppIconButton
-import com.tmdb.designsystem.theme.AppPreviewWrapper
+import com.tmdb.designsystem.theme.AppPreviewWithSharedTransitionLayout
+import com.tmdb.designsystem.theme.LocalNavAnimatedVisibilityScope
+import com.tmdb.designsystem.theme.LocalSharedTransitionScope
 import com.tmdb.designsystem.theme.ThemePreviews
+import com.tmdb.designsystem.utils.AppSharedElementKey
+import com.tmdb.designsystem.utils.AppSharedElementType
+import com.tmdb.designsystem.utils.detailBoundsTransform
 import com.tmdb.designsystem.utils.networkImagePainter
+import com.tmdb.designsystem.utils.nonSpatialExpressiveSpring
 import com.tmdb.discover.MovieDetailsPreview
 import com.tmdb.domain.model.CastModel
 import com.tmdb.domain.model.GenreModel
@@ -59,12 +68,11 @@ import kotlin.math.roundToInt
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class MovieDetails(val id: Int, val name: String, val posterPath: String)
+data class MovieDetails(val id: Int, val name: String, val posterPath: String, val type: String)
 
 @Composable
 fun MovieDetailsScreen(
-    id: Int,
-    posterPath: String,
+    args: MovieDetails,
     onEvent: (MovieDetailsEvent) -> Unit
 ) {
 
@@ -72,7 +80,7 @@ fun MovieDetailsScreen(
     val uiState by viewModel.uiState.collectAsState()
 
     MovieDetailsContent(
-        posterPath = posterPath,
+        args = args,
         uiState = uiState,
         onEvent = onEvent
     )
@@ -80,61 +88,79 @@ fun MovieDetailsScreen(
 
 @Composable
 internal fun MovieDetailsContent(
-    posterPath: String,
+    args: MovieDetails,
     uiState: MovieDetailsUIState,
     onEvent: (MovieDetailsEvent) -> Unit
 ) {
+    val sharedTransitionScope = LocalSharedTransitionScope.current
+        ?: throw IllegalStateException("No Scope found")
+    val animatedVisibilityScope = LocalNavAnimatedVisibilityScope.current
+        ?: throw IllegalStateException("No Scope found")
 
-    Scaffold(
-        modifier = Modifier.navigationBarsPadding(),
-        contentWindowInsets = WindowInsets(0),
-        topBar = {
-            TopAppBar(
-                title = {},
-                colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.Transparent),
-                navigationIcon = {
-                    AppIconButton(
-                        icon = R.drawable.ic_back,
-                        onClick = { onEvent(MovieDetailsEvent.NavigateUp) },
-                    )
+    with(sharedTransitionScope) {
+        Scaffold(
+            modifier = Modifier
+                .navigationBarsPadding()
+                .sharedBounds(
+                    sharedContentState = rememberSharedContentState(
+                        key = AppSharedElementKey(
+                            id = args.id.toString() + args.type,
+                            type = AppSharedElementType.Bounds
+                        )
+                    ),
+                    animatedVisibilityScope = animatedVisibilityScope,
+                    boundsTransform = detailBoundsTransform,
+                    exit = fadeOut(nonSpatialExpressiveSpring()),
+                    enter = fadeIn(nonSpatialExpressiveSpring()),
+                ),
+            contentWindowInsets = WindowInsets(0),
+            topBar = {
+                TopAppBar(
+                    title = {},
+                    colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.Transparent),
+                    navigationIcon = {
+                        AppIconButton(
+                            icon = R.drawable.ic_back,
+                            onClick = { onEvent(MovieDetailsEvent.NavigateUp) },
+                        )
 
-                },
-                actions = {
-                    AppIconButton(
-                        icon = R.drawable.ic_favorites,
-                        onClick = { onEvent(MovieDetailsEvent.OnToggleFavorite(uiState.details!!)) },
-                    )
-                }
-            )
-        }
-    ) { innerPadding ->
-        if (uiState.details != null) {
+                    },
+                    actions = {
+                        AppIconButton(
+                            icon = R.drawable.ic_favorites,
+                            onClick = { onEvent(MovieDetailsEvent.OnToggleFavorite(uiState.details!!)) },
+                        )
+                    }
+                )
+            }
+        ) { innerPadding ->
+
             LazyColumn(
                 contentPadding = PaddingValues(bottom = innerPadding.calculateBottomPadding()),
                 modifier = Modifier.fillMaxSize()
             ) {
 
                 headSection(
-                    posterPath = posterPath,
-                    voteAverage = uiState.details.voteAverage,
-                    originalTitle = uiState.details.originalTitle,
-                    releaseDate = uiState.details.releaseDate,
+                    args = args,
+                    voteAverage = uiState.details?.voteAverage ?: 0f,
+                    releaseDate = uiState.details?.releaseDate.orEmpty(),
                     modifier = Modifier
                         .aspectRatio(375f / 450f)
                         .padding(bottom = 20.dp)
                 )
 
                 overviewSection(
-                    overview = uiState.details.overview,
-                    video = uiState.details.video
+                    overview = uiState.details?.overview.orEmpty(),
+                    video = uiState.details?.video ?: false
                 )
 
-                castSection(cast = uiState.details.cast)
+                castSection(cast = uiState.details?.cast.orEmpty())
 
-                categoriesSection(genres = uiState.details.genres)
+                categoriesSection(genres = uiState.details?.genres.orEmpty())
             }
         }
     }
+
 }
 
 private fun LazyListScope.overviewSection(overview: String, video: Boolean) {
@@ -213,9 +239,8 @@ fun LazyListScope.castSection(
 
 private fun LazyListScope.headSection(
     modifier: Modifier = Modifier,
-    posterPath: String,
+    args: MovieDetails,
     voteAverage: Float,
-    originalTitle: String,
     releaseDate: String
 ) {
     item {
@@ -224,7 +249,7 @@ private fun LazyListScope.headSection(
             modifier = modifier.fillMaxWidth()
         ) {
             Image(
-                painter = networkImagePainter(posterPath),
+                painter = networkImagePainter(args.posterPath),
                 contentDescription = "poster",
                 contentScale = ContentScale.Crop,
                 modifier = Modifier.fillMaxSize()
@@ -245,7 +270,7 @@ private fun LazyListScope.headSection(
                     verticalArrangement = Arrangement.spacedBy(4.dp)
                 ) {
                     Text(
-                        text = originalTitle,
+                        text = args.name,
                         style = MaterialTheme.typography.titleLarge,
                         fontWeight = FontWeight.Bold,
                     )
@@ -315,11 +340,6 @@ private fun InnerBottomShadow(
 }
 
 @Composable
-private fun CastItem() {
-
-}
-
-@Composable
 private fun VoteAverage(
     modifier: Modifier = Modifier,
     progress: Float,
@@ -347,9 +367,14 @@ private fun VoteAverage(
 @ThemePreviews
 @Composable
 private fun MovieDetailsContentPreview() {
-    AppPreviewWrapper {
+    AppPreviewWithSharedTransitionLayout {
         MovieDetailsContent(
-            posterPath = "",
+            args = MovieDetails(
+                id = 2,
+                name = "Hello .NFQ",
+                posterPath = "",
+                type = ""
+            ),
             uiState = MovieDetailsUIState(
                 details = MovieDetailsPreview
             ),
