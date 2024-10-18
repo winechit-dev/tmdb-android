@@ -103,10 +103,12 @@ internal fun MovieDetailsContent(
                 }
             )
         }
-    ) {
+    ) { innerPadding ->
         if (uiState.details != null) {
             LazyColumn(
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(bottom = innerPadding.calculateBottomPadding())
             ) {
                 item {
                     HeadSection(
@@ -120,13 +122,16 @@ internal fun MovieDetailsContent(
                     )
                 }
 
-                item {
-                    Text(
-                        text = uiState.details.overview,
-                        style = MaterialTheme.typography.bodyMedium,
-                        modifier = Modifier.padding(horizontal = 20.dp)
-                    )
+                if (uiState.details.overview.isNotBlank()) {
+                    item {
+                        Text(
+                            text = uiState.details.overview,
+                            style = MaterialTheme.typography.bodyMedium,
+                            modifier = Modifier.padding(horizontal = 20.dp)
+                        )
+                    }
                 }
+
                 if (uiState.details.video) {
                     item {
                         AppButton(
