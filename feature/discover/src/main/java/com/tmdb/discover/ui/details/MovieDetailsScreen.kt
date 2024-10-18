@@ -44,7 +44,7 @@ import com.tmdb.designsystem.theme.ThemePreviews
 import com.tmdb.designsystem.theme.White
 import com.tmdb.designsystem.utils.networkImagePainter
 import com.tmdb.discover.MovieDetailsPreview
-import com.tmdb.discover.R
+import com.tmdb.designsystem.R
 import kotlin.math.roundToInt
 import kotlinx.serialization.Serializable
 

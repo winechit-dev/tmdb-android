@@ -26,7 +26,7 @@ import com.tmdb.designsystem.theme.ThemePreviews
 import com.tmdb.discover.ui.Discover
 import com.tmdb.discover.ui.SurfaceContainerAlpha
 import com.tmdb.favorites.Favorites
-import com.tmdb.mobile.R
+import com.tmdb.designsystem.R
 import kotlin.reflect.KClass
 
 enum class DefaultBottomBarNavigationItem(
