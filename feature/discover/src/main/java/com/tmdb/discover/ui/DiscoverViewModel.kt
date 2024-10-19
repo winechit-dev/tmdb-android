@@ -2,6 +2,7 @@ package com.tmdb.discover.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.tmdb.designsystem.utils.UserMessageManager
 import com.tmdb.discover.model.GenreUIModel
 import com.tmdb.domain.repository.MovieRepository
 import com.tmdb.ui.MovieUIModel
@@ -41,6 +42,7 @@ class DiscoverViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             repository
                 .getMovieGenres()
+                .onLeft { UserMessageManager.showMessage(it.message.toString()) }
                 .onRight {
 
                     _uiState.update { state ->
@@ -68,6 +70,7 @@ class DiscoverViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             repository
                 .getTrendingTodayMovies(1)
+                .onLeft { UserMessageManager.showMessage(it.message.toString()) }
                 .onRight { movies ->
 
                     _uiState.update { state ->
@@ -87,6 +90,7 @@ class DiscoverViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             repository
                 .getPopularMovies(1)
+                .onLeft { UserMessageManager.showMessage(it.message.toString()) }
                 .onRight { movies ->
                     _uiState.update { state ->
                         state.copy(
@@ -105,6 +109,7 @@ class DiscoverViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             repository
                 .getUpcomingMovies(1)
+                .onLeft { UserMessageManager.showMessage(it.message.toString()) }
                 .onRight { movies ->
                     _uiState.update { state ->
                         state.copy(
@@ -123,6 +128,7 @@ class DiscoverViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             repository
                 .getTopRatedMovies(1)
+                .onLeft { UserMessageManager.showMessage(it.message.toString()) }
                 .onRight { movies ->
                     _uiState.update { state ->
                         state.copy(
@@ -141,6 +147,7 @@ class DiscoverViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             repository
                 .getNowPlayingMovies(1)
+                .onLeft { UserMessageManager.showMessage(it.message.toString()) }
                 .onRight { movies ->
                     _uiState.update { state ->
                         state.copy(
@@ -160,7 +167,7 @@ class DiscoverViewModel @Inject constructor(
             state.copy(
                 selectedGenreId = genreId,
                 genres = state.genres.map { it.copy(selected = it.id == genreId) }
-                )
+            )
         }
         fetchAll()
     }

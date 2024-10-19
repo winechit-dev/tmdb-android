@@ -3,6 +3,7 @@ package com.tmdb.discover.ui.details
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.tmdb.designsystem.utils.UserMessageManager
 import com.tmdb.domain.model.MovieDetailsModel
 import com.tmdb.domain.repository.MovieRepository
 import com.tmdb.ui.MovieUIModel
@@ -33,6 +34,7 @@ class MovieDetailsViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             repository
                 .getMovieDetails(id)
+                .onLeft { UserMessageManager.showMessage(it.message.toString()) }
                 .onRight { details ->
                     _uiState.update { state ->
                         state.copy(

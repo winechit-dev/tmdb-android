@@ -2,6 +2,7 @@ package com.tmdb.search
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.tmdb.designsystem.utils.UserMessageManager
 import com.tmdb.domain.model.GenreModel
 import com.tmdb.domain.repository.MovieRepository
 import com.tmdb.search.mapper.toSearchMoviesUIModel
@@ -58,7 +59,9 @@ class SearchViewModel @Inject constructor(
     private fun searchMovie(query: String) {
         viewModelScope.launch(Dispatchers.IO) {
             _uiState.update { it.copy(loading = true) }
-            repository.searchMovie(query)
+            repository
+                .searchMovie(query)
+                .onLeft { UserMessageManager.showMessage(it.message.toString()) }
                 .onRight { results ->
                     _uiState.update {
                         val movies = results.toSearchMoviesUIModel(it.genres)
