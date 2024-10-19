@@ -73,7 +73,7 @@ class DiscoverViewModel @Inject constructor(
                     _uiState.update { state ->
                         state.copy(
                             trendingTodayMovies = movies
-                                .searches
+                                .results
                                 .toMoviesUIModel(state.selectedGenreId)
                         )
                     }
@@ -91,7 +91,7 @@ class DiscoverViewModel @Inject constructor(
                     _uiState.update { state ->
                         state.copy(
                             popularMovies = movies
-                                .searches
+                                .results
                                 .toMoviesUIModel(state.selectedGenreId)
                         )
                     }
@@ -109,7 +109,7 @@ class DiscoverViewModel @Inject constructor(
                     _uiState.update { state ->
                         state.copy(
                             upcomingMovies = movies
-                                .searches
+                                .results
                                 .toMoviesUIModel(state.selectedGenreId)
                         )
                     }
@@ -127,7 +127,7 @@ class DiscoverViewModel @Inject constructor(
                     _uiState.update { state ->
                         state.copy(
                             topRatedMovies = movies
-                                .searches
+                                .results
                                 .toMoviesUIModel(state.selectedGenreId)
                         )
                     }
@@ -145,7 +145,7 @@ class DiscoverViewModel @Inject constructor(
                     _uiState.update { state ->
                         state.copy(
                             nowPlayingMovies = movies
-                                .searches
+                                .results
                                 .toMoviesUIModel(state.selectedGenreId)
                         )
                     }

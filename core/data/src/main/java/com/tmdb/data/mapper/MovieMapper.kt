@@ -13,14 +13,12 @@ import com.tmdb.domain.model.MovieDetailsModel
 import com.tmdb.domain.model.MovieModel
 import com.tmdb.domain.model.MoviesModel
 import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 
 fun MoviesResponse.toMoviesModel(): MoviesModel {
     return MoviesModel(
         page = page,
-        searches = searches.map { it.toMovieModel() },
+        results = results.map { it.toMovieModel() },
         totalPages = totalPages,
         totalResults = totalResults
     )

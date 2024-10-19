@@ -3,7 +3,6 @@ package com.tmdb.network
 import arrow.core.Either
 import com.tmdb.data.datasource.remote.MovieDataSource
 import com.tmdb.data.model.CastResponse
-import com.tmdb.data.model.CreditsResponse
 import com.tmdb.data.model.GenresResponse
 import com.tmdb.data.model.MovieDetailsResponse
 import com.tmdb.data.model.MovieResponse
@@ -110,7 +109,7 @@ class MovieDataSourceImpl @Inject constructor(
                 service.getRecommendations(movieId = movieId, page = 1)
             },
             mapper = { data ->
-                data.searches
+                data.results
             }
         )
     }
