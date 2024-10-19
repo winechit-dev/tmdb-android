@@ -54,6 +54,7 @@ import com.tmdb.designsystem.theme.LocalSharedTransitionScope
 import com.tmdb.designsystem.theme.ThemePreviews
 import com.tmdb.designsystem.utils.AppSharedElementKey
 import com.tmdb.designsystem.utils.AppSharedElementType
+import com.tmdb.designsystem.utils.bounceClick
 import com.tmdb.designsystem.utils.detailBoundsTransform
 import com.tmdb.designsystem.utils.networkImagePainter
 import com.tmdb.search.model.SearchMovieUIModel
@@ -217,7 +218,9 @@ private fun SearchItem(
 
     with(sharedTransitionScope) {
         Card(
-            modifier = modifier.fillMaxWidth(),
+            modifier = modifier
+                .bounceClick()
+                .fillMaxWidth(),
             onClick = { onEvent(SearchEvent.MovieDetails(model)) }
         ) {
             Row(
@@ -257,7 +260,7 @@ private fun SearchItem(
                         overflow = TextOverflow.Ellipsis,
                         modifier = Modifier.padding(end = 20.dp)
                     )
-                    if (model.overview.isBlank()){
+                    if (model.overview.isBlank()) {
                         Text(
                             text = model.overview,
                             style = MaterialTheme.typography.bodyMedium,
@@ -267,7 +270,7 @@ private fun SearchItem(
                         )
                     }
 
-                    if(model.releaseDate.isNotBlank()){
+                    if (model.releaseDate.isNotBlank()) {
                         Text(
                             text = model.releaseDate,
                             style = MaterialTheme.typography.bodyMedium
