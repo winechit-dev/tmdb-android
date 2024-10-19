@@ -220,6 +220,18 @@ private fun SearchItem(
         Card(
             modifier = modifier
                 .bounceClick()
+                .sharedBounds(
+                    sharedContentState = rememberSharedContentState(
+                        key = AppSharedElementKey(
+                            id = model.id.toString(),
+                            type = AppSharedElementType.Bounds
+                        )
+                    ),
+                    animatedVisibilityScope = animatedVisibilityScope,
+                    boundsTransform = detailBoundsTransform,
+                    enter = fadeIn(),
+                    exit = fadeOut()
+                )
                 .fillMaxWidth(),
             onClick = { onEvent(SearchEvent.MovieDetails(model)) }
         ) {
@@ -233,18 +245,6 @@ private fun SearchItem(
                     modifier = Modifier
                         .weight(0.8f)
                         .size(124.dp, 188.dp)
-                        .sharedBounds(
-                            sharedContentState = rememberSharedContentState(
-                                key = AppSharedElementKey(
-                                    id = model.id.toString(),
-                                    type = AppSharedElementType.Bounds
-                                )
-                            ),
-                            animatedVisibilityScope = animatedVisibilityScope,
-                            boundsTransform = detailBoundsTransform,
-                            enter = fadeIn(),
-                            exit = fadeOut()
-                        )
                         .clip(RoundedCornerShape(topStart = 12.0.dp, bottomStart = 12.0.dp))
                 )
                 Column(
