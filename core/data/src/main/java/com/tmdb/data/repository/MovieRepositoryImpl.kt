@@ -3,7 +3,6 @@ package com.tmdb.data.repository
 import arrow.core.Either
 import arrow.core.flatMap
 import com.tmdb.data.datasource.remote.MovieDataSource
-import com.tmdb.data.mapper.toCast
 import com.tmdb.data.mapper.toGenresModel
 import com.tmdb.data.mapper.toMovieDetailsModel
 import com.tmdb.data.mapper.toMoviesModel
@@ -56,12 +55,15 @@ class MovieRepositoryImpl @Inject constructor(
     override suspend fun getMovieDetails(movieId: Int): Either<DataException, MovieDetailsModel> {
         return movieDataSource
             .getMovieDetails(movieId)
-            .flatMap {
-                val details = it.toMovieDetailsModel()
+            .flatMap { details ->
                 movieDataSource
-                    .getCreditDetails(movieId)
-                    .map { credit ->
-                        details.copy(cast = credit.toCast())
+                    .getCast(movieId)
+                    .flatMap { cast ->
+                        movieDataSource
+                            .getRecommendations(movieId)
+                            .map { recommendations ->
+                                details.toMovieDetailsModel(cast, recommendations)
+                            }
                     }
             }
     }

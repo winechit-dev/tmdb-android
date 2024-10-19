@@ -1,7 +1,7 @@
 package com.tmdb.data.mapper
 
 import com.tmdb.data.BuildConfig
-import com.tmdb.data.model.CreditsResponse
+import com.tmdb.data.model.CastResponse
 import com.tmdb.data.model.GenresResponse
 import com.tmdb.data.model.MovieDetailsResponse
 import com.tmdb.data.model.MovieResponse
@@ -25,7 +25,7 @@ fun MoviesResponse.toMoviesModel(): MoviesModel {
     )
 }
 
-private fun MovieResponse.toMovieModel(): MovieModel {
+fun MovieResponse.toMovieModel(): MovieModel {
     return MovieModel(
         adult = adult,
         backdropPath = backdropPath.orEmpty(),
@@ -55,7 +55,10 @@ fun GenresResponse.toGenresModel(): GenresModel {
     )
 }
 
-fun MovieDetailsResponse.toMovieDetailsModel(): MovieDetailsModel {
+fun MovieDetailsResponse.toMovieDetailsModel(
+    cast: List<CastResponse>,
+    recommendations: List<MovieResponse>
+): MovieDetailsModel {
     return MovieDetailsModel(
         adult = adult ?: false,
         backdropPath = backdropPath.orEmpty(),
@@ -82,12 +85,14 @@ fun MovieDetailsResponse.toMovieDetailsModel(): MovieDetailsModel {
         title = title.orEmpty(),
         video = video ?: false,
         voteAverage = (voteAverage ?: 0.0).toFloat(),
-        voteCount = voteCount ?: 0
+        voteCount = voteCount ?: 0,
+        cast = cast.toCast(),
+        recommendations = recommendations.map { it.toMovieModel() }
     )
 }
 
-fun CreditsResponse.toCast(): List<CastModel> {
-    return cast.map {
+fun List<CastResponse>.toCast(): List<CastModel> {
+    return map {
         CastModel(
             castId = it.castId,
             id = it.id,

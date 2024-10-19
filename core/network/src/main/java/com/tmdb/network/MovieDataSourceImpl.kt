@@ -2,9 +2,11 @@ package com.tmdb.network
 
 import arrow.core.Either
 import com.tmdb.data.datasource.remote.MovieDataSource
+import com.tmdb.data.model.CastResponse
 import com.tmdb.data.model.CreditsResponse
 import com.tmdb.data.model.GenresResponse
 import com.tmdb.data.model.MovieDetailsResponse
+import com.tmdb.data.model.MovieResponse
 import com.tmdb.data.model.MoviesResponse
 import com.tmdb.domain.exception.DataException
 import com.tmdb.network.handler.handleCall
@@ -91,13 +93,24 @@ class MovieDataSourceImpl @Inject constructor(
         )
     }
 
-    override suspend fun getCreditDetails(movieId: Int): Either<DataException, CreditsResponse> {
+    override suspend fun getCast(movieId: Int): Either<DataException, List<CastResponse>> {
         return handleCall(
             apiCall = {
                 service.getCreditDetails(movieId)
             },
             mapper = { data ->
-                data
+                data.cast
+            }
+        )
+    }
+
+    override suspend fun getRecommendations(movieId: Int): Either<DataException, List<MovieResponse>> {
+        return handleCall(
+            apiCall = {
+                service.getRecommendations(movieId = movieId, page = 1)
+            },
+            mapper = { data ->
+                data.searches
             }
         )
     }

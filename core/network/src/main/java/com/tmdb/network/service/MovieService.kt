@@ -67,4 +67,12 @@ interface MovieService {
         @Path("movie_id") movieId: Int,
         @Query("api_key") apiKey: String = BuildConfig.API_KEY,
     ): Response<CreditsResponse>
+
+    @GET("movie/{movie_id}/recommendations")
+    suspend fun getRecommendations(
+        @Path("movie_id") movieId: Int,
+        @Query("page") page: Int = STARTING_PAGE_INDEX,
+        @Query("api_key") apiKey: String = BuildConfig.API_KEY,
+        @Query("language") language: String = LANGUAGE
+    ): Response<MoviesResponse>
 }

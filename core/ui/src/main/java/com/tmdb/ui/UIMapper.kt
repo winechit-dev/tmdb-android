@@ -2,7 +2,7 @@ package com.tmdb.ui
 
 import com.tmdb.domain.model.MovieModel
 
-fun List<MovieModel>.toMoviesUIModel(genreId: Int?): List<MovieUIModel> {
+fun List<MovieModel>.toMoviesUIModel(genreId: Int? = 100): List<MovieUIModel> {
     return this
         .map { it.toMovieUIModel() }
         .filter { if (genreId != 100) it.genreIds.contains(genreId) else true }

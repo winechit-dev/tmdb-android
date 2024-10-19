@@ -67,7 +67,7 @@ val moviesPreview = listOf(
     )
 )
 
-val MovieDetailsPreview = MovieDetailsModel(
+val movieDetailsPreview = MovieDetailsModel(
     adult = false,
     backdropPath = "/jlWk4J1sV1EHgkjhvsN7EdzGvOx.jpg",
     budget = 17500000,

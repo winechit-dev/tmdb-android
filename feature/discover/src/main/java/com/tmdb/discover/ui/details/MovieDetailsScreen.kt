@@ -61,9 +61,13 @@ import com.tmdb.designsystem.utils.AppSharedElementType
 import com.tmdb.designsystem.utils.detailBoundsTransform
 import com.tmdb.designsystem.utils.networkImagePainter
 import com.tmdb.designsystem.utils.nonSpatialExpressiveSpring
-import com.tmdb.discover.MovieDetailsPreview
+import com.tmdb.discover.movieDetailsPreview
+import com.tmdb.discover.moviesPreview
 import com.tmdb.domain.model.CastModel
 import com.tmdb.domain.model.GenreModel
+import com.tmdb.ui.MovieItem
+import com.tmdb.ui.MovieUIModel
+import com.tmdb.ui.moviesLoading
 import kotlin.math.roundToInt
 import kotlinx.serialization.Serializable
 
@@ -100,7 +104,6 @@ internal fun MovieDetailsContent(
     with(sharedTransitionScope) {
         Scaffold(
             modifier = Modifier
-                .navigationBarsPadding()
                 .sharedBounds(
                     sharedContentState = rememberSharedContentState(
                         key = AppSharedElementKey(
@@ -137,16 +140,16 @@ internal fun MovieDetailsContent(
 
             LazyColumn(
                 contentPadding = PaddingValues(bottom = innerPadding.calculateBottomPadding()),
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier
+                    .fillMaxSize()
+                    .navigationBarsPadding()
             ) {
 
                 headSection(
                     args = args,
                     voteAverage = uiState.details?.voteAverage ?: 0f,
                     releaseDate = uiState.details?.releaseDate.orEmpty(),
-                    modifier = Modifier
-                        .aspectRatio(375f / 450f)
-                        .padding(bottom = 20.dp)
+                    modifier = Modifier.aspectRatio(375f / 450f)
                 )
 
                 overviewSection(
@@ -157,6 +160,19 @@ internal fun MovieDetailsContent(
                 castSection(cast = uiState.details?.cast.orEmpty())
 
                 categoriesSection(genres = uiState.details?.genres.orEmpty())
+
+                moviesSection(
+                    title = "Recommendations",
+                    movies = uiState.recommendations,
+                    onClickItem = { model, type ->
+                        onEvent(
+                            MovieDetailsEvent.MovieDetails(
+                                model = model,
+                                type = type
+                            )
+                        )
+                    }
+                )
             }
         }
     }
@@ -197,14 +213,14 @@ fun LazyListScope.castSection(
             fontWeight = FontWeight.SemiBold,
             modifier = Modifier
                 .padding(horizontal = 30.dp)
-                .padding(top = 32.dp)
+                .padding(top = 30.dp)
         )
         LazyRow(
             horizontalArrangement = Arrangement.spacedBy(12.dp),
             contentPadding = PaddingValues(horizontal = 30.dp),
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 14.dp)
+                .padding(top = 16.dp)
 
         ) {
             items(
@@ -260,7 +276,7 @@ private fun LazyListScope.headSection(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 20.dp)
-                    .padding(bottom = 20.dp)
+                    .padding(bottom = 40.dp)
             ) {
                 VoteAverage(
                     progress = voteAverage,
@@ -284,6 +300,7 @@ private fun LazyListScope.headSection(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 30.dp)
+                    .padding(bottom = 20.dp)
             )
         }
     }
@@ -298,7 +315,7 @@ private fun LazyListScope.categoriesSection(genres: List<GenreModel>) {
             fontWeight = FontWeight.SemiBold,
             modifier = Modifier
                 .padding(horizontal = 30.dp)
-                .padding(top = 32.dp)
+                .padding(top = 30.dp)
         )
         LazyRow(
             horizontalArrangement = Arrangement.spacedBy(12.dp),
@@ -306,7 +323,7 @@ private fun LazyListScope.categoriesSection(genres: List<GenreModel>) {
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 30.dp)
-                .padding(top = 14.dp)
+                .padding(top = 8.dp)
 
         ) {
             items(
@@ -318,6 +335,46 @@ private fun LazyListScope.categoriesSection(genres: List<GenreModel>) {
                     label = genre.name,
                     onClick = {}
                 )
+            }
+        }
+    }
+}
+
+private fun LazyListScope.moviesSection(
+    title: String,
+    movies: List<MovieUIModel>?,
+    onClickItem: (model: MovieUIModel, type: String) -> Unit
+) {
+    if (movies?.isEmpty() == true) return
+
+    item {
+        Text(
+            text = title,
+            style = MaterialTheme.typography.titleMedium,
+            fontWeight = FontWeight.SemiBold,
+            modifier = Modifier
+                .padding(horizontal = 30.dp)
+                .padding(bottom = 16.dp)
+        )
+        LazyRow(
+            horizontalArrangement = Arrangement.spacedBy(12.dp),
+            contentPadding = PaddingValues(horizontal = 30.dp),
+            modifier = Modifier.padding(bottom = 30.dp)
+        ) {
+            if (movies != null) {
+                items(
+                    items = movies,
+                    key = { it.id },
+                    contentType = { "Movie" }
+                ) { model ->
+                    MovieItem(
+                        model = model,
+                        type = title,
+                        onClick = onClickItem
+                    )
+                }
+            } else {
+                moviesLoading()
             }
         }
     }
@@ -376,7 +433,8 @@ private fun MovieDetailsContentPreview() {
                 type = ""
             ),
             uiState = MovieDetailsUIState(
-                details = MovieDetailsPreview
+                details = movieDetailsPreview,
+                recommendations = moviesPreview
             ),
             onEvent = {}
         )

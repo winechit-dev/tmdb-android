@@ -91,6 +91,17 @@ fun NavGraphBuilder.navMovieDetails(navController: NavController) {
                             navController.navigateUp()
                         }
 
+                        is MovieDetailsEvent.MovieDetails -> {
+                            navController.navigate(
+                                MovieDetails(
+                                    id = event.model.id,
+                                    name = event.model.name,
+                                    posterPath = event.model.posterPath,
+                                    type = event.type
+                                )
+                            )
+                        }
+
                         else -> Unit
                     }
                 }

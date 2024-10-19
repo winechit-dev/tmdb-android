@@ -51,6 +51,7 @@ fun AppChip(
         modifier = modifier,
         onClick = onClick,
         shape = CircleShape,
+
         colors = SuggestionChipDefaults.suggestionChipColors(
             containerColor = MaterialTheme.colorScheme.surfaceVariant,
             labelColor = MaterialTheme.colorScheme.onSurfaceVariant

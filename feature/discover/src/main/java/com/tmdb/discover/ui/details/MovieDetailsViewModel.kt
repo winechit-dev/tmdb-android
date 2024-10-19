@@ -5,6 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tmdb.domain.model.MovieDetailsModel
 import com.tmdb.domain.repository.MovieRepository
+import com.tmdb.ui.MovieUIModel
+import com.tmdb.ui.toMoviesUIModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
@@ -31,11 +33,12 @@ class MovieDetailsViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             repository
                 .getMovieDetails(id)
-                .onRight {
+                .onRight { details ->
                     _uiState.update { state ->
                         state.copy(
                             loading = false,
-                            details = it
+                            details = details,
+                            recommendations = details.recommendations.toMoviesUIModel()
                         )
                     }
                 }.onLeft {
@@ -47,5 +50,6 @@ class MovieDetailsViewModel @Inject constructor(
 
 data class MovieDetailsUIState(
     val loading: Boolean = true,
-    val details: MovieDetailsModel? = null
+    val details: MovieDetailsModel? = null,
+    val recommendations : List<MovieUIModel> = emptyList()
 )
