@@ -6,6 +6,9 @@ plugins {
 
 android {
     namespace = "com.tmdb.mobile"
+    compileOptions {
+        isCoreLibraryDesugaringEnabled = true
+    }
 }
 
 composeCompiler {
@@ -13,6 +16,7 @@ composeCompiler {
 }
 
 dependencies {
+    coreLibraryDesugaring(libs.desugaring)
     implementation(project(":core:designsystem"))
     implementation(project(":core:ui"))
     implementation(project(":core:data"))

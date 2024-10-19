@@ -13,10 +13,14 @@ android {
             "\"${project.extra["IMAGE_BASE_UR"] as String}\""
         )
     }
+    compileOptions {
+        isCoreLibraryDesugaringEnabled = true
+    }
 }
 
 dependencies {
     implementation(project(":core:domain"))
+    coreLibraryDesugaring(libs.desugaring)
     api(libs.retrofit.core)
     api(libs.okhttp.logging)
     implementation(libs.kotlinx.serialization.json)

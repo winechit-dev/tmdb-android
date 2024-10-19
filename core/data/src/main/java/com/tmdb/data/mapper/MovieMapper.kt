@@ -12,6 +12,7 @@ import com.tmdb.domain.model.GenresModel
 import com.tmdb.domain.model.MovieDetailsModel
 import com.tmdb.domain.model.MovieModel
 import com.tmdb.domain.model.MoviesModel
+import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
@@ -77,7 +78,7 @@ fun MovieDetailsResponse.toMovieDetailsModel(
         overview = overview.orEmpty(),
         popularity = popularity ?: 0.0,
         posterPath = posterPath.createImageUrl(),
-        releaseDate = releaseDate.changeFormat("yyyy-MM-dd", "dd MMMM yyyy"),
+        releaseDate = releaseDate.changeFormat("yyyy-MM-dd", "dd MMM yyyy"),
         revenue = revenue ?: 0,
         runtime = runtime ?: 0,
         status = status.orEmpty(),
@@ -109,18 +110,13 @@ fun String?.createImageUrl(): String {
 fun String?.changeFormat(
     originPattern: String,
     targetPattern: String,
-    isUTC: Boolean = false,
     default: String = "-"
 ): String {
     if (this.isNullOrBlank()) return default
     return try {
         val fromP = DateTimeFormatter.ofPattern(originPattern)
         val toP = DateTimeFormatter.ofPattern(targetPattern)
-        val fromLocalDate = LocalDateTime.parse(this, fromP)
-        if (isUTC) {
-            val fromZoneDateTime = fromLocalDate.atZone(ZoneOffset.UTC)
-            return fromZoneDateTime.format(toP)
-        }
+        val fromLocalDate = LocalDate.parse(this, fromP)
         return fromLocalDate.format(toP)
     } catch (e: Exception) {
         this
