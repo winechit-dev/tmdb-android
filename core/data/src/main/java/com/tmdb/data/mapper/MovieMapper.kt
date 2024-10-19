@@ -35,7 +35,7 @@ fun MovieResponse.toMovieModel(): MovieModel {
         overview = overview,
         popularity = popularity,
         posterPath = posterPath.createImageUrl(),
-        releaseDate = releaseDate,
+        releaseDate = releaseDate.changeFormat("yyyy-MM-dd", "dd MMM yyyy"),
         title = title,
         video = video,
         voteAverage = voteAverage,
