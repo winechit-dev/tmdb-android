@@ -12,7 +12,6 @@ fun networkImagePainter(
     url: String?,
 ): Painter = rememberAsyncImagePainter(
     model = ImageRequest.Builder(LocalContext.current)
-        .placeholder(R.drawable.ic_placeholder_default)
         .data(url)
         .crossfade(true)
         .error(R.drawable.ic_placeholder_default)
