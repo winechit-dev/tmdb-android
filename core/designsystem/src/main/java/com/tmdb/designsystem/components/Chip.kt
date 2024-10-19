@@ -18,6 +18,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import com.tmdb.designsystem.theme.AppPreviewWrapper
 import com.tmdb.designsystem.theme.ThemePreviews
+import com.tmdb.designsystem.utils.bounceClick
 
 @Composable
 fun AppFilterChip(
@@ -28,7 +29,9 @@ fun AppFilterChip(
     enabled: Boolean = true,
 ) {
     FilterChip(
-        modifier = modifier.height(31.dp),
+        modifier = modifier
+            .bounceClick(enabled = enabled)
+            .height(31.dp),
         selected = selected,
         shape = CircleShape,
         colors = FilterChipDefaults.filterChipColors(

@@ -33,6 +33,7 @@ import com.tmdb.designsystem.theme.AppPreviewWrapper
 import com.tmdb.designsystem.theme.ThemePreviews
 import com.tmdb.designsystem.theme.asBrush
 import com.tmdb.designsystem.theme.defaultButton
+import com.tmdb.designsystem.utils.bounceClick
 
 val MinHeight = 43.dp
 
@@ -60,6 +61,7 @@ fun AppButton(
     Button(
         onClick = onClick,
         modifier = modifier
+            .bounceClick()
             .background(brush = brush, shape = CircleShape)
             .defaultMinSize(minHeight = MinHeight),
         enabled = enabled,
@@ -93,6 +95,7 @@ fun AppIconButton(
     IconButton(
         onClick = onClick,
         modifier = modifier
+            .bounceClick()
             .clip(CircleShape)
             .background(containerColor)
     ) {

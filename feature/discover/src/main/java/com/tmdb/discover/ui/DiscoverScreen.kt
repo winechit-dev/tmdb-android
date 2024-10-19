@@ -47,6 +47,7 @@ import com.tmdb.designsystem.theme.LocalSharedTransitionScope
 import com.tmdb.designsystem.theme.ThemePreviews
 import com.tmdb.designsystem.utils.AppSharedElementKey
 import com.tmdb.designsystem.utils.AppSharedElementType
+import com.tmdb.designsystem.utils.bounceClick
 import com.tmdb.designsystem.utils.detailBoundsTransform
 import com.tmdb.discover.genresPreview
 import com.tmdb.discover.model.GenreUIModel
@@ -174,6 +175,7 @@ private fun LazyListScope.searchBarSection(
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier
+                        .bounceClick()
                         .fillMaxWidth()
                         .padding(20.dp)
                         .sharedBounds(

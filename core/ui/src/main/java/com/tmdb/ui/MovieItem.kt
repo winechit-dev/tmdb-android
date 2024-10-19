@@ -23,6 +23,7 @@ import com.tmdb.designsystem.theme.LocalSharedTransitionScope
 import com.tmdb.designsystem.theme.ThemePreviews
 import com.tmdb.designsystem.utils.AppSharedElementKey
 import com.tmdb.designsystem.utils.AppSharedElementType
+import com.tmdb.designsystem.utils.bounceClick
 import com.tmdb.designsystem.utils.detailBoundsTransform
 import com.tmdb.designsystem.utils.networkImagePainter
 
@@ -41,6 +42,7 @@ fun MovieItem(
     with(sharedTransitionScope) {
         Card(
             modifier = modifier
+                .bounceClick()
                 .widthIn(max = (LocalConfiguration.current.screenWidthDp / 3).dp)
                 .aspectRatio(124f / 188f)
                 .sharedBounds(
