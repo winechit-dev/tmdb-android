@@ -61,6 +61,7 @@ import com.tmdb.designsystem.utils.AppSharedElementType
 import com.tmdb.designsystem.utils.detailBoundsTransform
 import com.tmdb.designsystem.utils.networkImagePainter
 import com.tmdb.designsystem.utils.nonSpatialExpressiveSpring
+import com.tmdb.designsystem.utils.shimmerEffect
 import com.tmdb.discover.movieDetailsPreview
 import com.tmdb.discover.moviesPreview
 import com.tmdb.domain.model.CastModel
@@ -147,13 +148,13 @@ internal fun MovieDetailsContent(
 
                 headSection(
                     args = args,
-                    voteAverage = uiState.details?.voteAverage ?: 0f,
-                    releaseDate = uiState.details?.releaseDate.orEmpty(),
+                    voteAverage = uiState.details?.voteAverage,
+                    releaseDate = uiState.details?.releaseDate,
                     modifier = Modifier.aspectRatio(375f / 450f)
                 )
 
                 overviewSection(
-                    overview = uiState.details?.overview.orEmpty(),
+                    overview = uiState.details?.overview,
                     video = uiState.details?.video ?: false
                 )
 
@@ -179,8 +180,28 @@ internal fun MovieDetailsContent(
 
 }
 
-private fun LazyListScope.overviewSection(overview: String, video: Boolean) {
-    if (overview.isNotBlank()) {
+private fun LazyListScope.overviewSection(overview: String?, video: Boolean) {
+
+    if (overview == null) {
+        item {
+            Box(
+                modifier = Modifier
+                    .padding(horizontal = 20.dp)
+                    .fillMaxWidth()
+                    .height(14.dp)
+                    .shimmerEffect()
+            )
+            Box(
+                modifier = Modifier
+                    .padding(top = 10.dp)
+                    .padding(horizontal = 20.dp)
+                    .width(240.dp)
+                    .height(14.dp)
+                    .shimmerEffect()
+            )
+
+        }
+    } else if (overview.isNotBlank()) {
         item {
             Text(
                 text = overview,
@@ -256,8 +277,8 @@ fun LazyListScope.castSection(
 private fun LazyListScope.headSection(
     modifier: Modifier = Modifier,
     args: MovieDetails,
-    voteAverage: Float,
-    releaseDate: String
+    voteAverage: Float?,
+    releaseDate: String?
 ) {
     item {
         Box(
@@ -290,16 +311,25 @@ private fun LazyListScope.headSection(
                         style = MaterialTheme.typography.titleLarge,
                         fontWeight = FontWeight.Bold,
                     )
-                    Text(
-                        text = releaseDate,
-                        style = MaterialTheme.typography.bodyLarge,
-                    )
+                    if (releaseDate == null) {
+                        Box(
+                            modifier = Modifier
+                                .width(100.dp)
+                                .height(12.dp)
+                                .shimmerEffect()
+                        )
+                    } else {
+                        Text(
+                            text = releaseDate,
+                            style = MaterialTheme.typography.bodyLarge,
+                        )
+                    }
                 }
             }
             HorizontalDivider(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 30.dp)
+                    .padding(horizontal = 20.dp)
                     .padding(bottom = 20.dp)
             )
         }
@@ -399,9 +429,9 @@ private fun InnerBottomShadow(
 @Composable
 private fun VoteAverage(
     modifier: Modifier = Modifier,
-    progress: Float,
+    progress: Float?,
 ) {
-
+    if (progress == null || progress == 0f) return
     Box(
         modifier = modifier,
         contentAlignment = Alignment.Center
@@ -418,6 +448,7 @@ private fun VoteAverage(
             fontWeight = FontWeight.Bold,
         )
     }
+
 }
 
 
@@ -435,6 +466,25 @@ private fun MovieDetailsContentPreview() {
             uiState = MovieDetailsUIState(
                 details = movieDetailsPreview,
                 recommendations = moviesPreview
+            ),
+            onEvent = {}
+        )
+    }
+}
+
+@ThemePreviews
+@Composable
+private fun MovieDetailsLoadingContentPreview() {
+    AppPreviewWithSharedTransitionLayout {
+        MovieDetailsContent(
+            args = MovieDetails(
+                id = 2,
+                name = "Hello .NFQ",
+                posterPath = "",
+                type = ""
+            ),
+            uiState = MovieDetailsUIState(
+                details = null
             ),
             onEvent = {}
         )
