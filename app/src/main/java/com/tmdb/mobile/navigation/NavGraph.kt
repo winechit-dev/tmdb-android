@@ -7,7 +7,6 @@ import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
 import androidx.compose.material3.Scaffold
@@ -57,7 +56,6 @@ fun NavGraph(
 
     MovieQuestTheme {
         Scaffold(
-            contentWindowInsets = WindowInsets(0),
             bottomBar = {
                 DefaultBottomNavigation(
                     navController = navController,

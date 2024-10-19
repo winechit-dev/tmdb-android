@@ -11,15 +11,16 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
@@ -32,9 +33,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.style.TextAlign
@@ -109,7 +112,6 @@ internal fun SearchContent(
                 modifier = Modifier
                     .statusBarsPadding()
                     .padding(top = 20.dp)
-                    .padding(8.dp)
             ) {
                 AppIconButton(
                     icon = R.drawable.ic_back,
@@ -224,9 +226,10 @@ private fun SearchItem(
                 Image(
                     painter = networkImagePainter(model.posterPath),
                     contentDescription = "poster",
+                    contentScale = ContentScale.Crop,
                     modifier = Modifier
                         .weight(0.8f)
-                        .aspectRatio(124f / 188f)
+                        .size(124.dp, 188.dp)
                         .sharedBounds(
                             sharedContentState = rememberSharedContentState(
                                 key = AppSharedElementKey(
@@ -239,6 +242,7 @@ private fun SearchItem(
                             enter = fadeIn(),
                             exit = fadeOut()
                         )
+                        .clip(RoundedCornerShape(topStart = 12.0.dp, bottomStart = 12.0.dp))
                 )
                 Column(
                     verticalArrangement = Arrangement.spacedBy(8.dp),
@@ -253,17 +257,23 @@ private fun SearchItem(
                         overflow = TextOverflow.Ellipsis,
                         modifier = Modifier.padding(end = 20.dp)
                     )
-                    Text(
-                        text = model.overview,
-                        style = MaterialTheme.typography.bodyMedium,
-                        maxLines = 3,
-                        overflow = TextOverflow.Ellipsis,
-                        modifier = Modifier.padding(end = 20.dp)
-                    )
-                    Text(
-                        text = model.releaseDate,
-                        style = MaterialTheme.typography.bodyMedium
-                    )
+                    if (model.overview.isBlank()){
+                        Text(
+                            text = model.overview,
+                            style = MaterialTheme.typography.bodyMedium,
+                            maxLines = 3,
+                            overflow = TextOverflow.Ellipsis,
+                            modifier = Modifier.padding(end = 20.dp)
+                        )
+                    }
+
+                    if(model.releaseDate.isNotBlank()){
+                        Text(
+                            text = model.releaseDate,
+                            style = MaterialTheme.typography.bodyMedium
+                        )
+                    }
+
                     LazyRow(
                         horizontalArrangement = Arrangement.spacedBy(12.dp),
                         contentPadding = PaddingValues(end = 30.dp),

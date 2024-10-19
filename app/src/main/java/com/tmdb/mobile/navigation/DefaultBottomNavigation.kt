@@ -14,19 +14,18 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.tmdb.designsystem.R
 import com.tmdb.designsystem.theme.AppPreviewWrapper
 import com.tmdb.designsystem.theme.ThemePreviews
 import com.tmdb.discover.ui.Discover
 import com.tmdb.discover.ui.SurfaceContainerAlpha
 import com.tmdb.favorites.Favorites
-import com.tmdb.designsystem.R
 import kotlin.reflect.KClass
 
 enum class DefaultBottomBarNavigationItem(
@@ -58,7 +57,7 @@ fun DefaultBottomNavigation(
 ) {
     val bottomBarPadding = WindowInsets.navigationBars
         .asPaddingValues(LocalDensity.current)
-        .calculateBottomPadding() / 2
+        .calculateBottomPadding()
 
     NavigationBar(
         modifier = modifier,

@@ -12,12 +12,10 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -117,7 +115,6 @@ internal fun MovieDetailsContent(
                     exit = fadeOut(nonSpatialExpressiveSpring()),
                     enter = fadeIn(nonSpatialExpressiveSpring()),
                 ),
-            contentWindowInsets = WindowInsets(0),
             topBar = {
                 TopAppBar(
                     title = {},
@@ -141,9 +138,7 @@ internal fun MovieDetailsContent(
 
             LazyColumn(
                 contentPadding = PaddingValues(bottom = innerPadding.calculateBottomPadding()),
-                modifier = Modifier
-                    .fillMaxSize()
-                    .navigationBarsPadding()
+                modifier = Modifier.fillMaxSize()
             ) {
 
                 headSection(
@@ -413,13 +408,14 @@ private fun InnerBottomShadow(
 ) {
     val shadowGradient = Brush.verticalGradient(
         0.2f to Color.Transparent,
+        0.8f to MaterialTheme.colorScheme.surface,
         1f to MaterialTheme.colorScheme.surface
     )
     Box(
         modifier = modifier
             .fillMaxWidth()
             .background(shadowGradient)
-            .height(250.dp)
+            .height(350.dp)
     )
 }
 
