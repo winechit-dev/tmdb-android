@@ -19,4 +19,5 @@ interface MovieDataSource {
     suspend fun getMovieDetails(movieId: Int): Either<DataException, MovieDetailsResponse>
     suspend fun getCast(movieId: Int): Either<DataException, List<CastResponse>>
     suspend fun getRecommendations(movieId: Int): Either<DataException, List<MovieResponse>>
+    suspend fun searchMovie(query: String): Either<DataException, MoviesResponse>
 }

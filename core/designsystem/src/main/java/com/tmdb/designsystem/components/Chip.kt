@@ -1,16 +1,18 @@
 package com.tmdb.designsystem.components
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.SuggestionChip
-import androidx.compose.material3.SuggestionChipDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
@@ -44,22 +46,26 @@ fun AppFilterChip(
 @Composable
 fun AppChip(
     modifier: Modifier = Modifier,
-    label: String,
-    onClick: () -> Unit
+    label: String
 ) {
-    SuggestionChip(
-        modifier = modifier,
-        onClick = onClick,
-        shape = CircleShape,
 
-        colors = SuggestionChipDefaults.suggestionChipColors(
-            containerColor = MaterialTheme.colorScheme.surfaceVariant,
-            labelColor = MaterialTheme.colorScheme.onSurfaceVariant
-        ),
-        label = {
-            Text(label)
-        }
-    )
+    Box(
+        contentAlignment = Alignment.Center,
+        modifier = modifier
+            .clip(CircleShape)
+            .background(MaterialTheme.colorScheme.surfaceVariant)
+            .padding(
+                vertical = 8.dp,
+                horizontal = 14.dp
+            )
+
+    ) {
+        Text(
+            text = label,
+            style = MaterialTheme.typography.labelLarge,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
+    }
 }
 
 class ChipPreviewParameterProvider : PreviewParameterProvider<Boolean> {
@@ -92,7 +98,6 @@ private fun AppChipPreview() {
     AppPreviewWrapper {
         AppChip(
             label = "Popular",
-            onClick = {},
             modifier = Modifier.padding(20.dp)
         )
     }

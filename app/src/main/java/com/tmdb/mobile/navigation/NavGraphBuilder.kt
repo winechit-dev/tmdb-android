@@ -5,6 +5,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
+import arrow.core.computations.eval
 import com.tmdb.designsystem.theme.LocalNavAnimatedVisibilityScope
 import com.tmdb.discover.ui.Discover
 import com.tmdb.discover.ui.DiscoverEvent
@@ -15,6 +16,7 @@ import com.tmdb.discover.ui.details.MovieDetailsScreen
 import com.tmdb.favorites.Favorites
 import com.tmdb.favorites.FavoritesScreen
 import com.tmdb.search.Search
+import com.tmdb.search.SearchEvent
 import com.tmdb.search.SearchScreen
 
 fun NavGraphBuilder.navGraphBuilder(
@@ -23,7 +25,7 @@ fun NavGraphBuilder.navGraphBuilder(
 
     navDiscover(navController)
     navFavorites()
-    navSearch()
+    navSearch(navController)
     navMovieDetails(navController)
 }
 
@@ -44,6 +46,10 @@ fun NavGraphBuilder.navDiscover(navController: NavController) {
                                     type = event.type
                                 )
                             )
+                        }
+
+                        is DiscoverEvent.Search -> {
+                            navController.navigate(Search)
                         }
 
                         else -> Unit
@@ -67,12 +73,35 @@ fun NavGraphBuilder.navFavorites() {
     }
 }
 
-fun NavGraphBuilder.navSearch() {
+fun NavGraphBuilder.navSearch(
+    navController: NavController
+) {
     composable<Search> {
         CompositionLocalProvider(
             LocalNavAnimatedVisibilityScope provides this@composable
         ) {
-            SearchScreen()
+            SearchScreen(
+                onEvent = { event ->
+                    when (event) {
+                        is SearchEvent.MovieDetails -> {
+                            navController.navigate(
+                                MovieDetails(
+                                    id = event.model.id,
+                                    name = event.model.name,
+                                    posterPath = event.model.posterPath,
+                                    type = ""
+                                )
+                            )
+                        }
+
+                        is SearchEvent.NavigateUp -> {
+                            navController.navigateUp()
+                        }
+
+                        else -> Unit
+                    }
+                }
+            )
         }
     }
 }

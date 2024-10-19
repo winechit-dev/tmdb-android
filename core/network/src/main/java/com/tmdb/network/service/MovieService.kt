@@ -75,4 +75,11 @@ interface MovieService {
         @Query("api_key") apiKey: String = BuildConfig.API_KEY,
         @Query("language") language: String = LANGUAGE
     ): Response<MoviesResponse>
+
+    @GET("search/movie")
+    suspend fun searchMovie(
+        @Query("query") query: String,
+        @Query("page") page: Int = STARTING_PAGE_INDEX,
+        @Query("api_key") apiKey: String = BuildConfig.API_KEY
+    ): Response<MoviesResponse>
 }

@@ -87,13 +87,14 @@ fun AppButton(
 fun AppIconButton(
     modifier: Modifier = Modifier,
     @DrawableRes icon: Int,
+    containerColor: Color = MaterialTheme.colorScheme.surface.copy(alpha = 0.5f),
     onClick: () -> Unit
 ) {
     IconButton(
         onClick = onClick,
         modifier = modifier
             .clip(CircleShape)
-            .background(MaterialTheme.colorScheme.surface.copy(alpha = 0.5f))
+            .background(containerColor)
     ) {
         Icon(
             painter = painterResource(icon),

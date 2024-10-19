@@ -361,10 +361,7 @@ private fun LazyListScope.categoriesSection(genres: List<GenreModel>) {
                 key = { it.id },
                 contentType = { "genres" }
             ) { genre ->
-                AppChip(
-                    label = genre.name,
-                    onClick = {}
-                )
+                AppChip(label = genre.name)
             }
         }
     }

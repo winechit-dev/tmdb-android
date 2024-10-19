@@ -113,4 +113,15 @@ class MovieDataSourceImpl @Inject constructor(
             }
         )
     }
+
+    override suspend fun searchMovie(query: String): Either<DataException, MoviesResponse> {
+        return handleCall(
+            apiCall = {
+                service.searchMovie(query = query, page = 1)
+            },
+            mapper = { data ->
+                data
+            }
+        )
+    }
 }

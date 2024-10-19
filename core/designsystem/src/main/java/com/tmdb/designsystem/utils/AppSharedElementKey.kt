@@ -12,7 +12,8 @@ data class AppSharedElementKey(
 )
 
 enum class AppSharedElementType {
-    Bounds
+    Bounds,
+    SearchBar
 }
 
 
