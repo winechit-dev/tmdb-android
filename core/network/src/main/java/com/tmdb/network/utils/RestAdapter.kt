@@ -38,6 +38,9 @@ fun createOkHttpClient(
             )
         }
     }
+    .addInterceptor { chain ->
+        tokenInterceptor(chain = chain)
+    }
     .connectTimeout(60L, TimeUnit.SECONDS)
     .readTimeout(60L, TimeUnit.SECONDS)
     .writeTimeout(60L, TimeUnit.SECONDS)
