@@ -5,7 +5,6 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
-import arrow.core.computations.eval
 import com.tmdb.designsystem.theme.LocalNavAnimatedVisibilityScope
 import com.tmdb.discover.ui.Discover
 import com.tmdb.discover.ui.DiscoverEvent
@@ -24,7 +23,7 @@ fun NavGraphBuilder.navGraphBuilder(
 ) {
 
     navDiscover(navController)
-    navFavorites()
+    navFavorites(navController)
     navSearch(navController)
     navMovieDetails(navController)
 }
@@ -62,14 +61,26 @@ fun NavGraphBuilder.navDiscover(navController: NavController) {
     }
 }
 
-fun NavGraphBuilder.navFavorites() {
+fun NavGraphBuilder.navFavorites(
+    navController: NavController
+) {
     composable<Favorites> {
         CompositionLocalProvider(
             LocalNavAnimatedVisibilityScope provides this@composable
         ) {
-            FavoritesScreen()
+            FavoritesScreen(
+                onNavigateMovieDetails = { model, type ->
+                    navController.navigate(
+                        MovieDetails(
+                            id = model.movieId,
+                            name = model.name,
+                            posterPath = model.posterPath,
+                            type = type
+                        )
+                    )
+                }
+            )
         }
-
     }
 }
 

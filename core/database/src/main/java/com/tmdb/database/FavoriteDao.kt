@@ -1,14 +1,13 @@
 package com.tmdb.database
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface FavoriteDao {
-    @Query("SELECT * FROM favorite_entity ORDER BY movieId DESC")
+    @Query("SELECT * FROM favorite_entity ORDER BY created_at DESC")
     fun getAllFavorites(): Flow<List<FavoriteEntity>>
 
     @Insert
