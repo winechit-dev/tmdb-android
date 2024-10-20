@@ -64,17 +64,17 @@ class MovieDetailsViewModel @Inject constructor(
     }
 
     fun onToggleFavorite() {
-            viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(Dispatchers.IO) {
             val details = uiState.value.details ?: return@launch
-                repository.toggleFavorite(
-                    FavoriteMovieModel(
-                        movieId = details.id,
-                        name = details.originalTitle,
-                        posterPath = details.posterPath,
-                        favorite = uiState.value.favorite
-                    )
-                ).onLeft { error ->
-                    UserMessageManager.showMessage(error.message.toString())
+            repository.toggleFavorite(
+                FavoriteMovieModel(
+                    movieId = details.id,
+                    name = details.originalTitle,
+                    posterPath = details.posterPath,
+                    favorite = uiState.value.favorite
+                )
+            ).onLeft { error ->
+                UserMessageManager.showMessage(error.message.toString())
             }
         }
     }
