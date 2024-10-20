@@ -19,8 +19,8 @@ class SettingDataSerializer @Inject constructor() : Serializer<SettingsDataRespo
     override val defaultValue: SettingsDataResponse
         get() = SettingsDataResponse(
             themeBrand = ThemeBrandResponse.DEFAULT,
-            darkThemeConfig = DarkThemeConfigResponse.DARK,
-            useDynamicColor = true
+            darkThemeConfig = DarkThemeConfigResponse.FOLLOW_SYSTEM,
+            useDynamicColor = false
         )
 
     override suspend fun readFrom(input: InputStream): SettingsDataResponse {
