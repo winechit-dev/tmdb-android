@@ -40,6 +40,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -157,12 +158,9 @@ internal fun SearchContent(
         LazyColumn(
             modifier = Modifier
                 .imePadding()
-                .padding(top = innerPadding.calculateTopPadding())
+                .padding(top = innerPadding.calculateTopPadding() + 10.dp)
                 .padding(horizontal = 20.dp),
-            contentPadding = PaddingValues(
-                top = 10.dp,
-                bottom = innerPadding.calculateBottomPadding()
-            ),
+            contentPadding = PaddingValues(bottom = innerPadding.calculateBottomPadding()),
             verticalArrangement = Arrangement.spacedBy(14.dp)
         ) {
             items(
@@ -244,7 +242,7 @@ private fun SearchItem(
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
                         .weight(0.8f)
-                        .size(124.dp, 188.dp)
+                        .size(124.dp, 200.dp)
                         .clip(RoundedCornerShape(topStart = 12.0.dp, bottomStart = 12.0.dp))
                 )
                 Column(
@@ -258,9 +256,10 @@ private fun SearchItem(
                         style = MaterialTheme.typography.titleLarge,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
-                        modifier = Modifier.padding(end = 20.dp)
+                        modifier = Modifier.padding(end = 20.dp),
+                        fontWeight = FontWeight.SemiBold
                     )
-                    if (model.overview.isBlank()) {
+                    if (model.overview.isNotBlank()) {
                         Text(
                             text = model.overview,
                             style = MaterialTheme.typography.bodyMedium,
@@ -280,10 +279,7 @@ private fun SearchItem(
                     LazyRow(
                         horizontalArrangement = Arrangement.spacedBy(12.dp),
                         contentPadding = PaddingValues(end = 30.dp),
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 8.dp)
-
+                        modifier = Modifier.fillMaxWidth()
                     ) {
                         items(
                             items = model.genres,
