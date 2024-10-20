@@ -10,4 +10,6 @@ java {
 
 dependencies {
     implementation(libs.arrow)
+    implementation(libs.kotlinx.coroutines.android)
+
 }

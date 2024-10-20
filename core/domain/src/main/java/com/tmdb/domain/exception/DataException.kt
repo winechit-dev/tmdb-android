@@ -12,6 +12,10 @@ sealed class DataException : RuntimeException {
         override val message: String
     ) : DataException(message)
 
+    data class IOOperation(
+        override val message: String
+    ) : DataException(message)
+
     data class Api(
         override val message: String,
         val title: String = "",
