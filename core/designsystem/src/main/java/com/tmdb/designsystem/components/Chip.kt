@@ -5,9 +5,12 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.AssistChip
+import androidx.compose.material3.ElevatedAssistChip
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -52,23 +55,34 @@ fun AppChip(
     label: String
 ) {
 
-    Box(
-        contentAlignment = Alignment.Center,
+    AssistChip(
+        modifier = modifier,
+        shape = CircleShape,
+        label = {
+            Text(
+                text = label,
+            )
+        },
+        onClick = {}
+    )
+    /*Surface(
         modifier = modifier
             .clip(CircleShape)
-            .background(MaterialTheme.colorScheme.surfaceVariant)
             .padding(
                 vertical = 8.dp,
                 horizontal = 14.dp
             )
-
     ) {
-        Text(
-            text = label,
-            style = MaterialTheme.typography.labelLarge,
-            color = MaterialTheme.colorScheme.onSurfaceVariant
-        )
-    }
+        Box(
+            contentAlignment = Alignment.Center,
+            ) {
+            Text(
+                text = label,
+                style = MaterialTheme.typography.labelLarge,
+            )
+        }
+    }*/
+
 }
 
 class ChipPreviewParameterProvider : PreviewParameterProvider<Boolean> {
