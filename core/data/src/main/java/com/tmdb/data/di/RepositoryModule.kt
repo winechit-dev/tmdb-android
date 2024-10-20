@@ -1,7 +1,9 @@
 package com.tmdb.data.di
 
 import com.tmdb.data.repository.MovieRepositoryImpl
+import com.tmdb.data.repository.SettingRepositoryImpl
 import com.tmdb.domain.repository.MovieRepository
+import com.tmdb.domain.repository.SettingRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -14,7 +16,13 @@ abstract class RepositoryModule {
 
     @Singleton
     @Binds
-    abstract fun bindMasterDataRepository(
+    abstract fun bindMovieRepository(
         movieRepositoryImpl: MovieRepositoryImpl
     ): MovieRepository
+
+    @Singleton
+    @Binds
+    abstract fun bindSettingRepository(
+        settingRepositoryImpl: SettingRepositoryImpl
+    ): SettingRepository
 }

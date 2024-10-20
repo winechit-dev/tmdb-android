@@ -1,6 +1,6 @@
 package com.tmdb.domain.model
 
-data class SettingsData(
+data class SettingsDataModel(
     val themeBrand: ThemeBrand,
     val darkThemeConfig: DarkThemeConfig,
     val useDynamicColor: Boolean,

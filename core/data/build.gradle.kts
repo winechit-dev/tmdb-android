@@ -21,6 +21,7 @@ android {
 dependencies {
     implementation(project(":core:domain"))
     implementation(project(":core:database"))
+    implementation(project(":core:datastore"))
     coreLibraryDesugaring(libs.desugaring)
     api(libs.retrofit.core)
     api(libs.okhttp.logging)
