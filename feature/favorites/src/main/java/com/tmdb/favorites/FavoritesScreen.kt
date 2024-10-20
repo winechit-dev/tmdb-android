@@ -11,9 +11,9 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
@@ -28,14 +28,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.tmdb.designsystem.R
 import com.tmdb.designsystem.components.AppIconButton
 import com.tmdb.designsystem.theme.AppPreviewWithSharedTransitionLayout
-import com.tmdb.designsystem.theme.AppPreviewWrapper
 import com.tmdb.designsystem.theme.LocalEntryPadding
 import com.tmdb.designsystem.theme.LocalNavAnimatedVisibilityScope
 import com.tmdb.designsystem.theme.LocalSharedTransitionScope
@@ -131,12 +129,12 @@ private fun FavoriteMovieItem(
     with(sharedTransitionScope) {
         Card(
             modifier = modifier
-                .widthIn(max = (LocalConfiguration.current.screenWidthDp / 3).dp)
+                .fillMaxWidth()
                 .aspectRatio(124f / 188f)
                 .sharedBounds(
                     sharedContentState = rememberSharedContentState(
                         key = AppSharedElementKey(
-                            id = model.movieId.toString(),
+                            id = model.movieId.toString() + AppSharedElementType.Favorite,
                             type = AppSharedElementType.Bounds
                         )
                     ),
