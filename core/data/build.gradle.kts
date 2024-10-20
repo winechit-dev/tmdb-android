@@ -27,4 +27,9 @@ dependencies {
     api(libs.okhttp.logging)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.retrofit.kotlin.serialization)
+
+    testImplementation (libs.mockk)
+    testImplementation (libs.kotlinx.coroutines.test)
+    testImplementation (libs.junit)
+    testImplementation (libs.turbine)
 }
