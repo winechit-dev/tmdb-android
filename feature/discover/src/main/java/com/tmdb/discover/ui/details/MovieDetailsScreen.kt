@@ -236,12 +236,12 @@ fun LazyListScope.castSection(
             style = MaterialTheme.typography.titleMedium,
             fontWeight = FontWeight.SemiBold,
             modifier = Modifier
-                .padding(horizontal = 30.dp)
+                .padding(horizontal = 20.dp)
                 .padding(top = 30.dp)
         )
         LazyRow(
             horizontalArrangement = Arrangement.spacedBy(12.dp),
-            contentPadding = PaddingValues(horizontal = 30.dp),
+            contentPadding = PaddingValues(horizontal = 20.dp),
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 16.dp)
@@ -347,12 +347,12 @@ private fun LazyListScope.categoriesSection(genres: List<GenreModel>) {
             style = MaterialTheme.typography.titleMedium,
             fontWeight = FontWeight.SemiBold,
             modifier = Modifier
-                .padding(horizontal = 30.dp)
+                .padding(horizontal = 20.dp)
                 .padding(top = 30.dp)
         )
         LazyRow(
             horizontalArrangement = Arrangement.spacedBy(12.dp),
-            contentPadding = PaddingValues(horizontal = 30.dp),
+            contentPadding = PaddingValues(horizontal = 20.dp),
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 30.dp)
@@ -383,12 +383,12 @@ private fun LazyListScope.moviesSection(
             style = MaterialTheme.typography.titleMedium,
             fontWeight = FontWeight.SemiBold,
             modifier = Modifier
-                .padding(horizontal = 30.dp)
+                .padding(horizontal = 20.dp)
                 .padding(bottom = 16.dp)
         )
         LazyRow(
             horizontalArrangement = Arrangement.spacedBy(12.dp),
-            contentPadding = PaddingValues(horizontal = 30.dp),
+            contentPadding = PaddingValues(horizontal = 20.dp),
             modifier = Modifier.padding(bottom = 30.dp)
         ) {
             if (movies != null) {
