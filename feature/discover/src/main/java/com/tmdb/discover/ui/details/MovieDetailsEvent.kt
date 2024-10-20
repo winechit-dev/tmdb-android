@@ -1,6 +1,6 @@
 package com.tmdb.discover.ui.details
 
-import com.tmdb.ui.MovieUIModel
+import com.tmdb.ui.model.MovieUIModel
 
 sealed interface MovieDetailsEvent {
     data object NavigateUp : MovieDetailsEvent

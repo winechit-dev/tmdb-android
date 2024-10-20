@@ -54,7 +54,7 @@ import com.tmdb.discover.moviesPreview
 import com.tmdb.discover.subtitle_discover
 import com.tmdb.discover.title_discover
 import com.tmdb.ui.MovieItem
-import com.tmdb.ui.MovieUIModel
+import com.tmdb.ui.model.MovieUIModel
 import kotlinx.serialization.Serializable
 
 @Serializable

@@ -1,4 +1,4 @@
-package com.tmdb.ui
+package com.tmdb.ui.model
 
 data class MovieUIModel (
     val id: Int,

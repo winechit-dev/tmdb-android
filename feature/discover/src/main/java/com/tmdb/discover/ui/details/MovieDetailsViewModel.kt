@@ -7,7 +7,7 @@ import com.tmdb.designsystem.utils.UserMessageManager
 import com.tmdb.domain.model.FavoriteMovieModel
 import com.tmdb.domain.model.MovieDetailsModel
 import com.tmdb.domain.repository.MovieRepository
-import com.tmdb.ui.MovieUIModel
+import com.tmdb.ui.model.MovieUIModel
 import com.tmdb.ui.toMoviesUIModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject

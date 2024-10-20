@@ -4,7 +4,7 @@ import com.tmdb.discover.model.GenreUIModel
 import com.tmdb.domain.model.CastModel
 import com.tmdb.domain.model.GenreModel
 import com.tmdb.domain.model.MovieDetailsModel
-import com.tmdb.ui.MovieUIModel
+import com.tmdb.ui.model.MovieUIModel
 
 val genresPreview = listOf(
     GenreUIModel(

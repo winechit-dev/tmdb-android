@@ -26,6 +26,7 @@ import com.tmdb.designsystem.utils.AppSharedElementType
 import com.tmdb.designsystem.utils.bounceClick
 import com.tmdb.designsystem.utils.detailBoundsTransform
 import com.tmdb.designsystem.utils.networkImagePainter
+import com.tmdb.ui.model.MovieUIModel
 
 @Composable
 fun MovieItem(
