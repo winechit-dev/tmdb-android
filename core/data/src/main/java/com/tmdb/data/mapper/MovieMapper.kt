@@ -6,13 +6,17 @@ import com.tmdb.data.model.GenresResponse
 import com.tmdb.data.model.MovieDetailsResponse
 import com.tmdb.data.model.MovieResponse
 import com.tmdb.data.model.MoviesResponse
+import com.tmdb.database.FavoriteEntity
 import com.tmdb.domain.model.CastModel
+import com.tmdb.domain.model.FavoriteMovieModel
 import com.tmdb.domain.model.GenreModel
 import com.tmdb.domain.model.GenresModel
 import com.tmdb.domain.model.MovieDetailsModel
 import com.tmdb.domain.model.MovieModel
 import com.tmdb.domain.model.MoviesModel
 import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
 fun MoviesResponse.toMoviesModel(): MoviesModel {
@@ -99,6 +103,30 @@ fun List<CastResponse>.toCast(): List<CastModel> {
             originalName = it.originalName
         )
     }
+}
+
+fun FavoriteEntity.toFavoriteModel(): FavoriteMovieModel {
+    return FavoriteMovieModel(
+        movieId = movieId,
+        name = name,
+        favorite = favorite,
+        posterPath = posterPath
+    )
+}
+
+val currentDateTime: LocalDateTime get() = LocalDateTime.now()
+
+val LocalDateTime.millis: Long
+    get() = toInstant(ZonedDateTime.now().offset).toEpochMilli()
+
+fun FavoriteMovieModel.toFavoriteEntity(): FavoriteEntity {
+    return FavoriteEntity(
+        movieId = movieId,
+        name = name,
+        favorite = true,
+        posterPath = posterPath,
+        createdAt = currentDateTime.millis
+    )
 }
 
 fun String?.createImageUrl(): String {

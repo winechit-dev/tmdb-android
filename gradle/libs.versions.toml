@@ -21,10 +21,13 @@ retrofit = "2.11.0"
 okhttp = "4.12.0"
 coreArrow = "1.1.5"
 coilVersion = "2.7.0"
+coroutines = "1.9.0"
 foundation = "1.7.4"
 composeNavigation = "2.8.3"
 jetbrainsKotlinJvm = "2.0.0"
 desugar = "2.1.2"
+room = "2.6.1"
+sqlcipher = "4.5.3"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -69,6 +72,14 @@ okhttp-logging = { group = "com.squareup.okhttp3", name = "logging-interceptor",
 
 arrow = { module = "io.arrow-kt:arrow-core", version.ref = "coreArrow" }
 coil = { module = "io.coil-kt:coil-compose", version.ref = "coilVersion" }
+kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
+
+#Room
+room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
+room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
+room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
+
+sqlcipher = { module = "net.zetetic:android-database-sqlcipher", version.ref = "sqlcipher" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

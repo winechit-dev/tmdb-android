@@ -4,6 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tmdb.designsystem.utils.UserMessageManager
+import com.tmdb.domain.model.FavoriteMovieModel
 import com.tmdb.domain.model.MovieDetailsModel
 import com.tmdb.domain.repository.MovieRepository
 import com.tmdb.ui.MovieUIModel
@@ -12,8 +13,11 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -23,8 +27,18 @@ class MovieDetailsViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
     private val id = savedStateHandle.get<Int>("id")!!
+
     private val _uiState = MutableStateFlow(MovieDetailsUIState())
-    val uiState: StateFlow<MovieDetailsUIState> = _uiState.asStateFlow()
+    val uiState: StateFlow<MovieDetailsUIState> = combine(
+        _uiState,
+        repository.isFavorite(id)
+    ) { state, favorite ->
+        state.copy(favorite = favorite)
+    }.stateIn(
+        scope = viewModelScope,
+        initialValue = MovieDetailsUIState(),
+        started = SharingStarted.WhileSubscribed(5000L)
+    )
 
     init {
         getDetails()
@@ -43,15 +57,33 @@ class MovieDetailsViewModel @Inject constructor(
                             recommendations = details.recommendations.toMoviesUIModel()
                         )
                     }
-                }.onLeft {
+                }.onLeft { error ->
+                    UserMessageManager.showMessage(error.message.toString())
                     _uiState.update { it.copy(loading = false) }
                 }
+        }
+    }
+
+    fun onToggleFavorite() {
+        viewModelScope.launch(Dispatchers.IO) {
+            val details = uiState.value.details ?: return@launch
+            repository.toggleFavorite(
+                FavoriteMovieModel(
+                    movieId = details.id,
+                    name = details.originalTitle,
+                    posterPath = details.posterPath,
+                    favorite = uiState.value.favorite
+                )
+            ).onLeft { error ->
+                UserMessageManager.showMessage(error.message.toString())
+            }
         }
     }
 }
 
 data class MovieDetailsUIState(
     val loading: Boolean = true,
+    val favorite: Boolean = false,
     val details: MovieDetailsModel? = null,
-    val recommendations : List<MovieUIModel> = emptyList()
+    val recommendations: List<MovieUIModel> = emptyList()
 )

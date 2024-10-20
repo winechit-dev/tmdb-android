@@ -85,7 +85,15 @@ fun MovieDetailsScreen(
     MovieDetailsContent(
         args = args,
         uiState = uiState,
-        onEvent = onEvent
+        onEvent = { event ->
+            when (event) {
+                is MovieDetailsEvent.OnToggleFavorite -> {
+                    viewModel.onToggleFavorite()
+                }
+
+                else -> onEvent(event)
+            }
+        }
     )
 }
 
@@ -128,7 +136,7 @@ internal fun MovieDetailsContent(
                     },
                     actions = {
                         AppIconButton(
-                            icon = R.drawable.ic_favorites,
+                            icon = if (uiState.favorite) R.drawable.ic_favorite_on else R.drawable.ic_favorite_off,
                             onClick = { onEvent(MovieDetailsEvent.OnToggleFavorite(uiState.details!!)) },
                         )
                     }
