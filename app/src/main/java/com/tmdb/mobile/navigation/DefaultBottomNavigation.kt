@@ -42,7 +42,7 @@ enum class DefaultBottomBarNavigationItem(
     FavoritesItem(
         Favorites,
         "Favorites",
-        R.drawable.ic_favorites
+        R.drawable.ic_favorite_off
     )
 }
 
