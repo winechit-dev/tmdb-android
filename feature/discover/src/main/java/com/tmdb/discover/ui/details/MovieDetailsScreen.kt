@@ -348,7 +348,7 @@ private fun LazyListScope.categoriesSection(genres: List<GenreModel>) {
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 30.dp)
-                .padding(top = 8.dp)
+                .padding(top = 16.dp)
 
         ) {
             items(
