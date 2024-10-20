@@ -15,7 +15,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
@@ -65,17 +64,17 @@ class MovieDetailsViewModel @Inject constructor(
     }
 
     fun onToggleFavorite() {
-        viewModelScope.launch(Dispatchers.IO) {
+            viewModelScope.launch(Dispatchers.IO) {
             val details = uiState.value.details ?: return@launch
-            repository.toggleFavorite(
-                FavoriteMovieModel(
-                    movieId = details.id,
-                    name = details.originalTitle,
-                    posterPath = details.posterPath,
-                    favorite = uiState.value.favorite
-                )
-            ).onLeft { error ->
-                UserMessageManager.showMessage(error.message.toString())
+                repository.toggleFavorite(
+                    FavoriteMovieModel(
+                        movieId = details.id,
+                        name = details.originalTitle,
+                        posterPath = details.posterPath,
+                        favorite = uiState.value.favorite
+                    )
+                ).onLeft { error ->
+                    UserMessageManager.showMessage(error.message.toString())
             }
         }
     }
