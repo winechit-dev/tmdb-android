@@ -15,7 +15,7 @@ import kotlinx.coroutines.flow.map
 class SettingRepositoryImpl @Inject constructor(
     private val preferencesDataSource: PreferencesDataSource
 ) : SettingRepository {
-    override val settingsDataModel: Flow<SettingsDataModel>
+    override val settingsFlow: Flow<SettingsDataModel>
         get() = preferencesDataSource
             .settingsDataFlow
             .map { it.toSettingsDataModel() }

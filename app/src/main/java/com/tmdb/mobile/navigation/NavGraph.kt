@@ -6,6 +6,7 @@ import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
@@ -28,12 +29,15 @@ import com.tmdb.designsystem.theme.LocalSharedTransitionScope
 import com.tmdb.designsystem.theme.MovieQuestTheme
 import com.tmdb.discover.ui.Discover
 import com.tmdb.favorites.Favorites
+import com.tmdb.settings.Settings
 import kotlin.reflect.KClass
 
 @Composable
 fun NavGraph(
     startDestination: Any,
     navController: NavHostController,
+    darkTheme: Boolean = isSystemInDarkTheme(),
+    dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
     val backStackEntry by navController.currentBackStackEntryAsState()
@@ -43,7 +47,8 @@ fun NavGraph(
         derivedStateOf {
             backStackEntry.hasAnyRoute(
                 Discover::class,
-                Favorites::class
+                Favorites::class,
+                Settings::class
             )
         }
     }
@@ -54,7 +59,10 @@ fun NavGraph(
         animationSpec = tween(durationMillis = 300)
     )
 
-    MovieQuestTheme {
+    MovieQuestTheme (
+        darkTheme = darkTheme,
+        dynamicColor = dynamicColor
+    ){
         Scaffold(
             bottomBar = {
                 DefaultBottomNavigation(

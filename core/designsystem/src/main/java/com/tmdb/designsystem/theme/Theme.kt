@@ -4,6 +4,7 @@ package com.tmdb.designsystem.theme
 
 import android.content.res.Configuration
 import android.os.Build
+import androidx.annotation.ChecksSdkIntAtLeast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
@@ -42,6 +43,10 @@ private val LightColorScheme = lightColorScheme(
     onTertiary = White
 )
 
+@ChecksSdkIntAtLeast(api = Build.VERSION_CODES.S)
+fun supportsDynamicTheming() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
+
+
 @Composable
 fun MovieQuestTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
@@ -50,7 +55,7 @@ fun MovieQuestTheme(
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {
-        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
+        dynamicColor && supportsDynamicTheming() -> {
             val context = LocalContext.current
             if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
         }
@@ -69,6 +74,7 @@ fun MovieQuestTheme(
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_NO, name = "Light theme")
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES, name = "Dark theme")
 annotation class ThemePreviews
+
 
 @Composable
 fun AppPreviewWrapper(

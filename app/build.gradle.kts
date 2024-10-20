@@ -25,5 +25,6 @@ dependencies {
     implementation(project(":feature:discover"))
     implementation(project(":feature:favorites"))
     implementation(project(":feature:search"))
+    implementation(project(":feature:settings"))
 }
 

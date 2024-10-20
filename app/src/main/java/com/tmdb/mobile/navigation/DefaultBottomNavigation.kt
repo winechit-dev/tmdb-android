@@ -26,6 +26,7 @@ import com.tmdb.designsystem.theme.ThemePreviews
 import com.tmdb.discover.ui.Discover
 import com.tmdb.discover.ui.SurfaceContainerAlpha
 import com.tmdb.favorites.Favorites
+import com.tmdb.settings.Settings
 import kotlin.reflect.KClass
 
 enum class DefaultBottomBarNavigationItem(
@@ -43,6 +44,11 @@ enum class DefaultBottomBarNavigationItem(
         Favorites,
         "Favorites",
         R.drawable.ic_favorite_off
+    ),
+    SettingsItem(
+        Settings,
+        "Settings",
+        R.drawable.ic_settings
     )
 }
 

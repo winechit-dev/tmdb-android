@@ -17,6 +17,8 @@ import com.tmdb.favorites.FavoritesScreen
 import com.tmdb.search.Search
 import com.tmdb.search.SearchEvent
 import com.tmdb.search.SearchScreen
+import com.tmdb.settings.Settings
+import com.tmdb.settings.SettingsScreen
 
 fun NavGraphBuilder.navGraphBuilder(
     navController: NavController
@@ -26,6 +28,7 @@ fun NavGraphBuilder.navGraphBuilder(
     navFavorites(navController)
     navSearch(navController)
     navMovieDetails(navController)
+    navSettings()
 }
 
 fun NavGraphBuilder.navDiscover(navController: NavController) {
@@ -147,6 +150,12 @@ fun NavGraphBuilder.navMovieDetails(navController: NavController) {
                 }
             )
         }
+    }
+}
+
+fun NavGraphBuilder.navSettings() {
+    composable<Settings> {
+        SettingsScreen()
     }
 }
 

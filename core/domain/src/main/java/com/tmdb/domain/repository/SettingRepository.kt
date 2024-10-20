@@ -6,7 +6,7 @@ import com.tmdb.domain.model.SettingsDataModel
 import kotlinx.coroutines.flow.Flow
 
 interface SettingRepository {
-    val settingsDataModel: Flow<SettingsDataModel>
+    val settingsFlow: Flow<SettingsDataModel>
     suspend fun setThemeBrand(themeBrand: ThemeBrand)
     suspend fun setDarkThemeConfig(darkThemeConfig: DarkThemeConfig)
     suspend fun setDynamicColorPreference(useDynamicColor: Boolean)
