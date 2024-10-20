@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.convention.application)
     alias(libs.plugins.convention.compose.application)
     alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.screenshot)
 }
 
 android {
@@ -10,6 +11,7 @@ android {
     compileOptions {
         isCoreLibraryDesugaringEnabled = true
     }
+    experimentalProperties["android.experimental.enableScreenshotTest"] = true
 }
 
 composeCompiler {
@@ -29,5 +31,7 @@ dependencies {
     implementation(project(":feature:favorites"))
     implementation(project(":feature:search"))
     implementation(project(":feature:settings"))
+
+    screenshotTestImplementation(libs.androidx.ui.tooling)
 }
 

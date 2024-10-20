@@ -30,6 +30,7 @@ room = "2.6.1"
 sqlcipher = "4.5.3"
 androidxDataStore = "1.1.1"
 androidxDataStorePref = "1.1.1"
+screenshot = "0.0.1-alpha01"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -95,6 +96,7 @@ android-library = { id = "com.android.library", version.ref = "agp" }
 kotlin-ksp = { id = "com.google.devtools.ksp", version.ref = "kotlinKsp" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlinSerialization" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
+screenshot = { id = "com.android.compose.screenshot", version.ref = "screenshot"}
 
 ## Custom Plugin
 convention-application = { id = "conventionPluginApplication.android.application", version.ref = "customPlugin" }
