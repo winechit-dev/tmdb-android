@@ -84,8 +84,7 @@ internal fun FavoritesContent(
             )
         }
     ) { innerPadding ->
-        val top =
-            LocalEntryPadding.current.calculateTopPadding() + innerPadding.calculateTopPadding()
+        val top = innerPadding.calculateTopPadding() + 20.dp
         val bottom =
             LocalEntryPadding.current.calculateBottomPadding() + innerPadding.calculateBottomPadding()
 
@@ -95,6 +94,7 @@ internal fun FavoritesContent(
             horizontalArrangement = Arrangement.spacedBy(12.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp),
             modifier = Modifier
+                .fillMaxSize()
                 .padding(top = top)
                 .padding(horizontal = 20.dp)
         ) {
@@ -110,7 +110,16 @@ internal fun FavoritesContent(
                 )
             }
         }
-
+        if (favorites.isEmpty()) {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = "No Favorites!"
+                )
+            }
+        }
     }
 }
 
