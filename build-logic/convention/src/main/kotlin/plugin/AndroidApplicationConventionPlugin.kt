@@ -57,6 +57,7 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
                         isMinifyEnabled = false
                         applicationIdSuffix = ".debug"
                         signingConfig = signingConfigs.getByName("debug")
+                        resValue ("string", "app_name", "Dev The Movie DB")
                     }
                     getByName("release") {
                         isMinifyEnabled = true
@@ -67,6 +68,7 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
                             getDefaultProguardFile("proguard-android-optimize.txt"),
                             "proguard-rules.pro"
                         )
+                        resValue ("string", "app_name", "The Movie DB")
                     }
                 }
 
