@@ -4,16 +4,23 @@ import com.android.build.api.dsl.ApplicationExtension
 import config.Config
 import extension.configureAndroidKotlin
 import extension.versionCatalog
+import java.io.FileInputStream
+import java.util.Properties
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
+import org.gradle.kotlin.dsl.extra
 
 
-class AndroidApplicationConventionPlugin: Plugin<Project> {
+class AndroidApplicationConventionPlugin : Plugin<Project> {
 
     override fun apply(project: Project) {
         with(project) {
+            val keystorePropertiesFile = rootProject.file("keystore.properties")
+            val keystoreProperties = Properties()
+            keystoreProperties.load(FileInputStream(keystorePropertiesFile))
+
             with(pluginManager) {
                 apply("com.android.application")
                 apply("org.jetbrains.kotlin.android")
@@ -31,16 +38,31 @@ class AndroidApplicationConventionPlugin: Plugin<Project> {
                     versionCode = Config.android.versionCode
                     versionName = Config.android.versionName
                 }
-
+                signingConfigs {
+                    create("release") {
+                        storeFile = file("../keystore/release.keystore")
+                        storePassword = keystoreProperties["RELEASE_KEY_STORE_PASSWORD"] as String
+                        keyAlias = keystoreProperties["RELEASE_KEY_ALIAS"] as String
+                        keyPassword = keystoreProperties["RELEASE_KEY_PASSWORD"] as String
+                    }
+                    getByName("debug") {
+                        storeFile = file("../keystore/debug.keystore")
+                        storePassword = keystoreProperties["DEBUG_KEY_STORE_PASSWORD"] as String
+                        keyAlias = keystoreProperties["DEBUG_KEY_ALIAS"] as String
+                        keyPassword = keystoreProperties["DEBUG_KEY_PASSWORD"] as String
+                    }
+                }
                 buildTypes {
                     getByName("debug") {
                         isMinifyEnabled = false
                         applicationIdSuffix = ".debug"
+                        signingConfig = signingConfigs.getByName("debug")
                     }
                     getByName("release") {
                         isMinifyEnabled = true
                         isShrinkResources = true
                         applicationIdSuffix = ".release"
+                        signingConfig = signingConfigs.getByName("release")
                         proguardFiles(
                             getDefaultProguardFile("proguard-android-optimize.txt"),
                             "proguard-rules.pro"
@@ -54,8 +76,14 @@ class AndroidApplicationConventionPlugin: Plugin<Project> {
 
                 dependencies {
                     add("implementation", versionCatalog().findLibrary("hilt-android").get())
-                    add("implementation", versionCatalog().findLibrary("androidx-hilt-navigation-compose").get())
-                    add("implementation", versionCatalog().findLibrary("kotlinx-serialization-json").get())
+                    add(
+                        "implementation",
+                        versionCatalog().findLibrary("androidx-hilt-navigation-compose").get()
+                    )
+                    add(
+                        "implementation",
+                        versionCatalog().findLibrary("kotlinx-serialization-json").get()
+                    )
                     add("ksp", versionCatalog().findLibrary("hilt-compiler").get())
                     add("implementation", versionCatalog().findLibrary("arrow").get())
                     add("implementation", versionCatalog().findLibrary("coil").get())

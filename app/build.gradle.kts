@@ -6,6 +6,7 @@ plugins {
 
 android {
     namespace = "com.tmdb.mobile"
+
     compileOptions {
         isCoreLibraryDesugaringEnabled = true
     }
