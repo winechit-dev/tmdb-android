@@ -42,7 +42,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -109,6 +111,8 @@ internal fun MovieDetailsContent(
     val animatedVisibilityScope = LocalNavAnimatedVisibilityScope.current
         ?: throw IllegalStateException("No Scope found")
 
+    val hapticFeedback = LocalHapticFeedback.current
+
     with(sharedTransitionScope) {
         Scaffold(
             modifier = Modifier
@@ -138,7 +142,11 @@ internal fun MovieDetailsContent(
                     actions = {
                         AppIconButton(
                             icon = if (uiState.favorite) R.drawable.ic_favorite_on else R.drawable.ic_favorite_off,
-                            onClick = { onEvent(MovieDetailsEvent.OnToggleFavorite) },
+                            enabled = uiState.details != null,
+                            onClick = {
+                                hapticFeedback.performHapticFeedback(HapticFeedbackType.LongPress)
+                                onEvent(MovieDetailsEvent.OnToggleFavorite)
+                            },
                         )
                     }
                 )
