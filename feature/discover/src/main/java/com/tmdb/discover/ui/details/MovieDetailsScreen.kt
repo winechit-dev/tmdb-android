@@ -2,6 +2,7 @@
 
 package com.tmdb.discover.ui.details
 
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -296,7 +297,6 @@ private fun LazyListScope.headSection(
             )
             InnerBottomShadow()
             Row(
-                horizontalArrangement = Arrangement.spacedBy(16.dp),
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 20.dp)
@@ -304,7 +304,9 @@ private fun LazyListScope.headSection(
             ) {
                 VoteAverage(
                     progress = voteAverage,
-                    modifier = Modifier.size(57.dp)
+                    modifier = Modifier
+                        .padding(end = 16.dp)
+                        .size(57.dp)
                 )
                 Column(
                     verticalArrangement = Arrangement.spacedBy(4.dp)
@@ -432,23 +434,31 @@ private fun VoteAverage(
     modifier: Modifier = Modifier,
     progress: Float?,
 ) {
-    if (progress == null || progress == 0f) return
-    Box(
-        modifier = modifier,
-        contentAlignment = Alignment.Center
-    ) {
-        CircularProgressIndicator(
-            modifier = Modifier.size(60.dp),
-            progress = { progress / 10 },
-            trackColor = MaterialTheme.colorScheme.outlineVariant,
-            strokeCap = StrokeCap.Round
-        )
-        Text(
-            text = (progress * 10).roundToInt().toString().plus("%"),
-            style = MaterialTheme.typography.bodyMedium,
-            fontWeight = FontWeight.Bold,
-        )
+    AnimatedContent(
+        targetState = progress != null && progress != 0f,
+        label = "",
+        contentAlignment = Alignment.CenterStart
+    ) { targetState ->
+        if (targetState) {
+            Box(
+                modifier = modifier,
+                contentAlignment = Alignment.Center
+            ) {
+                CircularProgressIndicator(
+                    modifier = Modifier.size(60.dp),
+                    progress = { progress!! / 10 },
+                    trackColor = MaterialTheme.colorScheme.outlineVariant,
+                    strokeCap = StrokeCap.Round
+                )
+                Text(
+                    text = (progress!! * 10).roundToInt().toString().plus("%"),
+                    style = MaterialTheme.typography.bodyMedium,
+                    fontWeight = FontWeight.Bold,
+                )
+            }
+        }
     }
+
 
 }
 
