@@ -104,7 +104,7 @@ internal fun SettingsContent(
             }
             Column {
                 Text(
-                    text = "Dark mode preference",
+                    text = "Theme preference",
                     style = MaterialTheme.typography.titleMedium,
                     modifier = Modifier.padding(bottom = 10.dp)
                 )
