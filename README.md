@@ -3,11 +3,11 @@
 ## Introduction
 The TMDB (The Movie Database) project is an application designed to interact with the TMDB API to fetch and display information about movies and actors. The project is built using Kotlin and it leverages Gradle for dependency management and build automation. The project is organized into multiple modules to enhance maintainability and scalability.
 
-## Design Reference
-You can view the design on Figma by following [this link](https://www.figma.com/design/obfHECfEsAK3y5mgIqSe60/TMDB-(Community)?node-id=0-1&node-type=canvas&t=XDLJ7LcSOit03MTQ-0).
-
 ## App Design
 ![TMDB Cover](https://github.com/winechit-dev/tmdb-android/blob/master/TMDB%20cover.png)
+
+## Design Reference
+You can view the design on Figma by following [this link](https://www.figma.com/design/obfHECfEsAK3y5mgIqSe60/TMDB-(Community)?node-id=0-1&node-type=canvas&t=XDLJ7LcSOit03MTQ-0).
 
 ## My Favorite Features
 - [Theme Settings](https://winechit-dev.github.io/tmdb-android/video/Theme%20setting.mp4).
