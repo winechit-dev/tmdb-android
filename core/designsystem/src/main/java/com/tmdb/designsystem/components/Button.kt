@@ -89,11 +89,13 @@ fun AppButton(
 fun AppIconButton(
     modifier: Modifier = Modifier,
     @DrawableRes icon: Int,
+    enabled: Boolean = true,
     containerColor: Color = MaterialTheme.colorScheme.surface.copy(alpha = 0.5f),
     onClick: () -> Unit
 ) {
     IconButton(
         onClick = onClick,
+        enabled = enabled,
         modifier = modifier
             .bounceClick()
             .clip(CircleShape)
