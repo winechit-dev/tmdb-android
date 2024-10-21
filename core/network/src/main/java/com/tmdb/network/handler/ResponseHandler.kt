@@ -2,7 +2,7 @@ package com.tmdb.network.handler
 
 import android.accounts.NetworkErrorException
 import arrow.core.Either
-import com.tmdb.domain.exception.DataException
+import com.tmdb.common.exception.DataException
 import java.net.UnknownHostException
 import kotlinx.serialization.SerializationException
 import retrofit2.Response

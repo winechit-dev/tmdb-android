@@ -1,7 +1,7 @@
 package com.tmdb.domain.repository
 
 import arrow.core.Either
-import com.tmdb.domain.exception.DataException
+import com.tmdb.common.exception.DataException
 import com.tmdb.domain.model.FavoriteMovieModel
 import com.tmdb.domain.model.GenresModel
 import com.tmdb.domain.model.MovieDetailsModel

@@ -19,9 +19,11 @@ android {
 }
 
 dependencies {
+    implementation(project(":core:common"))
     implementation(project(":core:domain"))
     implementation(project(":core:database"))
     implementation(project(":core:datastore"))
+    implementation(project(":core:network"))
     coreLibraryDesugaring(libs.desugaring)
     api(libs.retrofit.core)
     api(libs.okhttp.logging)

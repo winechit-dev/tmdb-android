@@ -11,6 +11,7 @@ import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.extra
+import org.gradle.kotlin.dsl.project
 
 
 class AndroidApplicationConventionPlugin : Plugin<Project> {
@@ -57,7 +58,7 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
                         isMinifyEnabled = false
                         applicationIdSuffix = ".debug"
                         signingConfig = signingConfigs.getByName("debug")
-                        resValue ("string", "app_name", "Dev The Movie DB")
+                        resValue("string", "app_name", "Dev The Movie DB")
                     }
                     getByName("release") {
                         isMinifyEnabled = true
@@ -68,7 +69,7 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
                             getDefaultProguardFile("proguard-android-optimize.txt"),
                             "proguard-rules.pro"
                         )
-                        resValue ("string", "app_name", "The Movie DB")
+                        resValue("string", "app_name", "The Movie DB")
                     }
                 }
 
@@ -77,6 +78,7 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
 
 
                 dependencies {
+                    add("implementation", (project(":core:common")))
                     add("implementation", versionCatalog().findLibrary("hilt-android").get())
                     add(
                         "implementation",

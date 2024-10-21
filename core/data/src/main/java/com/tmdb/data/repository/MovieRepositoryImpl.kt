@@ -2,14 +2,14 @@ package com.tmdb.data.repository
 
 import arrow.core.Either
 import arrow.core.flatMap
-import com.tmdb.data.datasource.remote.MovieDataSource
+import com.tmdb.common.exception.DataException
+import com.tmdb.network.MovieDataSource
 import com.tmdb.data.mapper.toFavoriteEntity
 import com.tmdb.data.mapper.toFavoriteModel
 import com.tmdb.data.mapper.toGenresModel
 import com.tmdb.data.mapper.toMovieDetailsModel
 import com.tmdb.data.mapper.toMoviesModel
 import com.tmdb.database.FavoriteDao
-import com.tmdb.domain.exception.DataException
 import com.tmdb.domain.model.FavoriteMovieModel
 import com.tmdb.domain.model.GenresModel
 import com.tmdb.domain.model.MovieDetailsModel

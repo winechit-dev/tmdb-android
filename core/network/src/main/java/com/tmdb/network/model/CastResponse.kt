@@ -1,4 +1,4 @@
-package com.tmdb.data.model
+package com.tmdb.network.model
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

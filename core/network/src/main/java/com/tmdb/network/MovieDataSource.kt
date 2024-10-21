@@ -1,13 +1,12 @@
-package com.tmdb.data.datasource.remote
+package com.tmdb.network
 
 import arrow.core.Either
-import com.tmdb.data.model.CastResponse
-import com.tmdb.data.model.CreditsResponse
-import com.tmdb.data.model.GenresResponse
-import com.tmdb.data.model.MovieDetailsResponse
-import com.tmdb.data.model.MovieResponse
-import com.tmdb.data.model.MoviesResponse
-import com.tmdb.domain.exception.DataException
+import com.tmdb.common.exception.DataException
+import com.tmdb.network.model.CastResponse
+import com.tmdb.network.model.GenresResponse
+import com.tmdb.network.model.MovieDetailsResponse
+import com.tmdb.network.model.MovieResponse
+import com.tmdb.network.model.MoviesResponse
 
 interface MovieDataSource {
     suspend fun getTrendingTodayMovies(nextPage: Int): Either<DataException, MoviesResponse>

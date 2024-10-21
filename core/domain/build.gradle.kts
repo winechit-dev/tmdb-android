@@ -9,7 +9,7 @@ java {
 }
 
 dependencies {
+    implementation(project(":core:common"))
     implementation(libs.arrow)
     implementation(libs.kotlinx.coroutines.android)
-
 }

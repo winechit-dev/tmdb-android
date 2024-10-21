@@ -1,9 +1,9 @@
 package com.tmdb.network.service
 
-import com.tmdb.data.model.CreditsResponse
-import com.tmdb.data.model.GenresResponse
-import com.tmdb.data.model.MovieDetailsResponse
-import com.tmdb.data.model.MoviesResponse
+import com.tmdb.network.model.CreditsResponse
+import com.tmdb.network.model.GenresResponse
+import com.tmdb.network.model.MovieDetailsResponse
+import com.tmdb.network.model.MoviesResponse
 import com.tmdb.network.BuildConfig
 import retrofit2.Response
 import retrofit2.http.GET

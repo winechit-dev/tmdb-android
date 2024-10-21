@@ -1,4 +1,4 @@
-package com.tmdb.domain.exception
+package com.tmdb.common.exception
 
 sealed class DataException : RuntimeException {
 

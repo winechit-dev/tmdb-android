@@ -1,7 +1,7 @@
 package com.tmdb.data
 
 import arrow.core.Either
-import com.tmdb.data.datasource.remote.MovieDataSource
+import com.tmdb.network.MovieDataSource
 import com.tmdb.data.repository.MovieRepositoryImpl
 import com.tmdb.database.FavoriteDao
 import com.tmdb.domain.model.FavoriteMovieModel
@@ -17,7 +17,7 @@ import java.io.IOException
 
 class MovieRepositoryTest {
 
-    private lateinit var movieDataSource: MovieDataSource
+    private lateinit var movieDataSource: com.tmdb.network.MovieDataSource
     private lateinit var repository: MovieRepository
     private lateinit var favoriteDao: FavoriteDao
 

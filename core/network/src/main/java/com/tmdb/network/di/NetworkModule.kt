@@ -1,7 +1,7 @@
 package com.tmdb.network.di
 
 import android.content.Context
-import com.tmdb.data.datasource.remote.MovieDataSource
+import com.tmdb.network.MovieDataSource
 import com.tmdb.network.BuildConfig
 import com.tmdb.network.MovieDataSourceImpl
 import com.tmdb.network.utils.createOkHttpClient

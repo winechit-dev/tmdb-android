@@ -1,11 +1,11 @@
 package com.tmdb.data.mapper
 
 import com.tmdb.data.BuildConfig
-import com.tmdb.data.model.CastResponse
-import com.tmdb.data.model.GenresResponse
-import com.tmdb.data.model.MovieDetailsResponse
-import com.tmdb.data.model.MovieResponse
-import com.tmdb.data.model.MoviesResponse
+import com.tmdb.network.model.CastResponse
+import com.tmdb.network.model.GenresResponse
+import com.tmdb.network.model.MovieDetailsResponse
+import com.tmdb.network.model.MovieResponse
+import com.tmdb.network.model.MoviesResponse
 import com.tmdb.database.FavoriteEntity
 import com.tmdb.domain.model.CastModel
 import com.tmdb.domain.model.FavoriteMovieModel
@@ -19,7 +19,7 @@ import java.time.LocalDateTime
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
-fun MoviesResponse.toMoviesModel(): MoviesModel {
+fun com.tmdb.network.model.MoviesResponse.toMoviesModel(): MoviesModel {
     return MoviesModel(
         page = page,
         results = results.map { it.toMovieModel() },
@@ -28,7 +28,7 @@ fun MoviesResponse.toMoviesModel(): MoviesModel {
     )
 }
 
-fun MovieResponse.toMovieModel(): MovieModel {
+fun com.tmdb.network.model.MovieResponse.toMovieModel(): MovieModel {
     return MovieModel(
         adult = adult,
         backdropPath = backdropPath.orEmpty(),
@@ -47,7 +47,7 @@ fun MovieResponse.toMovieModel(): MovieModel {
     )
 }
 
-fun GenresResponse.toGenresModel(): GenresModel {
+fun com.tmdb.network.model.GenresResponse.toGenresModel(): GenresModel {
     return GenresModel(
         genres = this.genres.map {
             GenreModel(
@@ -58,9 +58,9 @@ fun GenresResponse.toGenresModel(): GenresModel {
     )
 }
 
-fun MovieDetailsResponse.toMovieDetailsModel(
-    cast: List<CastResponse>,
-    recommendations: List<MovieResponse>
+fun com.tmdb.network.model.MovieDetailsResponse.toMovieDetailsModel(
+    cast: List<com.tmdb.network.model.CastResponse>,
+    recommendations: List<com.tmdb.network.model.MovieResponse>
 ): MovieDetailsModel {
     return MovieDetailsModel(
         adult = adult ?: false,
@@ -94,7 +94,7 @@ fun MovieDetailsResponse.toMovieDetailsModel(
     )
 }
 
-fun List<CastResponse>.toCast(): List<CastModel> {
+fun List<com.tmdb.network.model.CastResponse>.toCast(): List<CastModel> {
     return map {
         CastModel(
             castId = it.castId,
