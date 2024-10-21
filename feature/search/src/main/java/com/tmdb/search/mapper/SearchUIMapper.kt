@@ -13,7 +13,7 @@ private fun MovieModel.toSearchMovieUIModel(genres: List<GenreModel>): SearchMov
         id = id,
         posterPath = posterPath,
         name = originalTitle,
-        genres = genres.map { it.name },
+        genres = genres.filter { this.genreIds.contains(it.id) }.map { it.name },
         releaseDate = releaseDate,
         overview = overview
     )
