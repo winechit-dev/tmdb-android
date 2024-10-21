@@ -6,6 +6,13 @@ The TMDB (The Movie Database) project is an application designed to interact wit
 ## Design Reference
 You can view the design on Figma by following [this link](https://www.figma.com/design/obfHECfEsAK3y5mgIqSe60/TMDB-(Community)?node-id=0-1&node-type=canvas&t=XDLJ7LcSOit03MTQ-0).
 
+## My Favorite Features
+- [Theme Settings](https://winechit-dev.github.io/tmdb-android/video/Theme%20setting.mp4).
+- [Bound Click Effect](https://winechit-dev.github.io/tmdb-android/video/bound%20click%20effect.webm).
+- [Haptic Feedback effect](https://winechit-dev.github.io/tmdb-android/video/haptic%20feedback%20effect.webm).
+- [Share Element Transation](https://winechit-dev.github.io/tmdb-android/video/share%20element%20transation.webm).
+- [System bars management](https://winechit-dev.github.io/tmdb-android/video/system%20bars%20management.mp4).
+
 ## Project Structure
 The project is divided into the following modules:
 
