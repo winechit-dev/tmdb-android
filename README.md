@@ -3,7 +3,6 @@
 ## Introduction
 The TMDB (The Movie Database) project is an application designed to interact with the TMDB API to fetch and display information about movies and actors. The project is built using Kotlin and it leverages Gradle for dependency management and build automation. The project is organized into multiple modules to enhance maintainability and scalability.
 
-## App Design
 ![TMDB Cover](https://github.com/winechit-dev/tmdb-android/blob/master/TMDB%20cover.png)
 
 ## Design Reference
