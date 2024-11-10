@@ -13,8 +13,8 @@ object Config {
     )
 
     val jvm = JvmConfig(
-        javaVersion = JavaVersion.VERSION_17,
-        kotlinJvm = JvmTarget.JVM_17,
+        javaVersion = JavaVersion.VERSION_21,
+        kotlinJvm = JvmTarget.JVM_21,
         freeCompilerArgs = listOf()
     )
 }
