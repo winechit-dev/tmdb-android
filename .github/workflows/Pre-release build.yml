@@ -3,7 +3,10 @@ name: Pre-release
 on:
   release:
     types: [prereleased]
-
+    
+ # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+  
 jobs:
   build-debug:
     runs-on: ubuntu-latest
