@@ -20,9 +20,6 @@ jobs:
         distribution: 'temurin'
         java-version: '17'
         cache: 'gradle'
-
-    - name: Change wrapper permissions
-      run: chmod +x ./gradlew
         
     - name: Grant execute permission for gradlew
       run: chmod +x ./gradlew
