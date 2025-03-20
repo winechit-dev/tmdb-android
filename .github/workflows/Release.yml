@@ -25,7 +25,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           distribution: 'zulu'
-          java-version: '17'
+          java-version: '21'
           cache: 'gradle'
       
       - name: Change wrapper permissions
@@ -57,7 +57,7 @@ jobs:
       
       # Upload Artifact Build
       - name: Upload APK ${{ env.BUILD_TYPE }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ env.repository_name }} - ${{ env.date_today }} - APK(s) ${{ env.BUILD_TYPE }} generated
           path: ${{ env.APK_PATH }}
