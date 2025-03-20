@@ -1,0 +1,73 @@
+name: Release Build
+on:
+  release:
+    types: [published]
+    
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+  
+jobs:
+  build-release:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v3
+      
+      # Set Current Date As Env Variable
+      - name: Set current date as env variable
+        run: echo "date_today=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
+      
+      # Set Repository Name As Env Variable
+      - name: Set repository name as env variable
+        run: echo "repository_name=$(echo '${{ github.repository }}' | awk -F '/' '{print $2}')" >> $GITHUB_ENV
+      
+      - name: Set Up JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+          cache: 'gradle'
+      
+      - name: Change wrapper permissions
+        run: chmod +x ./gradlew
+      
+      # Run Tests Build
+      - name: Run gradle tests
+        run: ./gradlew test
+      
+      # Run Build Project
+      - name: Build gradle project
+        run: ./gradlew build
+      
+      # Determine build type based on release type
+      - name: Determine build type
+        id: build-type
+        run: |
+          if [ "${{ github.event.release.prerelease }}" = "true" ]; then
+            echo "BUILD_TYPE=debug" >> $GITHUB_ENV
+            echo "APK_PATH=${{ env.main_project_module }}/build/outputs/apk/debug/" >> $GITHUB_ENV
+          else
+            echo "BUILD_TYPE=release" >> $GITHUB_ENV
+            echo "APK_PATH=${{ env.main_project_module }}/build/outputs/apk/release/" >> $GITHUB_ENV
+          fi
+      
+      # Create APK based on release type
+      - name: Build APK ${{ env.BUILD_TYPE }}
+        run: ./gradlew assemble${{ env.BUILD_TYPE }}
+      
+      # Upload Artifact Build
+      - name: Upload APK ${{ env.BUILD_TYPE }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ env.repository_name }} - ${{ env.date_today }} - APK(s) ${{ env.BUILD_TYPE }} generated
+          path: ${{ env.APK_PATH }}
+      
+      # Upload to Release
+      - name: Upload APK to Release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: ${{ env.APK_PATH }}
+          asset_name: ${{ env.repository_name }}-${{ env.BUILD_TYPE }}.apk
+          tag: ${{ github.event.release.tag_name }}
+          overwrite: true
