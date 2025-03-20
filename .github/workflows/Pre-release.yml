@@ -6,8 +6,8 @@ env:
 
 on:
   release:
-    types:
-      - [unpublished]
+    types:[unpublished]
+    
   push:
     branches:
       - 'staging'
