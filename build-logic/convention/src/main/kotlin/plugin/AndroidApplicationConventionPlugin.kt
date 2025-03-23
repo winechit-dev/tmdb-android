@@ -73,7 +73,6 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
                     getByName("release") {
                         isMinifyEnabled = true
                         isShrinkResources = true
-                        applicationIdSuffix = ".release"
                         signingConfig = signingConfigs.getByName("release")
                         proguardFiles(
                             getDefaultProguardFile("proguard-android-optimize.txt"),
