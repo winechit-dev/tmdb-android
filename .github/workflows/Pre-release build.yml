@@ -52,7 +52,7 @@ jobs:
           fi
 
           # Display updated file
-          cat versions.properties
+          cat app/versions.properties
 
       # Create APK Debug
       - name: Build apk debug project (APK) - ${{ env.main_project_module }} module
