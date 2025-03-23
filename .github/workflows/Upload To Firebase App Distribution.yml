@@ -57,16 +57,16 @@ jobs:
 
 
       # Create APK Debug
-      - name: Build apk debug project (APK) - ${{ env.main_project_module }} module
-        run: ./gradlew assembleRelease
-
-      # Upload Artifact Build
-      # Noted For Output [main_project_module]/build/outputs/apk/debug/
-      - name: Upload APK Debug - ${{ env.repository_name }}
-        uses: actions/upload-artifact@v4
-        with:
-          name: ${{ env.repository_name }} - ${{ env.date_today }} - APK(s) debug generated
-          path: app/build/outputs/apk/debug/
+      - name: Build APK
+        run: |
+          if [[ "${{ github.event.inputs.environment }}" == "staging" ]]; then
+            ./gradlew assembleDebug
+          elif [[ "${{ github.event.inputs.environment }}" == "release" ]]; then
+            ./gradlew assembleRelease
+          else
+            echo "Invalid environment selected"
+            exit 1
+          fi      
 
       - name: Upload artifact to Firebase App Distribution
         uses: wzieba/Firebase-Distribution-Github-Action@v1
@@ -74,4 +74,12 @@ jobs:
           appId: ${{secrets.FIREBASE_APP_ID}}
           serviceCredentialsFileContent: ${{ secrets.CREDENTIAL_FILE_CONTENT }}
           groups: testers
-          file: app/build/outputs/apk/debug/app-debug.apk
+          file: |
+            if [[ "${{ github.event.inputs.environment }}" == "staging" ]]; then
+              app/build/outputs/apk/debug/app-debug.apk
+            elif [[ "${{ github.event.inputs.environment }}" == "release" ]]; then
+              app/build/outputs/apk/release/app-release.apk
+            else
+              echo "Invalid environment selected"
+              exit 1
+            fi      
