@@ -58,6 +58,7 @@ jobs:
 
       # Create APK Debug
       - name: Build APK
+        id: build
         run: |
           if [[ "${{ github.event.inputs.environment }}" == "staging" ]]; then
             ./gradlew assembleDebug
@@ -74,12 +75,4 @@ jobs:
           appId: ${{secrets.FIREBASE_APP_ID}}
           serviceCredentialsFileContent: ${{ secrets.CREDENTIAL_FILE_CONTENT }}
           groups: testers
-          file: |
-            if [[ "${{ github.event.inputs.environment }}" == "staging" ]]; then
-              app/build/outputs/apk/debug/app-debug.apk
-            elif [[ "${{ github.event.inputs.environment }}" == "release" ]]; then
-              app/build/outputs/apk/release/app-release.apk
-            else
-              echo "Invalid environment selected"
-              exit 1
-            fi      
+          file: ${{ steps.build.outputs.apk_path }}
