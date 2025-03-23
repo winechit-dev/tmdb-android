@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "639944382714",
+    "project_id": "tmdb-64ac4",
+    "storage_bucket": "tmdb-64ac4.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:639944382714:android:8429a69df04ac78ec7d143",
+        "android_client_info": {
+          "package_name": "com.tmdb.mobile"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAJ_4D7ZtZaHYU4jSw7C9gWP6vrPLD6w7c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:639944382714:android:d56f0fcf398cac01c7d143",
+        "android_client_info": {
+          "package_name": "com.tmdb.mobile.debug"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAJ_4D7ZtZaHYU4jSw7C9gWP6vrPLD6w7c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

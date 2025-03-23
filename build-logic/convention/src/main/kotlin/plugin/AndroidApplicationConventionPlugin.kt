@@ -31,13 +31,25 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
                 apply("com.google.dagger.hilt.android")
             }
 
+            // Load version properties
+            val versionPropsFile = rootProject.file("versions.properties")
+            val versionProps = Properties()
+            versionPropsFile.inputStream().use { stream ->
+                versionProps.load(stream)
+            }
+
+            // Define version components
+            val versionMajor = 1 // You might want to add this to your properties file too
+            val versionMinor = versionProps.getProperty("version_minor").toInt()
+            val versionPatch = versionProps.getProperty("version_patch").toInt()
+
             extensions.configure<ApplicationExtension> {
 
                 defaultConfig.apply {
                     targetSdk = Config.android.targetSdkVersion
                     minSdk = Config.android.minSdkVersion
-                    versionCode = Config.android.versionCode
-                    versionName = Config.android.versionName
+                    versionCode = versionMajor * 10000 + versionMinor * 100 + versionPatch
+                    versionName = "${versionMajor}.${versionMinor}.${versionPatch}"
                 }
                 signingConfigs {
                     create("release") {

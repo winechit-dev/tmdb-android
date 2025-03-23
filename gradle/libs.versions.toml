@@ -35,6 +35,9 @@ androidxDataStore = "1.1.1"
 androidxDataStorePref = "1.1.1"
 screenshot = "0.0.1-alpha01"
 turbine = "0.7.0"
+firebaseCrashlytics = "19.4.2"
+googleGmsGoogleServices = "4.4.2"
+googleFirebaseCrashlytics = "3.0.3"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -94,6 +97,7 @@ sqlcipher = { module = "net.zetetic:android-database-sqlcipher", version.ref = "
 # Datastore
 androidx-dataStore-core = { group = "androidx.datastore", name = "datastore", version.ref = "androidxDataStore" }
 androidx-dataStore-pref = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "androidxDataStorePref" }
+firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics", version.ref = "firebaseCrashlytics" }
 
 # Firebase
 firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
@@ -109,11 +113,13 @@ kotlin-ksp = { id = "com.google.devtools.ksp", version.ref = "kotlinKsp" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlinSerialization" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 screenshot = { id = "com.android.compose.screenshot", version.ref = "screenshot"}
+jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrainsKotlinJvm" }
+google-gms-google-services = { id = "com.google.gms.google-services", version.ref = "googleGmsGoogleServices" }
+google-firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "googleFirebaseCrashlytics" }
 
 ## Custom Plugin
 convention-application = { id = "conventionPluginApplication.android.application", version.ref = "customPlugin" }
 convention-library = { id = "conventionPluginLibrary.android.library", version.ref = "customPlugin" }
 convention-compose-application = { id = "conventionPluginApplication.compose.application", version.ref = "customPlugin" }
 convention-compose-library = { id = "conventionPluginLibrary.compose.library", version.ref = "customPlugin" }
-jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrainsKotlinJvm" }
 

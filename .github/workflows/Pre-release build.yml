@@ -52,3 +52,24 @@ jobs:
           serviceCredentialsFileContent: ${{ secrets.CREDENTIAL_FILE_CONTENT }}
           groups: testers
           file: app/build/outputs/apk/debug/app-debug.apk
+
+      - name: Update versions.properties with tag
+        run: |
+          # Extract version components from tag (assuming format like v1.2.3)
+          TAG_VERSION="${{ github.event.release.tag_name }}"
+          TAG_VERSION="${TAG_VERSION#v}"  # Remove 'v' prefix if present
+
+          # Split version into components
+          IFS='.' read -r MAJOR MINOR PATCH <<< "$TAG_VERSION"
+
+          # Update versions.properties if components exist
+          if [ ! -z "$MINOR" ]; then
+            sed -i "s/version_minor = .*/version_minor = $MINOR/" versions.properties
+          fi
+
+          if [ ! -z "$PATCH" ]; then
+            sed -i "s/version_patch = .*/version_patch = $PATCH/" versions.properties
+          fi
+
+          # Display updated file
+          cat versions.properties

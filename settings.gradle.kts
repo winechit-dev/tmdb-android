@@ -18,7 +18,9 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
     }
+
 }
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 rootProject.name = "tmdb-android"
 include(":app")

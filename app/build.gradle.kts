@@ -3,6 +3,8 @@ plugins {
     alias(libs.plugins.convention.compose.application)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.screenshot)
+    alias(libs.plugins.google.gms.google.services)
+    alias(libs.plugins.google.firebase.crashlytics)
 }
 
 android {
@@ -31,6 +33,8 @@ dependencies {
     implementation(project(":feature:favorites"))
     implementation(project(":feature:search"))
     implementation(project(":feature:settings"))
+
+    implementation(libs.firebase.crashlytics)
 
     screenshotTestImplementation(libs.androidx.ui.tooling)
 }
