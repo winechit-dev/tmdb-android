@@ -10,7 +10,6 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
-import org.gradle.kotlin.dsl.extra
 import org.gradle.kotlin.dsl.project
 
 
@@ -31,7 +30,6 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
                 apply("com.google.dagger.hilt.android")
             }
 
-            // Load version properties
             val versionPropsFile = rootProject.file("app/versions.properties")
             val versionProps = Properties()
             versionPropsFile.inputStream().use { stream ->
@@ -39,16 +37,16 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
             }
 
             // Define version components
-            val versionMajor = 1 // You might want to add this to your properties file too
+            val versionMajor = 1
             val versionMinor = versionProps.getProperty("version_minor").toInt()
-            val versionPatch = versionProps.getProperty("version_patch")
+            val versionPatch = versionProps.getProperty("version_patch").toInt()
 
             extensions.configure<ApplicationExtension> {
 
                 defaultConfig.apply {
                     targetSdk = Config.android.targetSdkVersion
                     minSdk = Config.android.minSdkVersion
-                    versionCode = versionMajor * 10000 + versionMinor * 100
+                    versionCode = versionMajor * 10000 + versionMinor * 100 + versionPatch
                     versionName = "${versionMajor}.${versionMinor}.${versionPatch}"
                 }
                 signingConfigs {
