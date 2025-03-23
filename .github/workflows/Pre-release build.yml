@@ -44,3 +44,11 @@ jobs:
         with:
           name: ${{ env.repository_name }} - ${{ env.date_today }} - APK(s) debug generated
           path: app/build/outputs/apk/debug/
+
+      - name: Upload artifact to Firebase App Distribution
+        uses: wzieba/Firebase-Distribution-Github-Action@v1
+        with:
+          appId: ${{secrets.FIREBASE_APP_ID}}
+          serviceCredentialsFileContent: ${{ secrets.CREDENTIAL_FILE_CONTENT }}
+          groups: testers
+          file: app/build/outputs/apk/debug/app-debug.apk
