@@ -32,7 +32,7 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
             }
 
             // Load version properties
-            val versionPropsFile = rootProject.file("versions.properties")
+            val versionPropsFile = rootProject.file("app/versions.properties")
             val versionProps = Properties()
             versionPropsFile.inputStream().use { stream ->
                 versionProps.load(stream)
