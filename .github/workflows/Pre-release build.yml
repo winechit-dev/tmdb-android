@@ -64,11 +64,11 @@ jobs:
 
           # Update versions.properties if components exist
           if [ ! -z "$MINOR" ]; then
-            sed -i "s/version_minor = .*/version_minor = $MINOR/" versions.properties
+            sed -i "s/version_minor = .*/version_minor = $MINOR/" app/versions.properties
           fi
 
           if [ ! -z "$PATCH" ]; then
-            sed -i "s/version_patch = .*/version_patch = $PATCH/" versions.properties
+            sed -i "s/version_patch = .*/version_patch = $PATCH/" app/versions.properties
           fi
 
           # Display updated file
