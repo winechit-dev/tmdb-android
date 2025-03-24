@@ -94,6 +94,5 @@ jobs:
           GH_TOKEN: ${{ secrets.TMDB_GITHUB_TOKEN }}
         with:
           title: ${{ github.event.inputs.release_title || 'New Release' }}
-          description: ${{ github.event.inputs.release_notes }}
           prerelease: ${{ github.event.inputs.prerelease }}
           tag: "v${{ steps.all.outputs.version_major }}.${{ steps.all.outputs.version_minor }}.${{ steps.all.outputs.version_patch }}"
