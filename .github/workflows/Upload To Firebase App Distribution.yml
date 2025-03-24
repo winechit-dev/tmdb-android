@@ -27,6 +27,11 @@ on:
         description: 'Pre-release'
         required: false
         default: true
+      notify_testers:
+        type: boolean
+        description: 'Notify testers about this build'
+        required: false
+        default: true
 
 
 jobs:
@@ -74,6 +79,7 @@ jobs:
           fi      
 
       - name: Upload artifact to Firebase App Distribution
+        if: ${{ github.event.inputs.notify_testers }}
         uses: wzieba/Firebase-Distribution-Github-Action@v1
         with:
           appId: ${{ github.event.inputs.environment == 'staging' && secrets.FIREBASE_APP_ID || secrets.FIREBASE_RELEASE_APP_ID }}
