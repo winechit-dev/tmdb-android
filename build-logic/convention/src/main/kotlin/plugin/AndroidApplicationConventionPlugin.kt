@@ -37,7 +37,7 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
             }
 
             // Define version components
-            val versionMajor = 1
+            val versionMajor = versionProps.getProperty("version_major").toInt()
             val versionMinor = versionProps.getProperty("version_minor").toInt()
             val versionPatch = versionProps.getProperty("version_patch").toInt()
 
