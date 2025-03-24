@@ -21,16 +21,16 @@ on:
         required: false
       release_notes:
         type: textarea
-        description: 'Custom release notes (optional)'
+        description: 'Release notes (optional)'
         required: false
       create_release:
         type: boolean
         description: 'Create New Release'
         required: false
         default: false
-      notify_testers:
+      prerelease:
         type: boolean
-        description: 'Notify testers about this build'
+        description: 'Pre-release'
         required: false
         default: true
 
@@ -91,7 +91,9 @@ jobs:
         if: ${{ github.event.inputs.create_release }}
         uses: elgohr/Github-Release-Action@v5
         env:
-         GH_TOKEN: ${{ secrets.TMDB_GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.TMDB_GITHUB_TOKEN }}
         with:
-          title: "${{ github.event.inputs.release_title || 'New Release' }}"
+          title: ${{ github.event.inputs.release_title || 'New Release' }}
+          description: ${{ github.event.inputs.release_notes }}
+          prerelease: ${{ github.event.inputs.prerelease }}
           tag: "v${{ steps.all.outputs.version_major }}.${{ steps.all.outputs.version_minor }}.${{ steps.all.outputs.version_patch }}"
