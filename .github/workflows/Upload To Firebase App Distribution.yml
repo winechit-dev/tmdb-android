@@ -15,20 +15,25 @@ on:
         required: true
         default: 'patch'
         options: [ 'major', 'minor', 'patch' ]
-      custom_notes:
+      release_title:
+        type: textarea
+        description: 'Release title'
+        required: false
+      release_notes:
         type: textarea
         description: 'Custom release notes (optional)'
         required: false
+      create_release:
+        type: boolean
+        description: 'Create New Release'
+        required: false
+        default: false
       notify_testers:
         type: boolean
         description: 'Notify testers about this build'
         required: false
         default: true
-      debug_build:
-        type: boolean
-        description: 'Build debug APK (uncheck for release APK)'
-        required: false
-        default: true
+
 
 jobs:
   build:
@@ -55,6 +60,11 @@ jobs:
       - name: Change wrapper permissions
         run: chmod +x ./gradlew
 
+      - uses: BrycensRanch/read-properties-action@v1
+        id: all
+        with:
+          file: app/versions.properties
+          all: true
 
       # Create APK Debug
       - name: Build APK
@@ -76,3 +86,12 @@ jobs:
           serviceCredentialsFileContent: ${{ secrets.CREDENTIAL_FILE_CONTENT }}
           groups: testers
           file: ${{ github.event.inputs.environment == 'staging' && 'app/build/outputs/apk/debug/app-debug.apk' || 'app/build/outputs/apk/release/app-release.apk' }}
+
+      - name: Create Release
+        if: ${{ github.event.inputs.create_release }}
+        uses: elgohr/Github-Release-Action@v5
+        env:
+         GH_TOKEN: ${{ secrets.TMDB_GITHUB_TOKEN }}
+        with:
+          title: "${{ github.event.inputs.release_title || 'New Release' }}"
+          tag: "v${{ steps.all.outputs.version_major }}.${{ steps.all.outputs.version_minor }}.${{ steps.all.outputs.version_patch }}"
