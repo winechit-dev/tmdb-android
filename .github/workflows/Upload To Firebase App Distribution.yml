@@ -9,12 +9,6 @@ on:
         required: true
         default: 'staging'
         options: [ 'staging', 'release' ]
-      version_bump:
-        type: choice
-        description: 'Type of version bump'
-        required: true
-        default: 'patch'
-        options: [ 'major', 'minor', 'patch' ]
       release_title:
         type: textarea
         description: 'Release title'
