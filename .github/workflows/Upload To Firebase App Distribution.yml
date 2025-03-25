@@ -33,6 +33,8 @@ on:
         required: false
         default: true
 
+permissions:
+  contents: write
 
 jobs:
   build:
