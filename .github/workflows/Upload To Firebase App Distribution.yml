@@ -33,9 +33,6 @@ on:
         required: false
         default: true
 
-permissions:
-  contents: write
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -97,4 +94,6 @@ jobs:
           body: ${{ github.event.inputs.release_notes || 'No release notes provided' }}
           prerelease: ${{ github.event.inputs.prerelease }}
           tag_name: "v${{ steps.all.outputs.version_major }}.${{ steps.all.outputs.version_minor }}.${{ steps.all.outputs.version_patch }}"
+        permissions:
+          contents: write
 
