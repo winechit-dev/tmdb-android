@@ -95,4 +95,4 @@ jobs:
           body: ${{ github.event.inputs.release_notes || 'No release notes provided' }}
           prerelease: ${{ github.event.inputs.prerelease }}
           tag_name: "v${{ steps.all.outputs.version_major }}.${{ steps.all.outputs.version_minor }}.${{ steps.all.outputs.version_patch }}"
-          token: ${{ secrets.TMDB_GITHUB_TOKEN }}
+
