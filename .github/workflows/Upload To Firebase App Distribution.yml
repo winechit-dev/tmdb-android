@@ -106,9 +106,9 @@ jobs:
           - uses: actions/github-script@v6
             with:
               script: |
-                github.rest.actions.updateWorkflowRun({
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  run_id: context.runId,
-                  name: 'Build v${{ steps.all.outputs.version_major }}.${{ steps.all.outputs.version_minor }}.${{ steps.all.outputs.version_patch }}'              
-          })
+                 github.rest.actions.updateWorkflowRun({
+                 owner: context.repo.owner,
+                 repo: context.repo.repo,
+                 run_id: context.runId,
+                 name: 'Build v1.0.8'
+                })
