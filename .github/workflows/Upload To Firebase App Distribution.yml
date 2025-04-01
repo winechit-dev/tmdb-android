@@ -39,6 +39,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    permissions:
+      actions: write
+      
     steps:
       - uses: actions/checkout@v3
 
@@ -97,3 +100,15 @@ jobs:
           prerelease: ${{ github.event.inputs.prerelease }}
           tag_name: "v${{ steps.all.outputs.version_major }}.${{ steps.all.outputs.version_minor }}.${{ steps.all.outputs.version_patch }}"
 
+      - name: Set run name
+        run: |
+          if: success()
+          - uses: actions/github-script@v6
+            with:
+              script: |
+                github.rest.actions.updateWorkflowRun({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  run_id: context.runId,
+                  name: `Build v${{ steps.all.outputs.version_major }}.${{ steps.all.outputs.version_minor }}.${{ steps.all.outputs.version_patch }} (Run #${{ github.run_number }})`
+                })
