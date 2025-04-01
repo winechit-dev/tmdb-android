@@ -110,5 +110,5 @@ jobs:
                   owner: context.repo.owner,
                   repo: context.repo.repo,
                   run_id: context.runId,
-                  name: 'Build v${{ steps.all.outputs.version_major }}.${{ steps.all.outputs.version_minor }}.${{ steps.all.outputs.version_patch }} (Run #${{ github.run_number }})'              
+                  name: 'Build v${{ steps.all.outputs.version_major }}.${{ steps.all.outputs.version_minor }}.${{ steps.all.outputs.version_patch }}'              
           })
