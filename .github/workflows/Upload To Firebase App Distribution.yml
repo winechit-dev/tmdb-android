@@ -1,4 +1,6 @@
 name: Upload To Firebase App Distribution
+run-name: Deploy from ${{ github.actor }} - ${{ github.ref_name }}
+
 
 on:
   workflow_dispatch:
@@ -95,4 +97,3 @@ jobs:
           prerelease: ${{ github.event.inputs.prerelease }}
           tag_name: "v${{ steps.all.outputs.version_major }}.${{ steps.all.outputs.version_minor }}.${{ steps.all.outputs.version_patch }}"
 
-run-name: '${{ steps.all.outputs.version_major }}.${{ steps.all.outputs.version_minor }}.${{ steps.all.outputs.version_patch }} - Run ID: ${{ github.run_id }} - by @${{ github.actor }}'
